@@ -1,0 +1,47 @@
+*{
+	box-sizing: border-box;
+}
+
+body{
+	width: 100%;
+	margin: 0 auto;
+	min-width: 500px;
+	max-width: 1300px;
+}
+
+.red{
+	padding: 10px;
+	width:100%;
+	float:left;
+	min-height: 1px;
+}
+
+.kolona{
+	background: red;
+	margin-left: 2%;
+	margin-right: 2%;
+	display: inline-block; /*Omogućava da se kolone prikažu bez da se float mora clearovati poslije*/
+	float: left;
+	min-height: 20px;
+}
+
+.kolona:first-child{
+	margin-left: 0px;
+}
+
+.kolona:last-child{
+	margin-right: 0px;
+}
+
+.kolona.cetri{
+	width: 100%;
+}
+.kolona.tri{
+	width: 74%;
+}
+.kolona.dva{
+	width: 48%;
+}
+.kolona.jedan{
+	width: 22%;
+}
