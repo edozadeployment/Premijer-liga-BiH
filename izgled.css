@@ -13,6 +13,11 @@
 /* ++++++++++++++ */
 
 
+h1
+{
+	margin: 3px;
+	margin-top: 7px;
+}
 
 #logo {
   float: left;
@@ -58,28 +63,20 @@ nav
 .navigacija {
     list-style: none;
     margin: 20px auto 0 auto;
-
     text-align: center;
-
     padding: 0px;
- 
-    position: absolute;
     bottom: 0px;
-
-
     font-family: Arial;
     font-size: 17px;
-
-    float: left;
+    float: right;
 }
+
 nav ul li{
     display: inline;
     margin: 0px;
     padding: 0px;
 }
  
-
-
 nav ul a{
     color: white;
     text-decoration: none;
@@ -149,10 +146,11 @@ border-width: thin;
 border-color: #E0E0E0;
 background: white;
 position: relative;
+padding-top: 30px;
 }
  
 article {
-margin: 40px 0 0 0;
+margin: 5px 50px 0 0;
 }
  
 #compnav {
@@ -188,6 +186,13 @@ div#navtable a:visited {
 color: #ACACAC;
 }
  
+#info{
+	margin-top: 15px; 
+	border-width: 2px;
+	border-color: grey;
+	background-color: #DDD;
+}
+
 footer p {
 color: #9A9A9A;
 text-align: center;
@@ -216,6 +221,17 @@ padding-top: 6px;
 	border-width: 1px;
 
 	margin: 0 auto;
+	width: 90%;
+}
+
+.navigacija-wrap
+{
+	margin-top: 30px;
+	padding: 0px;
+}
+
+#tabela
+{
 	width: 90%;
 }
 
@@ -251,5 +267,15 @@ padding-top: 6px;
 
 	li:first-child a, li:last-child a{
     border-radius: 0px;
+	}
+
+	.kolona, .kolona.jedan, .kolona.dva, .kolona.tri, .kolona.cetri
+	{
+		width: 100%;
+	}
+
+	nav a
+	{
+		min-height: 45px;
 	}
 }
