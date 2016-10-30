@@ -12,11 +12,15 @@
  
 /* ++++++++++++++ */
 
+body{
+  background-color: #e0eaf9;
+}
 
 h1
 {
 	margin: 3px;
 	margin-top: 7px;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
 
 #logo {
@@ -137,16 +141,21 @@ font-size: 20px;
 font-weight: normal;
 }
  
+.glavni-sadrzaj
+{
+  background-color: white;
+}
+
 #sadrzaj {
 /*width: 700px;*/
-margin: 0% auto 55px auto;
-padding: 0px 20px 10px 20px;
-border-style:solid;
-border-width: thin;
-border-color: #E0E0E0;
-background: white;
-position: relative;
-padding-top: 30px;
+  margin: 0% auto 0px auto;
+  border-style:solid;
+  border-width: thin;
+  border-color: #E0E0E0;
+  background: white;
+  position: relative;
+  padding: 0px;
+  background-color: #e2e2e2;
 }
  
 article {
@@ -186,11 +195,15 @@ div#navtable a:visited {
 color: #ACACAC;
 }
  
-#info{
+.info{
 	margin-top: 15px; 
 	border-width: 2px;
 	border-color: grey;
 	background-color: #DDD;
+}
+
+.strana{
+  height: 100vh;
 }
 
 footer p {
@@ -207,9 +220,10 @@ padding-top: 6px;
 	height: 10em;
 }
 
+
 #kontakt-forma input
 {
-	display: block;
+	display: inline-block;
 }
 
 #kontakt-forma
@@ -221,7 +235,17 @@ padding-top: 6px;
 	border-width: 1px;
 
 	margin: 0 auto;
-	width: 90%;
+	width: 60%;
+
+  margin-bottom: 25px;
+
+  text-align: left;
+}
+
+form label
+{
+  display: inline-block;
+  width: 5em;
 }
 
 .navigacija-wrap
@@ -235,7 +259,28 @@ padding-top: 6px;
 	width: 90%;
 }
 
-@media screen and (max-width: 480px) {
+.navigacija-wrap{
+  position: relative;
+}
+
+.navigacija-kolona{
+  position: absolute;
+  bottom: 0px;
+}
+
+
+@media screen and (max-width: 800px) {
+  .naslov-stranice{
+    width: 100% !important;
+  }
+
+  .navigacija-kolona{
+    width: 100% !important;
+    position: relative;
+  }
+}
+
+@media screen and (max-width: 600px) {
     nav ul li{
 	    display: block;
 	    width: 100%;
@@ -260,6 +305,17 @@ padding-top: 6px;
 		position: relative;
 	}
 
+  .navigacija-wrap > .tri
+  {
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+
+  .glavni-sadrzaj{
+    margin: 4px;
+    margin-left:  4px;
+  }
+
 	.navigacija li a
 	{
 		width: 100%;
@@ -278,4 +334,13 @@ padding-top: 6px;
 	{
 		min-height: 45px;
 	}
+
+  #kontakt-forma input
+  {
+    display: block;
+  }
+}
+
+.dno{
+  background-color: #ededed;
 }
