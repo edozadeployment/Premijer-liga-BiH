@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html>
 <head>
 <meta charset = "utf-8">
@@ -8,30 +8,68 @@
 </head>
  
 <body>
-	<div class="red navigacija-wrap">
 
-		<div class="kolona jedan"><h1>Premijer liga BiH</h1></div>
-		<div class="kolona tri">
-			<nav>
-				<ul class="navigacija">
-					<li><a href="index.html">Novosti</a></li><li><a class="selected" href="/">Kupovina ulaznica</a></li><li><a href="fanklub.html">Fan klub</a></li><li><a href="onama.html">O nama</a></li>
-				</ul>
-			</nav>
-		</div>
+<div class="red navigacija-wrap">
+	<div class="kolona jedan naslov-stranice"><h1>Premijer liga BiH</h1></div>
+	<div class="kolona tri navigacija-kolona">
+	<nav>
+		<ul class="navigacija">
+			<li><a href="index.html">Novosti</a></li><li><a href="statistika.html">Liga</a></li><li><a class="selected" href="/">Kupovina ulaznica</a></li><li><a href="fanklub.html">Fan klub</a></li><li><a href="onama.html">O nama</a></li>
+		</ul>
+	</nav>
 	</div>
+</div>
 
-	<div id="sadrzaj" class="red">
-		<div class="kolona cetri glavni-sadrzaj">
+<div id="sadrzaj" class="red">
+	<div class="kolona cetri glavni-sadrzaj">
+		<form>
+			<div class="red">
+				<label for="kolo">Kolo: </label>
+				<input type="number" id="kolo" name="kolo" max="30" min="28">
+			</div>
+			
+			<div class="red">
+				<label for="utakmica">Utakmica: </label>
+				
+				<select name="utakmica" id="utakmica">
+					<option>Čelik - Široki Brijeg</option>
+					<option>Mladost - Zrinjski</option>
+					<option>Željezničar - Radnik</option>
+					<option>Metalleghe - Vitez</option>
+					<option>Krupa - Olimpic</option>
+					<option>Sloboda - Sarajevo</option>
+				</select>
 
-		</div>
-		
-		 <div class="red dno">
-		 
-		<div id="navtable"><div class="navrow"><p><a href="#top"><img src="top.png" title="Idi na vrh stranice" alt="top"></a></p></div><div class="navrow"><p><a href="#top">Top</a></p></div></div>
+			</div>
 
-	<footer>
-	<p>Napravio: Edo Imamović.</p>
-	</footer>
-	 </div>
+			<div class="red">
+				<label for="tribina">Tribina: </label>
+				<select id="tribina" name="tribina">
+					<option>Zapad</option>
+					<option>Istok</option>
+					<option>Jug</option>
+					<option>Sjever</option>
+				</select>
+			</div>
+
+			<div class="red">
+				<label for="brojulaznica">Broj karata: </label><input type="number" name="brojulaznica" id="brojulaznica" max="8" min="1" >
+			</div>
+
+			<div class="red">
+				<p>Preostalo ulaznica: <span id="preostalo">294</span></p>
+			</div>
+		</form>
+	</div>
+</div>
+
+ <div class="red dno">
+ 
+<div id="navtable"><div class="navrow"><p><a href="#top"><img src="top.png" title="Idi na vrh stranice" alt="top"></a></p></div><div class="navrow"><p><a href="#top">Top</a></p></div></div>
+
+<footer>
+<p>Napravio: Edo Imamović.</p>
+</footer>
+ </div>
 </body>
 </html>

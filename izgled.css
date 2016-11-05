@@ -216,8 +216,9 @@ padding-top: 6px;
 
 #kontakt-tekst
 {
-	width: 30em;
+	width: 80%;
 	height: 10em;
+  margin: 0 auto;
 }
 
 
@@ -269,7 +270,7 @@ form label
 }
 
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 880px) {
   .naslov-stranice{
     width: 100% !important;
   }
@@ -277,10 +278,12 @@ form label
   .navigacija-kolona{
     width: 100% !important;
     position: relative;
+    bottom: 0px;
   }
+
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 680px) {
     nav ul li{
 	    display: block;
 	    width: 100%;
@@ -343,4 +346,13 @@ form label
 
 .dno{
   background-color: #ededed;
+}
+
+form{
+  overflow: hidden;
+}
+
+table{
+  text-align: center;
+  width: 90%;
 }
