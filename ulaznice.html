@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset = "utf-8">
-<title>Lorem Ipsum</title>
+<title>BHT Premijer liga</title>
 <link rel="stylesheet" type="text/css" href="grid.css">
  <link rel="stylesheet" type="text/css" href="izgled.css">
 </head>
@@ -14,14 +14,19 @@
 	<div class="kolona tri navigacija-kolona">
 	<nav>
 		<ul class="navigacija">
-			<li><a href="index.html">Novosti</a></li><li><a href="statistika.html">Liga</a></li><li><a class="selected" href="/">Kupovina ulaznica</a></li><li><a href="fanklub.html">Fan klub</a></li><li><a href="onama.html">O nama</a></li>
+			<li><a href="index.html">Vijesti</a></li><li><a href="statistika.html">Liga</a></li><li><a class="selected" href="/">Kupovina ulaznica</a></li><li><a href="fanklub.html">Fan klub</a></li><li><a href="onama.html">O nama</a></li>
 		</ul>
 	</nav>
 	</div>
 </div>
 
 <div id="sadrzaj" class="red">
-	<div class="kolona cetri glavni-sadrzaj">
+	<div class="kolona cetri glavni-sadrzaj red">
+		<div class="kolona dva">
+			<p>Ovdje možete rezervisati karte za utakmice.</p>
+			<p>Moguće je rezervisati do osam karata. Ako ste član fan kluba, dobijate popust na cijenu od 10%.</p>
+		</div>
+		<div class="kolona dva">
 		<form>
 			<div class="red">
 				<label for="kolo">Kolo: </label>
@@ -39,7 +44,6 @@
 					<option>Krupa - Olimpic</option>
 					<option>Sloboda - Sarajevo</option>
 				</select>
-
 			</div>
 
 			<div class="red">
@@ -59,7 +63,22 @@
 			<div class="red">
 				<p>Preostalo ulaznica: <span id="preostalo">294</span></p>
 			</div>
+
+			<div class="red">
+				<label for="fan-klub">Šifra: </label>
+				<input type="text" name="fan-klub" id="fan-klub">				
+			</div>
+
+
+			<div class="red">
+				<div class="kolona jedan">
+				</div>
+				<div class="kolona tri">
+					<input type="submit" value="Rezerviši">
+				</div>
+			</div>
 		</form>
+		</div>
 	</div>
 </div>
 

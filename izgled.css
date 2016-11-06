@@ -144,6 +144,8 @@ font-weight: normal;
 .glavni-sadrzaj
 {
   background-color: white;
+  padding: 4px;
+  padding-left: 7px;
 }
 
 #sadrzaj {
@@ -199,7 +201,7 @@ color: #ACACAC;
 	margin-top: 15px; 
 	border-width: 2px;
 	border-color: grey;
-	background-color: #DDD;
+	background-color: #f2f2f2;
 }
 
 .strana{
@@ -328,10 +330,25 @@ form label
     border-radius: 0px;
 	}
 
-	.kolona, .kolona.jedan, .kolona.dva, .kolona.tri, .kolona.cetri
+	.kolona.jedan, .kolona.dva, .kolona.tri
 	{
 		width: 100%;
 	}
+
+  .kolona.jedan.centrirano
+  {
+    width: 20%;
+  }
+
+  .kolona.dva.centrirano
+  {
+    width: 46%;
+  }
+
+  .kolona.tri.centrirano
+  {
+    width: 72%;
+  }
 
 	nav a
 	{
@@ -355,4 +372,14 @@ form{
 table{
   text-align: center;
   width: 90%;
+
+  font-family: arial;
+}
+
+.centrirano{
+  text-align: center;
+}
+
+#sadrzaj.bijeli{
+  background-color: white;
 }
