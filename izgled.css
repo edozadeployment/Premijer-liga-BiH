@@ -40,7 +40,7 @@ nav
     text-align: center;
     padding: 0px;
     bottom: 0px;
-    font-family: Arial;
+    font-family: 'pt sans', arial, sans-serif;
     font-size: 17px;
     float: right;
 }
@@ -202,6 +202,10 @@ form label
     margin-right: 7px;
   }
 
+  .navigacija{
+    margin: 20px 20px 0 auto;
+  }
+
 }
 
 @media screen and (max-width: 680px) {
@@ -227,6 +231,8 @@ form label
 
 	.navigacija{
 		position: relative;
+    margin: 20px auto 0 auto;
+
 	}
 
   .navigacija-wrap > .tri
@@ -299,7 +305,7 @@ table{
   text-align: center;
   width: 90%;
 
-  font-family: arial;
+  font-family: 'pt-sans', arial, sans-serif;
 }
 
 .centrirano{
@@ -308,4 +314,8 @@ table{
 
 #sadrzaj.bijeli{
   background-color: white;
+}
+
+label{
+  font-family: 'pt-sans', arial, sans-serif;
 }
