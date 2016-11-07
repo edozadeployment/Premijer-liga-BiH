@@ -23,36 +23,6 @@ h1
   font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
 
-#logo {
-  float: left;
-  display: block;
-
-  width: 0px;
-  height: 0px;
-  border-top-left-radius: 60px;
-  border-top-right-radius: 60px;
-  border-bottom-left-radius: 60px;
-  border-bottom-right-radius: 60px;
-  border-right: 60px solid transparent;
-  border-top: 60px solid #41E2AA;
-  border-left: 60px solid #41E2AA;
-  border-bottom: 60px solid #41E2AA;
-
-}
-
-#logo:after 
-{
-  content: "";
-
-  position: absolute;
-  width: 50px;
-  height: 20px;
-  left: 50px;
-  top: 50px;
-  color: red; 
-  background-color: #41E2AA;
-}
-
 nav
 {
 	margin: 0px;
@@ -98,17 +68,6 @@ nav ul a:hover{
  
 }
  
-
-/* .selected {
-background-color: #e3acc5;
-color: black;
-}
- 
-.selected {
-background-color: #76B9E8;
-color: black;
-} */
- 
 .selected {
 background-color: #BC93C9;
 color: black;
@@ -121,19 +80,18 @@ color: black;
  
  
  
-li:first-child a {
+nav li:first-child a {
 border-top-left-radius: 15px;
 }
-li:last-child a {
+nav li:last-child a {
 border-top-right-radius: 15px;
 }
  
 p {
-font-family: 'pt sans';
+font-family: 'pt sans', arial, sans-serif;
 font-size: 14px;
 font-weight: normal;
 }
- 
  
 h2 {
 font-family: Arvo;
@@ -192,22 +150,10 @@ text-decoration:none;
  
 }
  
- 
 div#navtable a:visited {
 color: #ACACAC;
 }
  
-.info{
-	margin-top: 15px; 
-	border-width: 2px;
-	border-color: grey;
-	background-color: #f2f2f2;
-}
-
-.strana{
-  height: 100vh;
-}
-
 footer p {
 color: #9A9A9A;
 text-align: center;
@@ -216,34 +162,6 @@ font-size: 11px;
 padding-top: 6px;
 }
 
-#kontakt-tekst
-{
-	width: 80%;
-	height: 10em;
-  margin: 0 auto;
-}
-
-
-#kontakt-forma input
-{
-	display: inline-block;
-}
-
-#kontakt-forma
-{
-	background-color: #e9e9e9;
-	padding: 5px;
-	border-style: solid;
-	border-color: lightgrey;
-	border-width: 1px;
-
-	margin: 0 auto;
-	width: 60%;
-
-  margin-bottom: 25px;
-
-  text-align: left;
-}
 
 form label
 {
@@ -272,7 +190,7 @@ form label
 }
 
 
-@media screen and (max-width: 880px) {
+@media screen and (max-width: 910px) {
   .naslov-stranice{
     width: 100% !important;
   }
@@ -281,6 +199,7 @@ form label
     width: 100% !important;
     position: relative;
     bottom: 0px;
+    margin-right: 7px;
   }
 
 }
@@ -312,8 +231,8 @@ form label
 
   .navigacija-wrap > .tri
   {
-    margin-left: 4px;
-    margin-right: 4px;
+    margin-left: 0px;
+    margin-right: 0px;
   }
 
   .glavni-sadrzaj{
@@ -326,14 +245,21 @@ form label
 		width: 100%;
 	}
 
-	li:first-child a, li:last-child a{
+nav li:first-child a, nav li:last-child a {
     border-radius: 0px;
 	}
 
-	.kolona.jedan, .kolona.dva, .kolona.tri
+	.kolona
 	{
+    margin-left: 0px;
+    margin-right: 0px;
 		width: 100%;
 	}
+
+  .kolona.jedan, .kolona.dva, .kolona.tri
+  {
+    width: 100%;
+  }
 
   .kolona.jedan.centrirano
   {

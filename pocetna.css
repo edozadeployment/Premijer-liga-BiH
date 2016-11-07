@@ -1,0 +1,11 @@
+.info{
+  margin-top: 15px; 
+  border-width: 2px;
+  border-color: grey;
+  background-color: #f2f2f2;
+}
+
+
+.strana{
+  height: 100vh;
+}
