@@ -46,7 +46,8 @@ nav
 }
 
 nav ul li{
-    display: inline;
+    display: inline-block;
+    float: left;
     margin: 0px;
     padding: 0px;
 }
@@ -312,10 +313,17 @@ table{
   text-align: center;
 }
 
-#sadrzaj.bijeli{
+.bijeli{
   background-color: white;
+  margin: 0px;
+  padding: 0px;
 }
 
 label{
   font-family: 'pt-sans', arial, sans-serif;
+}
+
+#greska
+{
+  color: red;
 }
