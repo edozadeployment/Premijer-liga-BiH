@@ -6,7 +6,8 @@ request.onreadystatechange = function()
 		{
 			sadrzaj.innerHTML = request.responseText;
 
-		dodajValidaciju();
+			dodajValidaciju();
+			dodajPopup();
 		}
 	}
 

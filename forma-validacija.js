@@ -42,6 +42,35 @@ function provjeriFormu(e) {
 			return false;
 	}
 
+	var koloInput = forma['kolo'];
+	if (koloInput && !koloInput.value) {
+			greska.innerHTML+="Morate izabrati kolo";  
+            e.preventDefault(); 
+			return false;
+	}
+
+	var tribinaInput = forma['tribina'];
+	if (tribinaInput && !tribinaInput.value) {
+			greska.innerHTML+="Morate izabrati tribinu";  
+            e.preventDefault(); 
+			return false;
+	}
+
+	var utakmicaInput = forma['utakmica'];
+	if (utakmicaInput && !utakmicaInput.value) {
+			greska.innerHTML+="Morate izabrati utakmicu";  
+            e.preventDefault(); 
+			return false;
+	}
+
+	var brulaznicaInput = forma['brojulaznica'];
+	if (brulaznicaInput && !brulaznicaInput.value) {
+			greska.innerHTML+="Morate izabrati broj ulaznica";  
+            e.preventDefault(); 
+			return false;
+	}
+
+	alert("Uspješno popunjena forma");
 	return true;
 }
 

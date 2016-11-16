@@ -27,7 +27,7 @@ nav
 {
 	margin: 0px;
   position: relative;
-  overflow: auto;
+  overflow: hidden;
   width: 100%;
   min-height: 40px;
   display: block;
@@ -188,10 +188,20 @@ form label
 .navigacija-kolona{
   position: absolute;
   bottom: 0px;
+  right: 30px;
 }
+  .naslov-stranice{
+    width: 100% !important;
+    margin-right: 0px;
 
-
-@media screen and (max-width: 910px) {
+  }
+  .navigacija-kolona{
+    width: 100% !important;
+    position: relative;
+    bottom: 0px;
+    margin-right: 7px;
+  }
+@media screen and (max-width: 950px) {
   .naslov-stranice{
     width: 100% !important;
   }
@@ -201,6 +211,7 @@ form label
     position: relative;
     bottom: 0px;
     margin-right: 7px;
+    right: 0px;
   }
 
   .navigacija{
@@ -209,7 +220,7 @@ form label
 
 }
 
-@media screen and (max-width: 680px) {
+@media screen and (max-width: 800px) {
     nav ul li{
 	    display: block;
 	    width: 100%;
@@ -235,6 +246,10 @@ form label
     margin: 20px auto 0 auto;
 
 	}
+
+  .navigacija-kolona{
+    width: 100%;
+  }
 
   .navigacija-wrap > .tri
   {
@@ -326,4 +341,12 @@ label{
 #greska
 {
   color: red;
+}
+
+#tekst
+{
+  width: 70%;
+  height: 10em;
+  padding: 2px;
+  
 }
