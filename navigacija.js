@@ -1,5 +1,6 @@
 var sadrzaj = document.getElementById("sadrzaj");
 var request = new XMLHttpRequest();
+var otvorenaStranica = "vijesti.html";
 request.onreadystatechange = function()
 	{
 		if (request.readyState == 4 && request.status == 200)
@@ -8,6 +9,19 @@ request.onreadystatechange = function()
 
 			dodajValidaciju();
 			dodajPopup();
+
+			switch (otvorenaStranica)
+			{
+				case "onama.html":
+					povuciONama();
+					break;
+				case "fanklub.html":
+					povuciFanKlub();
+					break;
+				case "ulaznice.html":
+					povuciUlaznice();
+					break;
+			}
 		}
 	}
 
@@ -19,6 +33,8 @@ function otvori(elem, stranica)
 	request.open("GET", stranica, true);
 	request.setRequestHeader('Content-type', 'text/html');
 	request.send();
+
+	otvorenaStranica = stranica;
 
 	var navigacija = document.getElementsByClassName("link-navigacije");
 

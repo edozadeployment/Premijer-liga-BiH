@@ -43,8 +43,8 @@ function provjeriFormu(e) {
 	}
 
 	var koloInput = forma['kolo'];
-	if (koloInput && !koloInput.value) {
-			greska.innerHTML+="Morate izabrati kolo";  
+	if (koloInput && (!koloInput.value || koloInput.max < koloInput.value || koloInput.min > koloInput.value )) {
+			greska.innerHTML+="Morate izabrati (ispravno) kolo";  
             e.preventDefault(); 
 			return false;
 	}
@@ -64,8 +64,8 @@ function provjeriFormu(e) {
 	}
 
 	var brulaznicaInput = forma['brojulaznica'];
-	if (brulaznicaInput && !brulaznicaInput.value) {
-			greska.innerHTML+="Morate izabrati broj ulaznica";  
+	if (brulaznicaInput && (!brulaznicaInput.value) || brulaznicaInput.value < brulaznicaInput.min || brulaznicaInput.value > brulaznicaInput.max) {
+			greska.innerHTML+="Morate izabrati broj ulaznica (između 1 i 8)";  
             e.preventDefault(); 
 			return false;
 	}
