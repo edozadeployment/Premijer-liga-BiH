@@ -4,6 +4,8 @@ function sacuvajONama()
 	localStorage.setItem("onama_email", document.getElementById("email").value);
 	localStorage.setItem("onama_telefon", document.getElementById("telefon").value);
 	localStorage.setItem("onama_tekst", document.getElementById("tekst").value);
+
+	alert("Uspješno sačuvan sadržaj forme");
 }
 
 function povuciONama()
@@ -20,6 +22,8 @@ function sacuvajFanKlub()
 	localStorage.setItem("fanklub_prezime", document.getElementById("prezime").value);
 	localStorage.setItem("fanklub_email", document.getElementById("email").value);
 	localStorage.setItem("fanklub_telefon", document.getElementById("telefon").value);
+
+	alert("Uspješno sačuvan sadržaj forme");
 }
 
 function povuciFanKlub()
@@ -37,6 +41,8 @@ function sacuvajUlaznice()
 	localStorage.setItem("ulaznice_tribina", document.getElementById("tribina").selectedIndex);
 	localStorage.setItem("ulaznice_brojulaznica", document.getElementById("brojulaznica").value);
 	localStorage.setItem("ulaznice_sifra", document.getElementById("fan-klub").value);
+
+	alert("Uspješno sačuvan sadržaj forme");
 }
 
 function povuciUlaznice()

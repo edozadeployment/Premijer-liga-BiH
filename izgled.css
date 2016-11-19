@@ -16,6 +16,18 @@ body{
   background-color: #e0eaf9;
 }
 
+.info{
+  margin-top: 15px; 
+  border-width: 2px;
+  border-color: grey;
+  background-color: #f2f2f2;
+}
+
+
+.strana{
+  height: auto;
+}
+
 h1
 {
 	margin: 3px;
@@ -108,7 +120,6 @@ font-weight: normal;
 }
 
 #sadrzaj {
-/*width: 700px;*/
   margin: 0% auto 0px auto;
   border-style:solid;
   border-width: thin;
@@ -328,11 +339,6 @@ table{
   text-align: center;
 }
 
-.bijeli{
-  background-color: white;
-  margin: 0px;
-  padding: 0px;
-}
 
 label{
   font-family: 'pt-sans', arial, sans-serif;
