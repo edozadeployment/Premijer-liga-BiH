@@ -2,13 +2,13 @@
   font-family: 'PT Sans';
   font-style: normal;
   font-weight: 400;
-  src: local('PT Sans'), local('PTSans-Regular'), url(http://themes.googleusercontent.com/static/fonts/ptsans/v4/LKf8nhXsWg5ybwEGXk8UBQ.woff) format('woff');
+  src: local('PT Sans'), local('PTSans-Regular'), url(https://themes.googleusercontent.com/static/fonts/ptsans/v4/LKf8nhXsWg5ybwEGXk8UBQ.woff) format('woff');
 }
 @font-face {
   font-family: 'Arvo';
   font-style: normal;
   font-weight: 400;
-  src: local('Arvo'), url(http://themes.googleusercontent.com/static/fonts/arvo/v5/WJ6D195CfbTRlIs49IbkFw.woff) format('woff');}
+  src: local('Arvo'), url(https://themes.googleusercontent.com/static/fonts/arvo/v5/WJ6D195CfbTRlIs49IbkFw.woff) format('woff');}
  
 /* ++++++++++++++ */
 
