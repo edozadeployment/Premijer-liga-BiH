@@ -1,4 +1,4 @@
-function provjeriFormu(e) {
+﻿function provjeriFormu(e) {
 	var greska = document.getElementById('greska');
 	greska.innerHTML=""; // ocistimo prethodne greske
 	
@@ -7,14 +7,14 @@ function provjeriFormu(e) {
     var imeRegex = /^[a-zA-Z]{2,15}$/;
 	var imeInput = forma['ime'];
 	if (imeInput && !imeRegex.test(imeInput.value)) {
-            greska.innerHTML+="Ime mora imati 2-15 karaktera<br>";
+            greska.innerHTML+="Ime mora imati 2-15 slova<br>";
             e.preventDefault();
 			return false;
 	}
 
 	var prezimeInput = forma['prezime'];
 	if (prezimeInput && !imeRegex.test(prezimeInput.value)) {
-            greska.innerHTML+="Prezime mora imati 2-15 karaktera<br>";
+            greska.innerHTML+="Prezime mora imati 2-15 slova<br>";
             e.preventDefault();
 			return false;
 	}

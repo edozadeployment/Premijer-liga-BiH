@@ -40,7 +40,6 @@ function sacuvajUlaznice()
 	localStorage.setItem("ulaznice_utakmica", document.getElementById("utakmica").selectedIndex);
 	localStorage.setItem("ulaznice_tribina", document.getElementById("tribina").selectedIndex);
 	localStorage.setItem("ulaznice_brojulaznica", document.getElementById("brojulaznica").value);
-	localStorage.setItem("ulaznice_sifra", document.getElementById("fan-klub").value);
 
 	alert("Uspješno sačuvan sadržaj forme");
 }
@@ -51,5 +50,4 @@ function povuciUlaznice()
 	document.getElementById("utakmica").selectedIndex = localStorage.getItem("ulaznice_utakmica");
 	document.getElementById("tribina").selectedIndex = localStorage.getItem("ulaznice_tribina");
 	document.getElementById("brojulaznica").value = localStorage.getItem("ulaznice_brojulaznica");
-	document.getElementById("fan-klub").value = localStorage.getItem("ulaznice_sifra");
 }
