@@ -353,6 +353,36 @@ label{
 {
   width: 70%;
   height: 10em;
-  padding: 2px;
-  
+  padding: 2px; 
+}
+
+#admin-link
+{
+    float:right;
+}
+
+#logout-forma
+{
+  float: right;
+}
+
+#kontakt-forma input
+{
+  display: inline-block;
+}
+
+.izdvojena-forma
+{
+  background-color: #e9e9e9;
+  padding: 5px;
+  border-style: solid;
+  border-color: lightgrey;
+  border-width: 1px;
+
+  margin: 0 auto;
+  width: 70%;
+
+  margin-bottom: 25px;
+
+  text-align: left;
 }

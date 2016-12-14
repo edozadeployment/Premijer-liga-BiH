@@ -1,6 +1,6 @@
 var sadrzaj = document.getElementById("sadrzaj");
 var request = new XMLHttpRequest();
-var otvorenaStranica = "vijesti.html";
+var otvorenaStranica = "vijesti.php";
 request.onreadystatechange = function()
 	{
 		if (request.readyState == 4 && request.status == 200)
@@ -12,13 +12,13 @@ request.onreadystatechange = function()
 
 			switch (otvorenaStranica)
 			{
-				case "onama.html":
+				case "onama.php":
 					povuciONama();
 					break;
-				case "fanklub.html":
+				case "fanklub.php":
 					povuciFanKlub();
 					break;
-				case "ulaznice.html":
+				case "ulaznice.php":
 					povuciUlaznice();
 					break;
 			}
@@ -26,7 +26,7 @@ request.onreadystatechange = function()
 	}
 
 var pocetni = document.getElementById("vijesti");
-otvori(pocetni, "vijesti.html");
+otvori(pocetni, "vijesti.php");
 
 function otvori(elem, stranica)
 {
@@ -43,5 +43,8 @@ function otvori(elem, stranica)
 		   navigacija[i].className = navigacija[i].className.replace(/(?:^|\s)selected(?!\S)/g , '');
 	}
 
-	elem.className += " selected";
+	if (elem.id != "admin-link")
+	{
+		elem.className += " selected";
+	}
 }

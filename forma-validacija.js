@@ -70,7 +70,6 @@
 			return false;
 	}
 
-	alert("Uspješno popunjena forma");
 	return true;
 }
 
