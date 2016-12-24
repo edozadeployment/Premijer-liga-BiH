@@ -386,3 +386,30 @@ label{
 
   text-align: left;
 }
+
+article > h2
+{
+  display: inline-block;
+}
+
+.brisanje
+{
+  display: inline;
+}
+
+.edit-vijest
+{
+  display: none;
+}
+
+#pisanje-vijesti
+{
+  width: 90%;
+  padding-left: 3em;
+}
+
+#pisanje-vijesti textarea
+{
+  width: 75%;
+  height: 10em;
+}

@@ -4,6 +4,8 @@
 <script type="text/javascript" src="spasavanje-forme.js"></script>
 <script type="text/javascript" src="forma-validacija.js"></script>
 <script type="text/javascript" src="popup.js"></script>
+<script type="text/javascript" src="trazilica.js"></script>
+<script type="text/javascript" src="posiljalac-zahtjeva.js"></script>
 <meta charset = "utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 

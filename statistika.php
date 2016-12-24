@@ -52,179 +52,216 @@
 	</table>
 </div>
 </div>
-
 <div class="red">
-<div class="kolona dva glavni-sadrzaj">
-	<p>Trenutna tabela lige:</p>
-	<table>
-	<tr>
-		<th>#</th>
-		<th>Klub</th>
-		<th>B</th>
-	</tr>
-	<tr>
-		<td>1.</td>
-		<td>Zrinjski</td>
-		<td>30</td>
-	</tr>
-	<tr>
-		<td>2.</td>
-		<td>Krupa</td>
-		<td>24</td>
-	</tr>
-	<tr>
-		<td>3.</td>
-		<td>Radnik</td>
-		<td>22</td>
-	</tr>
-	<tr>
-		<td>4.</td>
-		<td>Željezničar</td>
-		<td>22</td>
-	</tr>
-	<tr>
-		<td>5.</td>
-		<td>Sloboda</td>
-		<td>20</td>
-	</tr>
-	<tr>
-		<td>6.</td>
-		<td>Sarajevo</td>
-		<td>19</td>
-	</tr>
-	<tr>
-		<td>7.</td>
-		<td>Mladost</td>
-		<td>19</td>
-	</tr>
-	<tr>
-		<td>8.</td>
-		<td>Široki B.</td>
-		<td>19</td>
-	</tr>
-	<tr>
-		<td>9.</td>
-		<td>Vitez</td>
-		<td>19</td>
-	</tr>
-	<tr>
-		<td>10.</td>
-		<td>Metalleghe</td>
-		<td>9</td>
-	</tr>
-	<tr>
-		<td>11.</td>
-		<td>Olimpic</td>
-		<td>9</td>
-	</tr>
-	<tr>
-		<td>12.</td>
-		<td>Čelik</td>
-		<td>6</td>
-	</tr>
-	</table>
-	</div>
 
-	<div class="kolona dva glavni-sadrzaj">
-	<p>Lista najboljih strijelaca:</p>
-	<table>
-	<tr>
-		<th>#</th>
-		<th>Igrač</th>
-		<th>Tim</th>
-		<th>Golovi</th>
-	</tr>
-	<tr>
-		<td>1.</td>
-		<td>S. Krpić</td>
-		<td>Sloboda</td>
-		<td>8</td>
-	</tr>
-	<tr>
-		<td>2.</td>
-		<td>E. Koljić</td>
-		<td>Krupa</td>
-		<td>7</td>
-	</tr>
-	<tr>
-		<td>3.</td>
-		<td>J. Mešanović</td>
-		<td>Zrinjski</td>
-		<td>7</td>
-	</tr>
-	<tr>
-		<td>4.</td>
-		<td>M. Obradović</td>
-		<td>Radnik</td>
-		<td>7</td>
-	</tr>
-	<tr>
-		<td>5.</td>
-		<td>M. Ahmetović</td>
-		<td>Sarajevo</td>
-		<td>6</td>
-	</tr>
-	<tr>
-		<td>6.</td>
-		<td>Wagner</td>
-		<td>Široki Brijeg</td>
-		<td>6</td>
-	</tr>
-	<tr>
-		<td>7.</td>
-		<td>I. Lendrić</td>
-		<td>Željezničar</td>
-		<td>6</td>
-	</tr>
-	<tr>
-		<td>8.</td>
-		<td>N. Bilbija</td>
-		<td>Zrinjski</td>
-		<td>5</td>
-	</tr>
-	<tr>
-		<td>9.</td>
-		<td>G. Brkić</td>
-		<td>Mladost</td>
-		<td>5</td>
-	</tr>
-	<tr>
-		<td>10.</td>
-		<td>S. Kajkut</td>
-		<td>Krupa</td>
-		<td>5</td>
-	</tr>
-	<tr>
-		<td>11.</td>
-		<td>O. Todorović</td>
-		<td>Zrinjski</td>
-		<td>5</td>
-	</tr>
-	<tr>
-		<td>12.</td>
-		<td>L. Menalo</td>
-		<td>Široki Brijeg</td>
-		<td>4</td>
-	</tr>
-	<tr>
-		<td>13.</td>
-		<td>I. Baraban</td>
-		<td>Široki Brijeg</td>
-		<td>3</td>
-	</tr>
-	<tr>
-		<td>14.</td>
-		<td>N. Crnkić</td>
-		<td>Sarajevo</td>
-		<td>3</td>
-	</tr>
-	<tr>
-		<td>15.</td>
-		<td>A. Huskić</td>
-		<td>Mladost</td>
-		<td>3</td>
-	</tr>
-	</table>
-	</div>
+<?php
+function idcmp($t1, $t2) {
+	return ($t1->attributes()["id"]) < ((int)$t2->attributes()["id"]);
+}
+
+function cmp($t1, $t2) {
+	return ((int) $t1->bodovi) < ((int)$t2->bodovi);
+}
+
+function cmp_strijelci($t1, $t2) {
+	return ((int) $t1->golovi) < ((int)$t2->golovi);
+}
+
+session_start();
+$xml= simplexml_load_file("podaci.xml");
+
+if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
+{
+	if (isset($_REQUEST["edit-tabela"]))
+	{
+		$nadjeni;
+		$trazeni = $_REQUEST["edit-tabela"];
+
+		foreach($xml->tabela->klub as $klub)
+		{
+			if ($klub->attributes()['id'] == $trazeni)
+			{
+				$klub->naziv = $_REQUEST["naziv"];
+				$klub->bodovi = $_REQUEST["bodovi"];
+				$xml->asXml("podaci.xml");
+
+				break;
+			}
+		}
+	}
+
+	if (isset($_REQUEST["edit-strijelci"]))
+	{
+		$nadjeni;
+		$trazeni = $_REQUEST["edit-strijelci"];
+
+		foreach($xml->strijelci->igrac as $igrac)
+		{
+			if ($igrac->attributes()['id'] == $trazeni)
+			{
+				$igrac->ime = $_REQUEST["ime"];
+				$igrac->tim = $_REQUEST["tim"];
+				$igrac->golovi = $_REQUEST["golovi"];
+				$xml->asXml("podaci.xml");
+
+				break;
+			}
+		}
+	}
+
+	if (isset($_REQUEST["brisi-tabela"]))
+	{
+		$tabela=$xml->xpath('//klub[@id="'.$_REQUEST["brisi-tabela"].'"]');
+
+		unset($tabela[0][0]);
+		$xml->asXml("podaci.xml");
+	}
+
+	if (isset($_REQUEST["brisi-strijelci"]))
+	{
+		$strijelci=$xml->xpath('//igrac[@id="'.$_REQUEST["brisi-strijelci"].'"]');
+
+		unset($strijelci[0][0]);
+		$xml->asXml("podaci.xml");
+	}
+
+	if (isset($_REQUEST["dodaj-tabela"]))
+	{
+		$idtabela = $xml->xpath('/podaci/tabela/klub');
+		usort($idtabela, "idcmp");
+		$idtabela[0];
+		$novi = $xml->tabela->addChild("klub", "");
+		$novi->addAttribute("id", intval($idtabela[0]->attributes()["id"]) + 1);
+		$novi->addChild("naziv", $_REQUEST["naziv"]);
+		$novi->addChild("bodovi", $_REQUEST["bodovi"]);
+
+		$xml->asXml("podaci.xml");
+	}
+
+	if (isset($_REQUEST["dodaj-strijelci"]))
+	{
+		$idtabela = $xml->xpath('/podaci/strijelci/igrac');
+		usort($idtabela, "idcmp");
+		$idtabela[0];
+		$novi = $xml->strijelci->addChild("igrac", "");
+		$novi->addAttribute("id", intval($idtabela[0]->attributes()["id"]) + 1);
+		$novi->addChild("ime", $_REQUEST["ime"]);
+		$novi->addChild("tim", $_REQUEST["tim"]);
+		$novi->addChild("golovi", $_REQUEST["golovi"]);
+
+		$xml->asXml("podaci.xml");
+	}
+}
+
+$tabela = $xml->xpath('/podaci/tabela/klub');
+$strijelci = $xml->xpath('/podaci/strijelci/igrac');
+
+usort($tabela, 'cmp');
+usort($strijelci, 'cmp_strijelci');
+
+print "<div class=\"kolona dva glavni-sadrzaj\">";
+print "<p>Trenutna tabela lige:</p>";
+
+if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
+{
+	foreach ($tabela as $mjesto=>$klub) {
+		print "<div class='red'>
+		<form method='POST' action='statistika.php' onsubmit=\"return submitForm(this);\">
+		<input type='text' name='naziv' value='$klub->naziv'>
+		<input type='text' name='bodovi' value='$klub->bodovi'>
+		<input type='hidden' name='edit-tabela' value='".$klub->attributes()["id"]."'>
+		<input type='submit' value='Sačuvaj'>
+		</form>
+
+		<form method='POST' action='statistika.php' onsubmit=\"return submitForm(this);\">
+		<input type='hidden' name='brisi-tabela' value='".$klub->attributes()["id"]."'>
+		<input type='submit' value='Izbriši'>
+		</form>
+		
+		</div>";
+	}
+
+	print "<div class='red'>
+	<form method='POST' action='statistika.php' onsubmit=\"return submitForm(this);\">
+	<input type='text' name='naziv'>
+	<input type='text' name='bodovi'>
+	<input type='hidden' name='dodaj-tabela'>
+	<input type='submit' value='Dodaj klub'>
+	</form>
+	</div>";
+}
+
+print "<table>";
+print "<tr>";
+print "<th>#</th>";
+print "<th>Klub</th>";
+print "<th>B</th>";
+print "</tr>";
+
+foreach ($tabela as $mjesto=>$klub) {
+	print "<tr>";
+	print "<td>". ($mjesto + 1) ."</td>";
+	print "<td>$klub->naziv</td>";
+	print "<td>$klub->bodovi</td>";
+	print "</tr>";
+}
+
+print "</table>";
+print "</div>";
+
+print "<div class=\"kolona dva glavni-sadrzaj\">";
+print "<p>Lista najboljih strijelaca:</p>";
+
+if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
+{
+	foreach ($strijelci as $mjesto=>$igrac) {
+		print "<div class='red'>
+		<form method='POST' action='statistika.php' onsubmit=\"return submitForm(this);\">
+		<input type='text' name='ime' value='$igrac->ime'>
+		<input type='text' name='tim' value='$igrac->tim'>
+		<input type='text' name='golovi' value='$igrac->golovi'>
+		<input type='hidden' name='edit-strijelci' value='".$igrac->attributes()["id"]."'>
+		<input type='submit' value='Sačuvaj'>
+		</form>
+
+		<form method='POST' action='statistika.php' onsubmit=\"return submitForm(this);\">
+		<input type='hidden' name='brisi-strijelci' value='".$igrac->attributes()["id"]."'>
+		<input type='submit' value='Izbriši'>
+		</form>
+		
+		</div>";
+	}
+
+	print "<div class='red'>
+	<form method='POST' action='statistika.php' onsubmit=\"return submitForm(this);\">
+	<input type='text' name='ime'>
+	<input type='text' name='tim'>
+	<input type='text' name='golovi'>
+	<input type='hidden' name='dodaj-strijelci'>
+	<input type='submit' value='Dodaj igrača'>
+	</form>
+	</div>";
+}
+
+
+print "<table>";
+print "<tr>";
+print "<th>#</th>";
+print "<th>Igrač</th>";
+print "<th>Tim</th>";
+print "<th>Golovi</th>";
+print "</tr>";
+
+foreach ($strijelci as $mjesto=>$strijelac) {
+	print "<tr>";
+	print "<td>".($mjesto + 1)."</td>";
+	print "<td>$strijelac->ime</td>";
+	print "<td>$strijelac->tim</td>";
+	print "<td>$strijelac->golovi</td>";
+	print "</tr>";
+}
+print "</table>";
+print "</div>";
+?>
 </div>
 </div>

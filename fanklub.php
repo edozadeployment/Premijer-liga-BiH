@@ -1,4 +1,33 @@
-﻿<div class="kolona cetri glavni-sadrzaj">
+﻿<?php
+	if (isset($_REQUEST['csv']))
+	{
+		$sadrzaj = "sep=,\n";
+		$xml = simplexml_load_file("fan-klub.xml");
+
+		$clanovi = $xml->record;
+
+		foreach ($clanovi as $clan)
+		{
+			$sadrzaj = $sadrzaj.$clan->id.','.$clan->ime.','.$clan->prezime.','.$clan->email.','.$clan->telefon."\n";
+		}
+
+		$file = "fanklub.csv";
+		file_put_contents($file, $sadrzaj);
+
+		if (file_exists($file)) {
+ 			header('Content-Description: File Transfer');
+    		header('Content-Type: application/octet-stream');
+    		header('Content-Disposition: attachment; filename="'.basename($file).'"');
+	    	header('Expires: 0');
+	    	header('Cache-Control: must-revalidate');
+    		header('Pragma: public');
+    		header('Content-Length: ' . filesize($file));
+    		readfile($file);
+    	}
+	}
+?>
+
+<div class="kolona cetri glavni-sadrzaj">
 	<div class="red">
 		<div class="kolona dva">
 			<p>Članstvom u fan-klubu ostvarujete pogodnosti kao što su popust pri kupovini ulaznica, učešće u nagradnim igrama i slično.</p>
@@ -57,96 +86,23 @@
 			</form>
 		</div>
 	</div>
-
-	<table>
-		<tr>
-			<th>#</th>
-			<th>Ime</th>
-			<th>Prezime</th>
-			<th>Email</th>
-			<th>Broj telefona</th>
-		</tr>
-
-		<tr>
-			<td>1</td>
-			<td>Mujo</td>
-			<td>Mujić</td>
-			<td>mmujic@mail.com</td>
-			<td>123456789</td>
-		</tr>
-
-		<tr>
-			<td>2</td>
-			<td>Suljo</td>
-			<td>Suljić</td>
-			<td>ssuljic@mail.com</td>
-			<td>23424198</td>
-		</tr>
-
-		<tr>
-			<td>3</td>
-			<td>Milan</td>
-			<td>Milanović</td>
-			<td>mmilanovic@mail.com</td>
-			<td>432981289</td>
-		</tr>
-
-		<tr>
-			<td>4</td>
-			<td>Ming</td>
-			<td>Tzu</td>
-			<td>mtzu@mail.com</td>
-			<td>1234322219</td>
-		</tr>
-	
-		<tr>
-			<td>5</td>
-			<td>Ivan</td>
-			<td>Ihtijarević</td>
-			<td>dssdsc@mail.com</td>
-			<td>123456789</td>
-		</tr>
-
-		<tr>
-			<td>6</td>
-			<td>Xuxpaix</td>
-			<td>Otpdsi</td>
-			<td>xpsua@mail.com</td>
-			<td>12341111189</td>
-		</tr>
-
-		<tr>
-			<td>7</td>
-			<td>Mujo</td>
-			<td>Mujić</td>
-			<td>mmujic@mail.com</td>
-			<td>123456789</td>
-		</tr>
-		
-		<tr>
-			<td>8</td>
-			<td>Mujo</td>
-			<td>Mujić</td>
-			<td>mmujic@mail.com</td>
-			<td>123456789</td>
-		</tr>
-		
-		<tr>
-			<td>9</td>
-			<td>Mujo</td>
-			<td>Mujić</td>
-			<td>mmujic@mail.com</td>
-			<td>123456789</td>
-		</tr>
-		
-		<tr>
-			<td>10</td>
-			<td>Mujo</td>
-			<td>Mujić</td>
-			<td>mmujic@mail.com</td>
-			<td>123456789</td>
-		</tr>
-	</table>
+<div class="red">
+<div class="kolona dva">
+	<form>
+		<label style="width: auto;" for="pretraga-polje">Pretraga članova: </label> <input type="text" id="pretraga-polje" name="pretraga-polje">
+	</form>
 </div>
+<div class="kolona jedan">
+</div>
+<div class="kolona jedan">
+	<form method="GET" action="fanklub.php">
+		<input type="submit" value="Download CSV svih članova">
+		<input type="hidden" name="csv">
+	</form>
+</div>
+
+</div>
+	<div id="rezultati-pretrage">
+	</div>
 
 <script type="text/javascript" src="forma-validacija.js"></script>

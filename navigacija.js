@@ -5,10 +5,14 @@ request.onreadystatechange = function()
 	{
 		if (request.readyState == 4 && request.status == 200)
 		{
+			document.removeEventListener('keyup', pretrazi);
+			document.removeEventListener('keyup', doc_keyUp);
+			
 			sadrzaj.innerHTML = request.responseText;
 
 			dodajValidaciju();
 			dodajPopup();
+			dodajTrazilicu();
 
 			switch (otvorenaStranica)
 			{
@@ -30,6 +34,7 @@ otvori(pocetni, "vijesti.php");
 
 function otvori(elem, stranica)
 {
+	
 	request.open("GET", stranica, true);
 	request.setRequestHeader('Content-type', 'text/html');
 	request.send();

@@ -1,105 +1,143 @@
-<div class="kolona tri glavni-sadrzaj">
-<article>
-<h2>Čelik savladao Olimpic i prepustio fenjer ekipi s Otoke</h2>
-<p>Zeničani su dominirali tokom čitavog susreta, a u prvom poluvremenu postigli su pogodak u 26. minuti koji je poništen.</p>
+<?php
+session_start();
 
-<p>Nakon ubačaja iz slobodnog udarca sa lijeve strane lopta je padala u peterac gostiju, a Smriko se postavio ispred Bandovića i nakon blagog kontakta golman Olimpica je ubacio loptu u vlastitu mrežu, ali je sviran prekršaj.</p>
+if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
+{
+	if (isset($_REQUEST["dodavanje"]))
+	{
+		$xml= simplexml_load_file("podaci.xml");
+		$sortirani = $xml->xpath('/podaci/vijesti/vijest');
 
-<p>Smriko je u 42. minuti bio u odličnoj šansi, ali je Bandović odlično odbranio.</p>
+		function cmp($t1, $t2) {
+    		return $t1->attributes()["id"] > $t2->attributes()["id"];
+		}
 
-<p>Čelik je poveo u 50. minuti. Salčinović je uputio jednu dubinsku loptu sa oko 40 metara, a Brković se odlično snalazi i šalje loptu u mrežu pored Bandovića za 1:0.</p>
+		usort($sortirani, 'cmp');
 
-<p>Brković je samo sedam minuta kasnije mogao postići svoj drugi gol, no sa svega nekoliko metara šutirao je direktno u Bandovića.</p>
-</article>
- 
-<article>
-<h2>Krpić heroj Slobode: Pogodak na Grbavici sam posvetio ocu</h2>
-<p>Krpiću je prije nekoliko dana preminuo otac, ali je on odlučio biti na raspolaganju treneru Vladi Jagodiću te se rame uz rame sa svojim saigračima suprotstavio Željezničaru u večerašnjoj utakmici.</p>
+		$noviId = $sortirani[0]->attributes()["id"] + 1;
 
-<p>"Teško mi je, najteže u životu. Otac mi se razbolio i preselio na drugi svijet. Sve se to dogodilo u periodu od dva-tri mjeseca. Bio sam u šoku, nisam mogao vjerovati. Međutim, moram nastaviti dalje. Odlučio sam igrati zato što sam želio postići gol, to se ispunilo i pogodak sam posvetio ocu", izjavio je Krpić za portal Klix.ba nakon utakmice protiv Željezničara.</p>
- 
- <p>Tuzlaci su u finišu utakmice mogli do pobjede, ali su zadovoljni i bodom. U narednoj utakmici na Tušnju žele pobijediti aktuelnog prvaka Zrinjskog.</p>
-</article>
+		$novi = $xml->vijesti->addChild("vijest", "");
+		$novi->addAttribute("id", $noviId);
+		$novi->addChild("naslov", $_REQUEST["naslov"]);
+		$novi->addChild("tekst", $_REQUEST["tekst"]);
+		$novi->addChild("autor", $_REQUEST["autor"]);
 
-<article>
-<h2>Vitez minimalnim rezultatom pobijedio Metalleghe u gostima</h2>
-<p>U 15. kolu BHT Premijer lige Vitez je kao gost na stadionu Pirota u Travniku rezultatom 1:0 savladao Metalleghe iz Jajca.</p>
-<p>Ovo je treći uzastopni ligaški meč u kojem Vitez ne zna za poraz, dok je Metalleghe ostao na samo jednoj pobjedi u posljednjih 10 utakmica u svim takmičenjima.</p>
-<p>Trener domaćeg tima Nermin Bašić od prve minute šansu je dao Fejziću, Duraku, Kovaču, Smajiću, Karađuzu, Helvidi, Selimoviću, Dujakoviću, Rašiću, Raduloviću i Pezi, dok je Slaven Musa na drugoj strani na teren poslao sljedeće igrače: Nwolokor, Rašić, Jevtić, Muminović, Kokot, Livančnić, Mamić, Barišić, Sadiković, Kapetan i Hodžurda.</p>
-<p>Gol odluke postigao je Kapetan u 29 .minuti što je njegov treći ligaški gol u ovoj sezoni.</p>
-</article>
-</div>
+		$xml->asXml("podaci.xml");
+	}
 
-<div class="kolona jedan strana">
-<div class="info">
-	<p>Trenutno stanje tabele:</p>
-	<table id="tabela">
-	<tr>
-		<th>#</th>
-		<th></th>
-		<th>B</th>
-	</tr>
-	<tr>
-		<td>1.</td>
-		<td>Zrinjski</td>
-		<td>30</td>
-	</tr>
-	<tr>
-		<td>2.</td>
-		<td>Krupa</td>
-		<td>24</td>
-	</tr>
-	<tr>
-		<td>3.</td>
-		<td>Radnik</td>
-		<td>22</td>
-	</tr>
-	<tr>
-		<td>4.</td>
-		<td>Željezničar</td>
-		<td>22</td>
-	</tr>
-	<tr>
-		<td>5.</td>
-		<td>Sloboda</td>
-		<td>20</td>
-	</tr>
-	<tr>
-		<td>6.</td>
-		<td>Sarajevo</td>
-		<td>19</td>
-	</tr>
-	<tr>
-		<td>7.</td>
-		<td>Mladost</td>
-		<td>19</td>
-	</tr>
-	<tr>
-		<td>8.</td>
-		<td>Široki B.</td>
-		<td>19</td>
-	</tr>
-	<tr>
-		<td>9.</td>
-		<td>Vitez</td>
-		<td>19</td>
-	</tr>
-	<tr>
-		<td>10.</td>
-		<td>Metalleghe</td>
-		<td>9</td>
-	</tr>
-	<tr>
-		<td>11.</td>
-		<td>Olimpic</td>
-		<td>9</td>
-	</tr>
-	<tr>
-		<td>12.</td>
-		<td>Čelik</td>
-		<td>6</td>
-	</tr>
-	</table>
-	</div>
+	if (isset($_REQUEST["edit"]))
+	{
+		$xml= simplexml_load_file("podaci.xml");
+		$nadjeni;
+		$trazeni = $_REQUEST["vijestId"];
+
+		foreach($xml->vijesti->vijest as $vijest)
+		{
+			if ($vijest->attributes()["id"] == $trazeni)
+			{
+				$vijest->tekst = $_REQUEST["tekst"];
+				$vijest->naslov = $_REQUEST["naslov"];
+				$xml->asXml("podaci.xml");
+
+				break;
+			}
+		}
+	}
+
+	if (isset($_REQUEST["brisi"]))
+	{
+		$xml= simplexml_load_file("podaci.xml");
+		$vijesti=$xml->xpath('//vijest[@id="'.$_REQUEST["brisi"].'"]');
+
+		unset($vijesti[0][0]);
+		$xml->asXml("podaci.xml");
+	}
+
+}
+
+print "<div class=\"kolona tri glavni-sadrzaj\">";
+$xml= simplexml_load_file("podaci.xml");
+
+
+$vijesti = $xml->vijesti->vijest;
+$tabela = $xml->tabela->klub;
+
+foreach($vijesti as $vijest)
+{	
+	if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
+	{
+
+
+		print	"<form  method='POST' action='vijesti.php' onsubmit=\"return submitForm(this);\">
+				<input type='text' name='naslov' value='$vijest->naslov'>
+				<textarea name='tekst'>$vijest->tekst</textarea>
+				<input type='hidden' name='vijestId' value='".$vijest->attributes()["id"]."'>
+				<input type='hidden' name='edit'>
+				<input hidden='".$vijest->attributes()["id"]."'>
+				<input type='submit' value='Sačuvaj'>
+			</form>";
+	}
 	
-</div>
+	print "<article>
+				<h2>$vijest->naslov</h2>";
+	if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
+	{
+		print "<a href=\"#\">Edit</a>
+				<form class='brisanje' method='POST' action='vijesti.php' onsubmit=\"return submitForm(this);\">
+								<input type='hidden' name='brisi' value='".$vijest->attributes()["id"]."'>
+								<input type='submit' value='Briši'>
+								</form>";
+	}
+				
+	print "<p>$vijest->tekst</p>
+			</article>";
+
+}
+
+if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
+{
+	print "<form class='izdvojena-forma' id='pisanje-vijesti' method='POST' action='vijesti.php' onsubmit=\"return submitForm(this);\">
+	<div class='red'>
+	<div class='kolona jedan'><label for='naslov'>Naslov: </label></div>
+	<div class='kolona tri'><input type='text' name='naslov'></div>
+	</div>
+	<div class='red'>
+	<div class='kolona cetri'>
+	<textarea name='tekst'></textarea>
+	</div>
+	</div>
+	<div class='red'>
+	<div class='kolona tri'></div>
+	<div class='kolona jedan'><input type='submit' value='dodaj'></div>
+	<input type='hidden' name='dodavanje'>
+	<input type='hidden' name='autor' value='$_SESSION[username]'>
+	</form>
+	</div>";
+}
+
+print "</div>";
+
+print "<div class=\"kolona jedan strana\">
+	<div class=\"info\">
+	<p>Trenutno stanje tabele:</p>
+	<table id=\"tabela\">
+	<tr>
+	<th>#</th>
+	<th></th>
+	<th>B</th>
+	</tr>";
+	
+foreach ($tabela as $klub) {
+	print "<tr>
+	<td>$klub->mjesto</td>
+	<td>$klub->naziv</td>
+	<td>$klub->bodovi</td>
+	</tr>";
+}
+
+print "</table>
+	</div>";
+
+
+
+print "<script src='edit-vijesti.js'></script>";
