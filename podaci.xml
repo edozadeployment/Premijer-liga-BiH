@@ -5,7 +5,7 @@
 
 		
 	<vijest id="4">
-		<naslov>hmmm</naslov>
+		<naslov>hmm</naslov>
 		<tekst>da li radi ascare nova</tekst>
 		<autor>admin</autor>
 	</vijest>
@@ -14,28 +14,22 @@
 	<tabela>
 		<klub id="6">
 			<naziv>Sarajevo</naziv>
-			<bodovi>19</bodovi>
+			<bodovi>192</bodovi>
 		</klub>
 		<klub id="7">
 			<naziv>Mladost</naziv>
-			<bodovi>19</bodovi>
+			<bodovi>198</bodovi>
 		</klub>
 		
 		<klub id="9">
 			<naziv>Čelik</naziv>
 			<bodovi>6</bodovi>
 		</klub>
-		<klub id="10">
-			<naziv>Vitez</naziv>
-			<bodovi>19</bodovi>
-		</klub>
 		
-		<klub id="12">
-			<naziv>Olimpic</naziv>
-			<bodovi>100</bodovi>
-		</klub>
-	<klub id="13"><naziv>grrrr</naziv><bodovi>9</bodovi></klub>
-</tabela>
+		
+		
+	
+<klub id="10"><naziv>noviklub</naziv><bodovi>10</bodovi></klub></tabela>
 
 	<strijelci>
 		<igrac id="1">
@@ -63,46 +57,22 @@
 			<tim>Sarajevo</tim>
 			<golovi>6</golovi>
 		</igrac>
-		<igrac id="6">
-			<ime>Wagner</ime>
-			<tim>Široki Brijeg</tim>
-			<golovi>6</golovi>
-		</igrac>
+		
 		<igrac id="7">
 			<ime>I. Lendrić</ime>
 			<tim>Željezničar</tim>
-			<golovi>6</golovi>
+			<golovi>60</golovi>
 		</igrac>
-		<igrac id="8">
-			<ime>N. Bilbija</ime>
-			<tim>Zrinjski</tim>
-			<golovi>5</golovi>
-		</igrac>
-		<igrac id="9">
-			<ime>G. Brkić</ime>
-			<tim>Mlados</tim>
-			<golovi>50</golovi>
-		</igrac>
+		
+		
 		<igrac id="10">
 			<ime>S. Kajkut</ime>
 			<tim>Krupa</tim>
 			<golovi>5</golovi>
 		</igrac>
-		<igrac id="11">
-			<ime>O. Todorović</ime>
-			<tim>Zrinjski</tim>
-			<golovi>5</golovi>
-		</igrac>
-		<igrac id="12">
-			<ime>L. Menalo</ime>
-			<tim>Široki Brijeg</tim>
-			<golovi>4</golovi>
-		</igrac>
-		<igrac id="13">
-			<ime>I. Baraban</ime>
-			<tim>Široki Brijeg</tim>
-			<golovi>3</golovi>
-		</igrac>
+		
+		
+		
 		<igrac id="14">
 			<ime>N. Crnkić</ime>
 			<tim>Sarajevo</tim>
@@ -113,5 +83,5 @@
 			<tim>Mlados</tim>
 			<golovi>3</golovi>
 		</igrac>
-	<igrac id="16"><ime>iks</ime><tim>iksic</tim><golovi>20</golovi></igrac></strijelci>
+	<igrac id="17"><ime>m. mujic</ime><tim>swoboda</tim><golovi>4</golovi></igrac></strijelci>
 </podaci>

@@ -72,6 +72,8 @@ $xml= simplexml_load_file("podaci.xml");
 
 if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 {
+
+
 	if (isset($_REQUEST["edit-tabela"]))
 	{
 		$nadjeni;
@@ -164,49 +166,59 @@ print "<p>Trenutna tabela lige:</p>";
 
 if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 {
-	foreach ($tabela as $mjesto=>$klub) {
-		print "<div class='red'>
-		<form method='POST' action='statistika.php' onsubmit=\"return submitForm(this);\">
-		<input type='text' name='naziv' value='$klub->naziv'>
-		<input type='text' name='bodovi' value='$klub->bodovi'>
-		<input type='hidden' name='edit-tabela' value='".$klub->attributes()["id"]."'>
-		<input type='submit' value='Sačuvaj'>
-		</form>
+	print "<div class='tabela'>";
+	print "<div class='tr'>";
+	print "<div class='th'>Klub</div>";
+	print "<div class='th'>Bodovi</div>";
+	print "<div class='th'></div>";
+	print "<div class='th'></div>";
+	print "</div>";
 
-		<form method='POST' action='statistika.php' onsubmit=\"return submitForm(this);\">
+	foreach ($tabela as $mjesto=>$klub) {
+		//print "<div class='red'>
+		print "<div class='tr'><form class='mala-forma' method='POST' action='statistika.php' onsubmit=\"return submitForm(this);\">
+		<div class='td'><input type='text' name='naziv' value='$klub->naziv'></div>
+		<div class='td'><input type='text' name='bodovi' value='$klub->bodovi'></div>
+		<input type='hidden' name='edit-tabela' value='".$klub->attributes()["id"]."'>
+		<div class='td'><input type='submit' value='Sačuvaj'></div>
+		</form>
+		<div class='td'>
+		<form class='mala-forma' method='POST' action='statistika.php' onsubmit=\"return submitForm(this);\">
 		<input type='hidden' name='brisi-tabela' value='".$klub->attributes()["id"]."'>
 		<input type='submit' value='Izbriši'>
+		</form></div></div>";
+	}
+	print "<div class='tr'>
+		<form method='POST' action='statistika.php' onsubmit=\"return submitForm(this);\">
+		<input type='hidden' name='dodaj-tabela'>
+		<div class='td'><input type='text' name='naziv'></div>
+		<div class='td'><input type='text' name='bodovi'></div>
+		<div class='td'><input type='submit' value='Dodaj klub'></div>
 		</form>
-		
-		</div>";
+	</div>";
+
+	print "</div>";
+}
+else
+{
+	print "<table>";
+	print "<tr>";
+	print "<th>#</th>";
+	print "<th>Klub</th>";
+	print "<th>Bodovi</th>";
+	print "</tr>";
+
+	foreach ($tabela as $mjesto=>$klub) {
+		print "<tr>";
+		print "<td>". ($mjesto + 1) ."</td>";
+		print "<td>$klub->naziv</td>";
+		print "<td>$klub->bodovi</td>";
+		print "</tr>";
 	}
 
-	print "<div class='red'>
-	<form method='POST' action='statistika.php' onsubmit=\"return submitForm(this);\">
-	<input type='text' name='naziv'>
-	<input type='text' name='bodovi'>
-	<input type='hidden' name='dodaj-tabela'>
-	<input type='submit' value='Dodaj klub'>
-	</form>
-	</div>";
+	print "</table>";
 }
 
-print "<table>";
-print "<tr>";
-print "<th>#</th>";
-print "<th>Klub</th>";
-print "<th>B</th>";
-print "</tr>";
-
-foreach ($tabela as $mjesto=>$klub) {
-	print "<tr>";
-	print "<td>". ($mjesto + 1) ."</td>";
-	print "<td>$klub->naziv</td>";
-	print "<td>$klub->bodovi</td>";
-	print "</tr>";
-}
-
-print "</table>";
 print "</div>";
 
 print "<div class=\"kolona dva glavni-sadrzaj\">";
@@ -214,36 +226,47 @@ print "<p>Lista najboljih strijelaca:</p>";
 
 if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 {
-	foreach ($strijelci as $mjesto=>$igrac) {
-		print "<div class='red'>
-		<form method='POST' action='statistika.php' onsubmit=\"return submitForm(this);\">
-		<input type='text' name='ime' value='$igrac->ime'>
-		<input type='text' name='tim' value='$igrac->tim'>
-		<input type='text' name='golovi' value='$igrac->golovi'>
-		<input type='hidden' name='edit-strijelci' value='".$igrac->attributes()["id"]."'>
-		<input type='submit' value='Sačuvaj'>
-		</form>
+	print "<div class='table'>";
+	print "<div class='tr'>";
+	print "<div class='th'>Igrač</div>";
+	print "<div class='th'>Tim</div>";
+	print "<div class='th'>Golovi</div>";	
+	print "<div class='th'></div>";	
+	print "</div>";
 
-		<form method='POST' action='statistika.php' onsubmit=\"return submitForm(this);\">
+	foreach ($strijelci as $mjesto=>$igrac) {
+		//print "<div class='red'>
+		print "<div class='tr'><form class='mala-forma' method='POST' action='statistika.php' onsubmit=\"return submitForm(this);\">
+		
+		<div class='td'><input type='text' name='ime' value='$igrac->ime'></div>
+		<div class='td'><input type='text' name='tim' value='$igrac->tim'></div>
+		<div class='td'><input type='text' name='golovi' value='$igrac->golovi'></div>
+		<input type='hidden' name='edit-strijelci' value='".$igrac->attributes()["id"]."'>
+		<div class='td'><input type='submit' value='Sačuvaj'></div>
+		</form>
+		<div class='td'>
+		<form class='mala-forma' method='POST' action='statistika.php' onsubmit=\"return submitForm(this);\">
 		<input type='hidden' name='brisi-strijelci' value='".$igrac->attributes()["id"]."'>
 		<input type='submit' value='Izbriši'>
 		</form>
-		
+		</div>
 		</div>";
+		//</div>";
 	}
 
-	print "<div class='red'>
-	<form method='POST' action='statistika.php' onsubmit=\"return submitForm(this);\">
-	<input type='text' name='ime'>
-	<input type='text' name='tim'>
-	<input type='text' name='golovi'>
-	<input type='hidden' name='dodaj-strijelci'>
-	<input type='submit' value='Dodaj igrača'>
+	//print "<div class='red'>
+	print "<tr><form method='POST' action='statistika.php' onsubmit=\"return submitForm(this);\">
+	<td><input type='text' name='ime'></td>
+	<td><input type='text' name='tim'></td>
+	<td><input type='text' name='golovi'>
+	<input type='hidden' name='dodaj-strijelci'></td>
+	<td colspan='2'><input type='submit' value='Dodaj igrača'></td></tr>
 	</form>
 	</div>";
 }
 
-
+else
+{
 print "<table>";
 print "<tr>";
 print "<th>#</th>";
@@ -260,8 +283,9 @@ foreach ($strijelci as $mjesto=>$strijelac) {
 	print "<td>$strijelac->golovi</td>";
 	print "</tr>";
 }
-print "</table>";
+print "</table>";	
+}
+
 print "</div>";
 ?>
-</div>
 </div>

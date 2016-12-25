@@ -36,7 +36,7 @@
 
 				$broj_pronadjenih++;
 
-				if ($broj_pronadjenih == 10)
+				if (!isset($_REQUEST["sve"]) && $broj_pronadjenih == 10)
 				{
 					break;
 				}

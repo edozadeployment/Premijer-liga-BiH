@@ -25,7 +25,51 @@
     		readfile($file);
     	}
 	}
+
+	if (isset($_REQUEST["registracija"]))
+	{
+		$xml= simplexml_load_file("fan-klub.xml");
+		$sortirani = $xml->xpath('/dataset/record');
+
+		function cmp($t1, $t2) {
+    		return $t1->id > $t2->id;
+		}
+		usort($sortirani, 'cmp');
+		$noviId = $sortirani[0]->id + 1;
+
+		$novi = $xml->addChild("record", "");
+		$novi->addChild("id", $noviId);
+		$novi->addChild("ime", $_REQUEST["ime"]);
+		$novi->addChild("prezime", $_REQUEST["prezime"]);
+		$novi->addChild("email", $_REQUEST["email"]);
+		$novi->addChild("telefon", $_REQUEST["telefon"]);
+
+		$xml->asXml("fan-klub.xml");
+	}
+
+	if (isset($_REQUEST["edit"]))
+	{
+		$xml= simplexml_load_file("fan-klub.xml");
+		$trazeni = ($xml->xpath('/dataset/record[id='.$_REQUEST["id"].']'))[0];
+		$trazeni->ime = $_REQUEST["ime"];
+		$trazeni->prezime = $_REQUEST["prezime"];
+		$trazeni->email = $_REQUEST["email"];
+		$trazeni->telefon = $_REQUEST["telefon"];
+
+		$xml->asXml("fan-klub.xml");
+	}
+
+	if (isset($_REQUEST["brisi"]))
+	{
+		$xml= simplexml_load_file("fan-klub.xml");
+		$trazeni = ($xml->xpath('/dataset/record[id='.$_REQUEST["id"].']'))[0];
+		
+		unset($trazeni[0][0]);
+		$xml->asXml("fan-klub.xml");
+	}
 ?>
+
+
 
 <div class="kolona cetri glavni-sadrzaj">
 	<div class="red">
@@ -34,62 +78,64 @@
 			<p>Ovdje se možete učlaniti u fan-klub bh. Premijer lige.</p>
 		</div>
 		
-		<div class="kolona dva">
-			<form>
-				<div class="red">
-					<div class="kolona dva">
-			 			<label for="ime">Ime:</label>
-						<input type="text" name="ime" id="ime">	
+		<div class='kolona dva'>
+			<form method='POST' action='fanklub.php'  onsubmit='return submitForm(this);'>
+			<input type="hidden" name="registracija">
+				<div class='red'>
+					<div class='kolona dva'>
+			 			<label for='ime'>Ime:</label>
+						<input type='text' name='ime' id='ime'>	
 					</div>
-					<div class="kolona dva"></div>
+					<div class='kolona dva'></div>
 				</div>
 
-				<div class="red">
-					<div class="kolona dva">
-				 		<label for="prezime">Prezime:</label>
-						<input type="text" name="prezime" id="prezime">
+				<div class='red'>
+					<div class='kolona dva'>
+				 		<label for='prezime'>Prezime:</label>
+						<input type='text' name='prezime' id='prezime'>
 					</div>
-					<div class="kolona dva"></div>
+					<div class='kolona dva'></div>
 				</div>
 
-				<div class="red">
-					<div class="kolona dva">
-				 		<label for="email">Email:</label>
-						<input type="text" name="email" id="email">
+				<div class='red'>
+					<div class='kolona dva'>
+				 		<label for='email'>Email:</label>
+						<input type='text' name='email' id='email'>
 					</div>
-					<div class="kolona dva"></div>
+					<div class='kolona dva'></div>
 				</div>
 
-				<div class="red">
-					<div class="kolona dva">
-				 		<label for="tel">Telefon:</label>
-						<input type="tel" name="telefon" id="telefon">
+				<div class='red'>
+					<div class='kolona dva'>
+				 		<label for='tel'>Telefon:</label>
+						<input type='tel' name='telefon' id='telefon'>
 					</div>
-					<div class="kolona dva"></div>
+					<div class='kolona dva'></div>
 				</div>
 
-				<div class="red">
-					<div class="kolona cetri">
-						<span id="greska"></span>
+				<div class='red'>
+					<div class='kolona cetri'>
+						<span id='greska'></span>
 					</div>
 				</div>
 
-				<div class="red">
-					<div class="kolona jedan">
-						<input type="submit" value="Registruj se">
+				<div class='red'>
+					<div class='kolona jedan'>
+						<input type='submit' value='Registruj se'>
 					</div>
-					<div class="kolona jedan">
-						<input type="button" value="Sačuvaj" onclick="sacuvajFanKlub()">
+					<div class='kolona jedan'>
+						<input type='button' value='Sačuvaj' onclick='sacuvajFanKlub()'>
 					</div>
-					<div class="kolona dva"></div>
+					<div class='kolona dva'></div>
 				</div>
 			</form>
 		</div>
 	</div>
 <div class="red">
 <div class="kolona dva">
-	<form>
+	<form onsubmit="trazi_glavno(); return false;">
 		<label style="width: auto;" for="pretraga-polje">Pretraga članova: </label> <input type="text" id="pretraga-polje" name="pretraga-polje">
+		<input type="submit" value="Traži">
 	</form>
 </div>
 <div class="kolona jedan">
@@ -102,7 +148,9 @@
 </div>
 
 </div>
-	<div id="rezultati-pretrage">
+	<div id="pretraga-sugestija">
 	</div>
 
+	<div id="pretraga-rezultati">
+	</div>
 <script type="text/javascript" src="forma-validacija.js"></script>
