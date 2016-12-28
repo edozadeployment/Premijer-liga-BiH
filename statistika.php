@@ -55,8 +55,11 @@
 <div class="red">
 
 <?php
+$greska = 0;
+$greska_string = "";
+
 function idcmp($t1, $t2) {
-	return ($t1->attributes()["id"]) < ((int)$t2->attributes()["id"]);
+	return intval($t1->attributes()["id"]) < intval($t2->attributes()["id"]);
 }
 
 function cmp($t1, $t2) {
@@ -72,46 +75,73 @@ $xml= simplexml_load_file("podaci.xml");
 
 if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 {
-
-
 	if (isset($_REQUEST["edit-tabela"]))
 	{
-		$nadjeni;
-		$trazeni = $_REQUEST["edit-tabela"];
-
-		foreach($xml->tabela->klub as $klub)
+		if(!preg_match('/^[a-zA-Z0-9. ]{2,20}$/', $_REQUEST["naziv"]))
 		{
-			if ($klub->attributes()['id'] == $trazeni)
-			{
-				$klub->naziv = $_REQUEST["naziv"];
-				$klub->bodovi = $_REQUEST["bodovi"];
-				$xml->asXml("podaci.xml");
+			$greska = 1;
+			$greska_string = "Naziv kluba može sadržavati samo slova, brojeve i razmake, u dužini od 2 do 20 karaktera.";
+		}
+		elseif (!preg_match('/^(\d?[1-9]|[1-9]0|0)$/', $_REQUEST["bodovi"])) {
+			$greska = 1;
+			$greska_string = "Bodovi moraju biti broj 0-99.";
+		}
+		else
+		{
+			$nadjeni;
+			$trazeni = $_REQUEST["edit-tabela"];
 
-				break;
+			foreach($xml->tabela->klub as $klub)
+			{
+				if ($klub->attributes()['id'] == $trazeni)
+				{
+					$klub->naziv = $_REQUEST["naziv"];
+					$klub->bodovi = $_REQUEST["bodovi"];
+					$xml->asXml("podaci.xml");
+
+					break;
+				}
 			}
 		}
 	}
 
-	if (isset($_REQUEST["edit-strijelci"]))
+	elseif (isset($_REQUEST["edit-strijelci"]))
 	{
-		$nadjeni;
-		$trazeni = $_REQUEST["edit-strijelci"];
-
-		foreach($xml->strijelci->igrac as $igrac)
+		if(!isset($_REQUEST["ime"]) || !preg_match('/^[a-zA-Z ]{2,25}$/', $_REQUEST["ime"]))
 		{
-			if ($igrac->attributes()['id'] == $trazeni)
-			{
-				$igrac->ime = $_REQUEST["ime"];
-				$igrac->tim = $_REQUEST["tim"];
-				$igrac->golovi = $_REQUEST["golovi"];
-				$xml->asXml("podaci.xml");
+			$greska = 2;
+			$greska_string = "Ime mora biti niz slova (+ razmaci) u dužini od 2 do 25 karaktera.";
+		}
+		elseif(!isset($_REQUEST["tim"]) || !preg_match('/^[a-zA-Z0-9. ]{2,20}$/', $_REQUEST["ime"]))
+		{
+			$greska = 2;
+			$greska_string = "Naziv kluba može sadržavati samo slova i razmake, u dužini od 2 do 20 karaktera.";
+		}
+		elseif (!preg_match('/^(\d?[1-9]|[1-9]0|0)$/', $_REQUEST["golovi"])) {
+			$greska = 2;
+			$greska_string = "Golovi moraju biti broj 0-99.";
+		}
+		else
+		{
+			$nadjeni;
+			$trazeni = $_REQUEST["edit-strijelci"];
 
-				break;
+			foreach($xml->strijelci->igrac as $igrac)
+			{
+				if ($igrac->attributes()['id'] == $trazeni)
+				{
+					$igrac->ime = $_REQUEST["ime"];
+					$igrac->tim = $_REQUEST["tim"];
+					$igrac->golovi = $_REQUEST["golovi"];
+					$xml->asXml("podaci.xml");
+
+					break;
+				}
 			}
 		}
 	}
 
-	if (isset($_REQUEST["brisi-tabela"]))
+	elseif (isset($_REQUEST["brisi-tabela"]))
 	{
 		$tabela=$xml->xpath('//klub[@id="'.$_REQUEST["brisi-tabela"].'"]');
 
@@ -129,6 +159,17 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 
 	if (isset($_REQUEST["dodaj-tabela"]))
 	{
+		if(!preg_match('/^[a-zA-Z. ]{2,20}$/', $_REQUEST["naziv"]))
+		{
+			$greska = 1;
+			$greska_string = "Naziv kluba može sadržavati samo slova i razmake, u dužini od 2 do 20 karaktera.";
+		}
+		elseif (!preg_match('/^(\d?[1-9]|[1-9]0)$/', $_REQUEST["bodovi"])) {
+			$greska = 1;
+			$greska_string = "Bodovi moraju biti broj 0-99.";
+		}
+		else
+		{
 		$idtabela = $xml->xpath('/podaci/tabela/klub');
 		usort($idtabela, "idcmp");
 		$idtabela[0];
@@ -138,20 +179,39 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 		$novi->addChild("bodovi", $_REQUEST["bodovi"]);
 
 		$xml->asXml("podaci.xml");
+		}
 	}
 
 	if (isset($_REQUEST["dodaj-strijelci"]))
 	{
-		$idtabela = $xml->xpath('/podaci/strijelci/igrac');
-		usort($idtabela, "idcmp");
-		$idtabela[0];
-		$novi = $xml->strijelci->addChild("igrac", "");
-		$novi->addAttribute("id", intval($idtabela[0]->attributes()["id"]) + 1);
-		$novi->addChild("ime", $_REQUEST["ime"]);
-		$novi->addChild("tim", $_REQUEST["tim"]);
-		$novi->addChild("golovi", $_REQUEST["golovi"]);
 
-		$xml->asXml("podaci.xml");
+		if(!isset($_REQUEST["ime"]) || !preg_match('/^[a-zA-Z ]{2,25}$/', $_REQUEST["ime"]))
+		{
+			$greska = 2;
+			$greska_string = "Ime mora biti niz slova (+ razmaci) u dužini od 2 do 25 karaktera.";
+		}
+		elseif(!isset($_REQUEST["tim"]) || !preg_match('/^[a-zA-Z0-9. ]{2,20}$/', $_REQUEST["ime"]))
+		{
+			$greska = 2;
+			$greska_string = "Naziv kluba može sadržavati samo slova i razmake, u dužini od 2 do 20 karaktera.";
+		}
+		elseif (!preg_match('/^(\d?[1-9]|[1-9]0)$/', $_REQUEST["golovi"])) {
+			$greska = 2;
+			$greska_string = "Golovi moraju biti broj 0-99.";
+		}
+		else
+		{
+			$idtabela = $xml->xpath('/podaci/strijelci/igrac');
+			usort($idtabela, "idcmp");
+			$idtabela[0];
+			$novi = $xml->strijelci->addChild("igrac", "");
+			$novi->addAttribute("id", intval($idtabela[0]->attributes()["id"]) + 1);
+			$novi->addChild("ime", $_REQUEST["ime"]);
+			$novi->addChild("tim", $_REQUEST["tim"]);
+			$novi->addChild("golovi", $_REQUEST["golovi"]);
+
+			$xml->asXml("podaci.xml");
+		}
 	}
 }
 
@@ -162,23 +222,29 @@ usort($tabela, 'cmp');
 usort($strijelci, 'cmp_strijelci');
 
 print "<div class=\"kolona dva glavni-sadrzaj\">";
-print "<p>Trenutna tabela lige:</p>";
+print "<p>Trenutna tabela lige (klub, golovi):</p>";
+print "<div class='red'><span class='greska' id='novi-klub-greska'>";
+if ($greska == 1)
+{
+	print $greska_string;
+}
+print "</div>";
 
 if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 {
 	print "<div class='tabela'>";
-	print "<div class='tr'>";
+/*	print "<div class='tr'>";
 	print "<div class='th'>Klub</div>";
 	print "<div class='th'>Bodovi</div>";
 	print "<div class='th'></div>";
 	print "<div class='th'></div>";
-	print "</div>";
+	print "</div>";*/
 
 	foreach ($tabela as $mjesto=>$klub) {
 		//print "<div class='red'>
-		print "<div class='tr'><form class='mala-forma' method='POST' action='statistika.php' onsubmit=\"return submitForm(this);\">
+		print "<div class='tr'><form class='mala-forma' method='POST' action='statistika.php' onsubmit=\"return validacijaKluba(this, 'novi-klub-greska') && submitForm(this);\">
 		<div class='td'><input type='text' name='naziv' value='$klub->naziv'></div>
-		<div class='td'><input type='text' name='bodovi' value='$klub->bodovi'></div>
+		<div class='td'><input type='number' name='bodovi' min='0' max='99' value='$klub->bodovi'></div>
 		<input type='hidden' name='edit-tabela' value='".$klub->attributes()["id"]."'>
 		<div class='td'><input type='submit' value='Sačuvaj'></div>
 		</form>
@@ -189,10 +255,10 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 		</form></div></div>";
 	}
 	print "<div class='tr'>
-		<form method='POST' action='statistika.php' onsubmit=\"return submitForm(this);\">
+		<form method='POST' action='statistika.php' onsubmit=\"return validacijaKluba(this, 'novi-klub-greska') && submitForm(this);\">
 		<input type='hidden' name='dodaj-tabela'>
 		<div class='td'><input type='text' name='naziv'></div>
-		<div class='td'><input type='text' name='bodovi'></div>
+		<div class='td'><input type='number' min='0' max='99' name='bodovi'></div>
 		<div class='td'><input type='submit' value='Dodaj klub'></div>
 		</form>
 	</div>";
@@ -222,25 +288,31 @@ else
 print "</div>";
 
 print "<div class=\"kolona dva glavni-sadrzaj\">";
-print "<p>Lista najboljih strijelaca:</p>";
+print "<p>Lista najboljih strijelaca (ime, tim, broj golova):</p>";
+print "<div class='red'><span class='greska' id='edit-klub-greska'>";
+if ($greska == 2)
+{
+	print $greska_string;
+}
+print "</div>";
 
 if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 {
 	print "<div class='table'>";
-	print "<div class='tr'>";
-	print "<div class='th'>Igrač</div>";
-	print "<div class='th'>Tim</div>";
-	print "<div class='th'>Golovi</div>";	
-	print "<div class='th'></div>";	
-	print "</div>";
+//	print "<div class='tr'>";
+//	print "<div class='th' style='width: 20%;'>Igrač</div>";
+//	print "<div class='th' style='width: 20%;'>Tim</div>";
+//	print "<div class='th' style='width: 20%;'>Golovi</div>";	
+//	print "<div class='th'></div>";	
+//	print "</div>";
 
 	foreach ($strijelci as $mjesto=>$igrac) {
 		//print "<div class='red'>
-		print "<div class='tr'><form class='mala-forma' method='POST' action='statistika.php' onsubmit=\"return submitForm(this);\">
+		print "<div class='tr'><form class='mala-forma' method='POST' action='statistika.php' onsubmit=\"return validacijaIgraca(this, 'edit-klub-greska') && submitForm(this);\">
 		
 		<div class='td'><input type='text' name='ime' value='$igrac->ime'></div>
 		<div class='td'><input type='text' name='tim' value='$igrac->tim'></div>
-		<div class='td'><input type='text' name='golovi' value='$igrac->golovi'></div>
+		<div class='td'><input type='number' min='0' max='99' name='golovi' value='$igrac->golovi'></div>
 		<input type='hidden' name='edit-strijelci' value='".$igrac->attributes()["id"]."'>
 		<div class='td'><input type='submit' value='Sačuvaj'></div>
 		</form>
@@ -255,10 +327,10 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 	}
 
 	//print "<div class='red'>
-	print "<tr><form method='POST' action='statistika.php' onsubmit=\"return submitForm(this);\">
+	print "<tr><form method='POST' action='statistika.php' onsubmit=\"return validacijaIgraca(this, 'edit-klub-greska') && submitForm(this);\">
 	<td><input type='text' name='ime'></td>
 	<td><input type='text' name='tim'></td>
-	<td><input type='text' name='golovi'>
+	<td><input type='number' min='0' max='99' name='golovi'>
 	<input type='hidden' name='dodaj-strijelci'></td>
 	<td colspan='2'><input type='submit' value='Dodaj igrača'></td></tr>
 	</form>

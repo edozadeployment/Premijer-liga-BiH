@@ -30,10 +30,12 @@ function trazi_glavno(e)
 function dodajTrazilicu()
 {
 	var rezultatiProstor = document.getElementById('pretraga-sugestija');
+	var pretragaPolje = document.getElementById('pretraga-polje');
 
 	if (rezultatiProstor)
 	{	
-		document.addEventListener('keyup', pretrazi, false);
+		//document.addEventListener('keyup', pretrazi, false);
+		pretragaPolje.addEventListener('input',pretrazi, false);
 	}
 
 }

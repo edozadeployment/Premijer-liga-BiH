@@ -5,8 +5,8 @@
 
 		
 	<vijest id="4">
-		<naslov>hmm</naslov>
-		<tekst>da li radi ascare nova</tekst>
+		<naslov>asdasdasdasd</naslov>
+		<tekst>sdgdfgdfgdhdfgdfgdfgdfgdfgdghdfgdfgdfdfgdfgddfhdfgdfgdfddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd</tekst>
 		<autor>admin</autor>
 	</vijest>
 <vijest id="5"><naslov>opala</naslov><tekst>mali</tekst><autor>admin</autor></vijest><vijest id="6"><naslov>da vidimo ajax</naslov><tekst>ajaxe ibro</tekst><autor>admin</autor></vijest>
@@ -14,22 +14,22 @@
 	<tabela>
 		<klub id="6">
 			<naziv>Sarajevo</naziv>
-			<bodovi>192</bodovi>
+			<bodovi>1</bodovi>
 		</klub>
 		<klub id="7">
 			<naziv>Mladost</naziv>
-			<bodovi>198</bodovi>
+			<bodovi>1</bodovi>
 		</klub>
 		
 		<klub id="9">
-			<naziv>Čelik</naziv>
-			<bodovi>6</bodovi>
+			<naziv>Celik</naziv>
+			<bodovi>60</bodovi>
 		</klub>
 		
 		
 		
 	
-<klub id="10"><naziv>noviklub</naziv><bodovi>10</bodovi></klub></tabela>
+<klub id="10"><naziv>noviklub</naziv><bodovi>13</bodovi></klub><klub id="11"><naziv>test</naziv><bodovi>0</bodovi></klub></tabela>
 
 	<strijelci>
 		<igrac id="1">
@@ -55,12 +55,12 @@
 		<igrac id="5">
 			<ime>M. Ahmetović</ime>
 			<tim>Sarajevo</tim>
-			<golovi>6</golovi>
+			<golovi>60</golovi>
 		</igrac>
 		
 		<igrac id="7">
-			<ime>I. Lendrić</ime>
-			<tim>Željezničar</tim>
+			<ime>Ivan Lendric</ime>
+			<tim>Zeljetnicar</tim>
 			<golovi>60</golovi>
 		</igrac>
 		
@@ -83,5 +83,5 @@
 			<tim>Mlados</tim>
 			<golovi>3</golovi>
 		</igrac>
-	<igrac id="17"><ime>m. mujic</ime><tim>swoboda</tim><golovi>4</golovi></igrac></strijelci>
+	<igrac id="17"><ime>m. mujic</ime><tim>swoboda</tim><golovi>4</golovi></igrac><igrac id="18"><ime>edhem bicakcic</ime><tim>N.K. Istra</tim><golovi>9</golovi></igrac></strijelci>
 </podaci>

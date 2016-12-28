@@ -344,7 +344,7 @@ label{
   font-family: 'pt-sans', arial, sans-serif;
 }
 
-#greska
+#greska, .greska
 {
   color: red;
 }
@@ -432,9 +432,21 @@ article > h2
 .td, .th
 {
   display: table-cell;
+
 }
 
 .th
 {
   font-weight: bold;
+}
+
+.siroki-text
+{
+  width: 75%;
+  height: 10em;
+}
+
+.t
+{
+  display: inline-block;
 }

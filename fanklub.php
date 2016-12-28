@@ -1,4 +1,5 @@
 ﻿<?php
+	$greska = 0;
 	if (isset($_REQUEST['csv']))
 	{
 		$sadrzaj = "sep=,\n";
@@ -28,41 +29,98 @@
 
 	if (isset($_REQUEST["registracija"]))
 	{
-		$xml= simplexml_load_file("fan-klub.xml");
-		$sortirani = $xml->xpath('/dataset/record');
-
-		function cmp($t1, $t2) {
-    		return $t1->id > $t2->id;
+		if(!isset($_REQUEST["ime"]) || !preg_match('/^([a-zA-Z]){2,15}$/', $_REQUEST["ime"]))
+		{
+			$greska = 1;
+			$greska_string = "Ime mora imati 2-15 slova<br>";
 		}
-		usort($sortirani, 'cmp');
-		$noviId = $sortirani[0]->id + 1;
+		elseif(!isset($_REQUEST["prezime"]) || !preg_match('/^[a-zA-Z]{2,15}$/', $_REQUEST["prezime"]))
+		{
+			$greska = 1;
+			$greska_string = "Prezime mora imati 2-15 slova<br>";			
+		}
+		elseif(!isset($_REQUEST["email"]) || (filter_var($_REQUEST["email"], FILTER_VALIDATE_EMAIL) === false))
+		{
+			$greska = 1;
+			$greska_string = "Email adresa nije ispravna<br>";
+		}
+		elseif(!isset($_REQUEST["telefon"]) || !preg_match('/^\(?(\d{3})\)?[-]?(\d{3})[-]?(\d{3})$/', $_REQUEST["telefon"]))
+		{
+			$greska = 1;
+			$greska_string = "Telefon format: (061)-123-345 ili 061-123-456 ili 061123456<br>";
+		}
+		else
+		{
+			$xml= simplexml_load_file("fan-klub.xml");
+			$sortirani = $xml->xpath('/dataset/record');
 
-		$novi = $xml->addChild("record", "");
-		$novi->addChild("id", $noviId);
-		$novi->addChild("ime", $_REQUEST["ime"]);
-		$novi->addChild("prezime", $_REQUEST["prezime"]);
-		$novi->addChild("email", $_REQUEST["email"]);
-		$novi->addChild("telefon", $_REQUEST["telefon"]);
+			function cmp($t1, $t2) {
 
-		$xml->asXml("fan-klub.xml");
+	    		return intval($t1->id) < intval($t2->id);
+			}
+			usort($sortirani, 'cmp');
+			$noviId = $sortirani[0]->id + 1;
+
+			$novi = $xml->addChild("record", "");
+			$novi->addChild("id", $noviId);
+			$novi->addChild("ime", $_REQUEST["ime"]);
+			$novi->addChild("prezime", $_REQUEST["prezime"]);
+			$novi->addChild("email", $_REQUEST["email"]);
+			$novi->addChild("telefon", $_REQUEST["telefon"]);
+
+			$xml->asXml("fan-klub.xml");
+		}
 	}
-
-	if (isset($_REQUEST["edit"]))
+	elseif (isset($_REQUEST["edit"]))
 	{
-		$xml= simplexml_load_file("fan-klub.xml");
-		$trazeni = ($xml->xpath('/dataset/record[id='.$_REQUEST["id"].']'))[0];
-		$trazeni->ime = $_REQUEST["ime"];
-		$trazeni->prezime = $_REQUEST["prezime"];
-		$trazeni->email = $_REQUEST["email"];
-		$trazeni->telefon = $_REQUEST["telefon"];
+		if(!isset($_REQUEST["ime"]) || preg_match('/^[a-zA-Z]{2,15}$/', $_REQUEST["ime"]))
+		{
+			$greska = 2;
+			$greska_string = "Ime mora imati 2-15 slova<br>";
+		}
+		elseif(!isset($_REQUEST["prezime"]) || preg_match('/^[a-zA-Z]{2,15}$/', $_REQUEST["prezime"]))
+		{
+			$greska = 2;
+			$greska_string = "Prezime mora imati 2-15 slova<br>";			
+		}
+		elseif(!isset($_REQUEST["email"]) || (filter_var($email, FILTER_VALIDATE_EMAIL) === false))
+		{
+			$greska = 2;
+			$greska_string = "Email adresa nije ispravna<br>";
+		}
+		elseif(!isset($_REQUEST["telefon"]) || preg_match('/^\(?(\d{3})\)?[-]?(\d{3})[-]?(\d{3})$/', $_REQUEST["telefon"]))
+		{
+			$greska = 2;
+			$greska_string = "Telefon format: (061)-123-345 ili 061-123-456 ili 061123456<br>";
+		}
+		else
+		{
+			$xml= simplexml_load_file("fan-klub.xml");
+			$src = "/dataset/record[id=".$_REQUEST["edit"]."]";
+			$trazeni = ($xml->xpath($src));
+			if (sizeof($trazeni != 1))
+			{
+				$greska = 2;
+				$greska_string = "Greska baze podataka";
+			}
+			else
+			{
+				$trazeni[0]->ime = $_REQUEST["ime"];
+				$trazeni[0]->prezime = $_REQUEST["prezime"];
+				$trazeni[0]->email = $_REQUEST["email"];
+				$trazeni[0]->telefon = $_REQUEST["telefon"];
 
-		$xml->asXml("fan-klub.xml");
+				$xml->asXml("fan-klub.xml");				
+			}
+		}
+
 	}
 
 	if (isset($_REQUEST["brisi"]))
 	{
 		$xml= simplexml_load_file("fan-klub.xml");
-		$trazeni = ($xml->xpath('/dataset/record[id='.$_REQUEST["id"].']'))[0];
+		$trazeni = ($xml->xpath('/dataset/record[id='.$_REQUEST["brisi"].']'));
+		
 		
 		unset($trazeni[0][0]);
 		$xml->asXml("fan-klub.xml");
@@ -79,7 +137,8 @@
 		</div>
 		
 		<div class='kolona dva'>
-			<form method='POST' action='fanklub.php'  onsubmit='return submitForm(this);'>
+
+			<form method='POST' action='fanklub.php' id="registracija-fan" onsubmit='return provjeriFormu(this) && submitForm(this);'>
 			<input type="hidden" name="registracija">
 				<div class='red'>
 					<div class='kolona dva'>
@@ -114,8 +173,16 @@
 				</div>
 
 				<div class='red'>
-					<div class='kolona cetri'>
-						<span id='greska'></span>
+					<div class='kolona cetri'><?php
+					$izlaz = "<span id='greska'>";
+					if ($greska == 1)
+					{
+						$izlaz = $izlaz . $greska_string;
+					} 
+					
+					$izlaz = $izlaz ."</span>";
+					print $izlaz;
+					?>
 					</div>
 				</div>
 
@@ -132,9 +199,23 @@
 		</div>
 	</div>
 <div class="red">
+	<div class="kolona cetri">
+		<?php
+			$izlaz = "<span class='greska'>";
+			if ($greska == 2)
+				{
+					$izlaz = $izlaz . $greska_string;
+				}
+			$izlaz = $izlaz . "</span>";
+			print $izlaz;
+
+			?>
+	</div>
+</div>
+<div class="red">
 <div class="kolona dva">
 	<form onsubmit="trazi_glavno(); return false;">
-		<label style="width: auto;" for="pretraga-polje">Pretraga članova: </label> <input type="text" id="pretraga-polje" name="pretraga-polje">
+		<label style="width: auto;" for="pretraga-polje">Pretraga članova: </label> <input type="text" id="pretraga-polje" oninput="pretrazi();" name="pretraga-polje">
 		<input type="submit" value="Traži">
 	</form>
 </div>
