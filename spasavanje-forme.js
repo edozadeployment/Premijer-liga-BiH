@@ -46,8 +46,10 @@ function sacuvajUlaznice()
 
 function povuciUlaznice()
 {
-	document.getElementById("kolo").value = localStorage.getItem("ulaznice_kolo");
-	document.getElementById("utakmica").selectedIndex = localStorage.getItem("ulaznice_utakmica");
-	document.getElementById("tribina").selectedIndex = localStorage.getItem("ulaznice_tribina");
-	document.getElementById("brojulaznica").value = localStorage.getItem("ulaznice_brojulaznica");
+	if (document.getElementById("utakmica"))
+	{
+		document.getElementById("utakmica").selectedIndex = localStorage.getItem("ulaznice_utakmica");
+		document.getElementById("tribina").selectedIndex = localStorage.getItem("ulaznice_tribina");
+		document.getElementById("brojulaznica").value = localStorage.getItem("ulaznice_brojulaznica");
+	}
 }

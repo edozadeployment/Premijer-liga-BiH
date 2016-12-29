@@ -3,12 +3,12 @@
 	$xml = simplexml_load_file("fan-klub.xml");
 
 	echo "<div class='table'>";
-	echo "<div class='tr'>
+	/*echo "<div class='tr'>
 		<div class='th'>Ime</div>
 		<div class='th'>Prezime</div>
 		<div class='th'>Email</div>
 		<div class='th'>Broj telefona</div>
-		</div>";
+		</div>";*/
 
 
 	if (!isset($_GET["pretraga"]) || ($_GET["pretraga"] == ""))
@@ -21,6 +21,8 @@
 		$pretraga = strtolower($_GET["pretraga"]);
 		$rezultat = "";
 		$broj_pronadjenih = 0;
+
+		print "<span>Rezultati: ime, prezime, email, telefon:</span><br>";
 
 		if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 		{

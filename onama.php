@@ -1,7 +1,7 @@
 <div class="kolona cetri glavni-sadrzaj">
 	<p>Ovu stranicu je osnovalo udruženje ljubitelja Premijer lige Bosne i Hercegovine, kako bi okupilo sve fanove na jedno mjesto i olakšalo im praćenje lige. Za sva pitanja, i sugestije vezane za stranicu ili rad udruženja, ispunite sljedeću formu: </p>
 
-	<form class="izdvojena-forma">
+	<form class="izdvojena-forma" onsubmit="return alert('Poslan mail...') && false;">
 		<div class="red">
 			<div class="kolona dva">
 		 		<label for="ime">Ime:</label>

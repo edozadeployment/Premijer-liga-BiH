@@ -1,5 +1,9 @@
 ﻿<?php
 	$greska = 0;
+	$greska_string = "";
+	$uspjeh = 0;
+	$uspjeh_string = "";
+
 	if (isset($_REQUEST['csv']))
 	{
 		$sadrzaj = "sep=,\n";
@@ -69,6 +73,9 @@
 			$novi->addChild("telefon", $_REQUEST["telefon"]);
 
 			$xml->asXml("fan-klub.xml");
+
+			$uspjeh = 1;
+			$uspjeh_string = "Uspješno registrovan novi član.";
 		}
 	}
 	elseif (isset($_REQUEST["edit"]))
@@ -110,7 +117,10 @@
 				$trazeni[0]->email = $_REQUEST["email"];
 				$trazeni[0]->telefon = $_REQUEST["telefon"];
 
-				$xml->asXml("fan-klub.xml");				
+				$xml->asXml("fan-klub.xml");
+
+				$uspjeh = 2;
+				$uspjeh_string = "Uspješno editovan član.";
 			}
 		}
 
@@ -124,6 +134,9 @@
 		
 		unset($trazeni[0][0]);
 		$xml->asXml("fan-klub.xml");
+
+		$uspjeh = 2;
+		$uspjeh_string = "Uspješno izbrisan član.";
 	}
 ?>
 
@@ -182,6 +195,14 @@
 					
 					$izlaz = $izlaz ."</span>";
 					print $izlaz;
+					$izlaz = "<span id='uspjeh'>";
+					if ($uspjeh == 1)
+					{
+						$izlaz = $izlaz . $uspjeh_string;
+					} 
+					
+					$izlaz = $izlaz ."</span>";
+					print $izlaz;
 					?>
 					</div>
 				</div>
@@ -205,6 +226,14 @@
 			if ($greska == 2)
 				{
 					$izlaz = $izlaz . $greska_string;
+				}
+			$izlaz = $izlaz . "</span>";
+			print $izlaz;
+
+			$izlaz = "<span class='uspjeh'>";
+			if ($uspjeh == 2)
+				{
+					$izlaz = $izlaz . $uspjeh_string;
 				}
 			$izlaz = $izlaz . "</span>";
 			print $izlaz;

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <podaci>
 	<vijesti>
-		
-
-		
-	<vijest id="4">
-		<naslov>asdasdasdasd</naslov>
-		<tekst>sdgdfgdfgdhdfgdfgdfgdfgdfgdghdfgdfgdfdfgdfgddfhdfgdfgdfddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd</tekst>
-		<autor>admin</autor>
-	</vijest>
-<vijest id="5"><naslov>opala</naslov><tekst>mali</tekst><autor>admin</autor></vijest><vijest id="6"><naslov>da vidimo ajax</naslov><tekst>ajaxe ibro</tekst><autor>admin</autor></vijest>
-<vijest id="7"><naslov>sdf</naslov><tekst>dfffff</tekst><autor>admin</autor></vijest></vijesti>
+	<vijest id="1"><naslov>Celik savladao Olimpic i prepustio fenjer ekipi s Otoke</naslov><tekst>Zenicani su dominirali tokom citavog susreta, a u prvom poluvremenu postigli su pogodak u 26. minuti koji je ponisten.&#13;
+&#13;
+Nakon ubacaja iz slobodnog udarca sa lijeve strane lopta je padala u peterac gostiju, a Smriko se postavio ispred Bandovica i nakon blagog kontakta golman Olimpica je ubacio loptu u vlastitu mrezu, ali je sviran prekrsaj.&#13;
+&#13;
+Smriko je u 42. minuti bio u odlicnoj sansi, ali je Bandovic odlicno odbranio. Celik je poveo u 50. minuti. Salcinovic je uputio jednu dubinsku loptu sa oko 40 metara, a Brkovic se odlicno snalazi i salje loptu u mrezu pored Bandovica za 1:0.&#13;
+&#13;
+Brkovic je samo sedam minuta kasnije mogao postici svoj drugi gol, no sa svega nekoliko metara sutirao je direktno u Bandovica. Celik savladao Olimpic i prepustio fenjer ekipi s Otoke.</tekst><autor>admin</autor></vijest><vijest id="2"><naslov>Krpic heroj Slobode: Pogodak na Grbavici sam posvetio ocu</naslov><tekst>Krpicu je prije nekoliko dana preminuo otac, ali je on odlucio biti na raspolaganju treneru Vladi Jagodicu te se rame uz rame sa svojim saigracima suprotstavio celjeznicaru u vecerasnjoj utakmici.</tekst><autor>admin</autor></vijest><vijest id="2"><naslov>Vitez minimalnim rezultatom pobijedio Metalleghe u gostima</naslov><tekst>U 15. kolu BHT Premijer lige Vitez je kao gost na stadionu Pirota u Travniku rezultatom 1:0 savladao Metalleghe iz Jajca.&#13;
+Ovo je treci uzastopni ligaski mec u kojem Vitez ne zna za poraz, dok je Metalleghe ostao na samo jednoj pobjedi u posljednjih 10 utakmica u svim takmicenjima.&#13;
+Trener domaceg tima Nermin Basic od prve minute sansu je dao Fejzicu, Duraku, Kovacu, Smajicu, Karadjuzu, Helvidi, Selimovicu, Dujakovicu, Rasicu, Radulovicu i Pezi, dok je Slaven Musa na drugoj strani na teren poslao sljedece igrace: Nwolokor, Rasic, Jevtic, Muminovic, Kokot, Livancnic, Mamic, Barisic, Sadikovic, Kapetan i Hodzurda.&#13;
+Gol odluke postigao je Kapetan u 29 .minuti sto je njegov treci ligaski gol u ovoj sezoni.</tekst><autor>admin</autor></vijest></vijesti>
 	<tabela>
 		<klub id="6">
 			<naziv>Sarajevo</naziv>
@@ -23,13 +23,9 @@
 		
 		<klub id="9">
 			<naziv>Celik</naziv>
-			<bodovi>60</bodovi>
+			<bodovi>6</bodovi>
 		</klub>
-		
-		
-		
-	
-<klub id="10"><naziv>noviklub</naziv><bodovi>13</bodovi></klub><klub id="11"><naziv>test</naziv><bodovi>0</bodovi></klub></tabela>
+<klub id="11"><naziv>Zrinjski</naziv><bodovi>30</bodovi></klub><klub id="12"><naziv>Krupa</naziv><bodovi>24</bodovi></klub><klub id="13"><naziv>Radnik</naziv><bodovi>22</bodovi></klub><klub id="14"><naziv>Sloboda</naziv><bodovi>5</bodovi></klub><klub id="15"><naziv>Zeljeznicar</naziv><bodovi>3</bodovi></klub><klub id="16"><naziv>Siroki Brijeg</naziv><bodovi>15</bodovi></klub><klub id="17"><naziv>Metalleghe</naziv><bodovi>9</bodovi></klub><klub id="18"><naziv>Vitez</naziv><bodovi>9</bodovi></klub><klub id="19"><naziv>Olimpic</naziv><bodovi>4</bodovi></klub></tabela>
 
 	<strijelci>
 		<igrac id="1">
@@ -66,7 +62,7 @@
 		
 		
 		<igrac id="10">
-			<ime>S. Kajkut</ime>
+			<ime>Sasa Kajkut</ime>
 			<tim>Krupa</tim>
 			<golovi>5</golovi>
 		</igrac>
@@ -84,4 +80,25 @@
 			<golovi>3</golovi>
 		</igrac>
 	<igrac id="17"><ime>m. mujic</ime><tim>swoboda</tim><golovi>4</golovi></igrac><igrac id="18"><ime>edhem bicakcic</ime><tim>N.K. Istra</tim><golovi>9</golovi></igrac></strijelci>
+
+	<utakmice>
+		<utakmica id="1">
+			<domacin>Celik</domacin>
+			<gost>Siroki Brijeg</gost>
+			<cijena>6</cijena>
+		</utakmica>
+		
+		
+		
+		<utakmica id="5">
+			<domacin>Krupa</domacin>
+			<gost>Olimpik</gost>
+			<cijena>4</cijena>
+		</utakmica>
+		<utakmica id="6">
+			<domacin>Sloboda</domacin>
+			<gost>Sarajevo</gost>
+			<cijena>6</cijena>
+		</utakmica>
+	<utakmica id="7"><domacin>Zrinjski</domacin><gost>Siroki</gost><cijena>7</cijena></utakmica><utakmica id="8"><domacin>Metalleghe</domacin><gost>Vitez</gost><cijena>3</cijena></utakmica></utakmice>
 </podaci>

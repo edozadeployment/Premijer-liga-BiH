@@ -45,36 +45,30 @@
 				return false;
 		}
 
-		var koloInput = forma['kolo'];
-		if (koloInput && (!koloInput.value || koloInput.max < koloInput.value || koloInput.min > koloInput.value )) {
-				greska.innerHTML+="Morate izabrati (ispravno) kolo";  
-	            //e.preventDefault(); 
-				return false;
-		}
 
-		var tribinaInput = forma['tribina'];
+		var tribinaInput = e.target['tribina'];
 		if (tribinaInput && !tribinaInput.value) {
 				greska.innerHTML+="Morate izabrati tribinu";  
-	            //e.preventDefault(); 
+	            e.preventDefault(); 
 				return false;
 		}
 
-		var utakmicaInput = forma['utakmica'];
-		if (utakmicaInput && !utakmicaInput.value) {
+		var utakmicaInput = e.target['utakmica'];
+		if (utakmicaInput && utakmicaInput.value >= 0) {
 				greska.innerHTML+="Morate izabrati utakmicu";  
-	            //e.preventDefault(); 
+	            e.preventDefault(); 
 				return false;
 		}
 
-		var brulaznicaInput = forma['brojulaznica'];
+		var brulaznicaInput = e.target['brojulaznica'];
 		if (brulaznicaInput && ((!brulaznicaInput.value) || brulaznicaInput.value < brulaznicaInput.min || brulaznicaInput.value > brulaznicaInput.max))
 		{
 				greska.innerHTML+="Morate izabrati broj ulaznica (između 1 i 8)";  
-	            //e.preventDefault(); 
+	            e.preventDefault(); 
 				return false;
 		}
 
-	var naslovRegex = /^([a-zA-Z.,!]){5,30}$/;
+	var naslovRegex = /^([a-zA-Z0-9.,:! ]){5,60}$/;
 	var naslovInput = forma['naslov'];
 	if (naslovInput && !naslovRegex.test(naslovInput.value)) {
 			var ova_greska = document.getElementById('edit-greska');
@@ -84,18 +78,28 @@
 				ova_greska = document.getElementById('nova-vijest-greska');
 			}
 
-            ova_greska.innerHTML="Nije validan unos. Naslov može sadržavati samo 5-30 alfanumeričkih znakova, razmaka i znakova interpunkcija.";
+            ova_greska.innerHTML="Nije validan unos. Naslov može sadržavati samo 5-60 alfanumeričkih znakova, razmaka i znakova interpunkcija.";
             //e.preventDefault();
 			return false;
 	}
 
-	var tekstRegex = /^[a-zA-Z.,!]{30,500}$/;
+	var tekstRegex = /^[a-zA-Z0-9.,!: \n]{30,800}$/;
 	var tekstInput = forma['tekst-vijesti'];
 	if (tekstInput && !tekstRegex.test(tekstInput.value)) {
 			var ova_greska = document.getElementById('edit-greska');
-            ova_greska.innerHTML="Nije validan unos. Tekst može sadržavati samo 30-500 alfanumeričkih znakova, razmaka i znakova interpunkcija.";
+            ova_greska.innerHTML="Nije validan unos. Tekst može sadržavati samo 30-800 alfanumeričkih znakova, razmaka i znakova interpunkcija.";
             //e.preventDefault();
 			return false;
+	}
+
+	var username = e.target['username'];
+	var pass = e.target['password'];
+
+	if((username && pass) && (username.value.length < 1 || pass.value.length < 1))
+	{
+		document.getElementById("greska").innerHTML = "Morate unijeti username i password.";
+        e.preventDefault();
+		return false;
 	}
 
 	return true;
@@ -157,6 +161,56 @@ function validacijaIgraca(e, greskaId)
 	for (var i = 0; i < greske.length; i++)
 	{
 		greske[i].innerHTML = "";
+	}
+
+	return true;
+}
+
+
+
+function validacijaUtakmice(e, greskaId)
+{
+	var greska = document.getElementById(greskaId);
+
+
+
+	var regex = /^[a-zA-Z0-9. ]{2,20}$/;
+	var input = e["domacin"];
+
+	if (input && !regex.test(input.value)) {
+            greska.innerHTML= "Naziv kluba (domacin) može sadržavati samo slova, brojeve i razmake, u dužini od 2 do 20 karaktera.";
+            //e.preventDefault();
+			return false;
+	}
+
+	var regex = /^[a-zA-Z0-9. ]{2,20}$/;
+	var input = e["gost"];
+
+	if (input && !regex.test(input.value)) {
+            greska.innerHTML= "Naziv kluba (gost) može sadržavati samo slova, brojeve i razmake, u dužini od 2 do 20 karaktera.";
+            //e.preventDefault();
+			return false;
+	}
+
+	var input = e['cijena'];
+	if (input && !((!isNaN(parseFloat(input.value)) && isFinite(input.value)) && (parseInt(input.value) >= 1) && (parseInt(input.value) <= 99))){
+            greska.innerHTML= "Cijena mora biti broj 1-99KM.";
+            //e.preventDefault();
+			return false;
+	}
+
+	return true;
+}
+
+function validacijaLogina(e)
+{
+	var username = e['username'];
+	var pass = e['password'];
+
+	if(username.value.length < 1 || pass.value.length < 1)
+	{
+		document.getElementById("greska").innerHTML = "Morate unijeti username i password.";
+		return false;
 	}
 
 	return true;

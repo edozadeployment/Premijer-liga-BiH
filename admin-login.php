@@ -17,7 +17,7 @@
 				</div>
 			</div>
 		 	<div class="red">
-		 		<span id="greska"></span>
+		 		<span class='greska' id="greska"></span>
 		 	</div>
 			<div class="red">
 				<div class="kolona jedan">

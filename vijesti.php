@@ -1,21 +1,28 @@
 <?php
+function cmp($t1, $t2) {
+	return ((int) $t1->bodovi) < ((int)$t2->bodovi);
+}
+
 session_start();
 $greska = 0;
 $greska_string = "";
+$uspjeh = 0;
+$uspjeh_string = "";
 
 if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 {
 	if (isset($_REQUEST["dodavanje"]))
 	{
-		if(!preg_match('/^[a-zA-Z.,!]{5,30}$/', $_REQUEST["naslov"]))
+		if(!preg_match('/^[a-zA-Z0-9.,!: ]{5,60}$/', $_REQUEST["naslov"]))
 		{
 			$greska = 1;
-			$greska_string = "Nije validan unos. Naslov može sadržavati samo 5-30 alfanumeričkih znakova, razmaka i znakova interpunkcija.";
+			$greska_string = "Nije validan unos. Naslov može sadržavati samo 5-60 alfanumeričkih znakova, razmaka i znakova interpunkcija.";
 		}
-		elseif(!preg_match('/^[a-zA-Z.,!]{30,500}$/', $_REQUEST["tekst-vijesti"]))
+		elseif(!preg_match('/^[a-zA-Z0-9.,!: ]{30,800}$/m', $_REQUEST["tekst-vijesti"]))
 		{
+			var_dump($_REQUEST);
 			$greska = 1;
-			$greska_string = "Nije validan unos. Tekst može sadržavati samo 30-500 alfanumeričkih znakova, razmaka i znakova interpunkcija.";
+			$greska_string = "Nije validan unos. Tekst može sadržavati samo 30-800 alfanumeričkih znakova, razmaka i znakova interpunkcija.";
 		}
 		else
 		{
@@ -27,8 +34,11 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 			}
 
 			usort($sortirani, 'cmp');
-
-			$noviId = $sortirani[0]->attributes()["id"] + 1;
+			$noviId = 1;
+			if (sizeof($sortirani) > 0)
+			{
+				$noviId = $sortirani[0]->attributes()["id"] + 1;
+			}
 
 			$novi = $xml->vijesti->addChild("vijest", "");
 			$novi->addAttribute("id", $noviId);
@@ -37,26 +47,26 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 			$novi->addChild("autor", $_SESSION["username"]);
 
 			$xml->asXml("podaci.xml");
+
+			$uspjeh = 1;
+			$uspjeh_string = "Uspješno dodana vijest";
 		}
 	}
 
 	if (isset($_REQUEST["edit"]))
 	{
-		if(!preg_match('/^[a-zA-Z.,!]{5,30}$/', $_REQUEST["naslov"]))
+		if(!preg_match('/^([a-zA-Z0-9.,! ]){5,60}$/', $_REQUEST["naslov"]))
 		{
-			echo "uso1";
 			$greska = 2;
-			$greska_string = "Nije validan unos. Naslov može sadržavati samo 5-30 alfanumeričkih znakova, razmaka i znakova interpunkcija.";
+			$greska_string = "Nije validan unos. Naslov može sadržavati samo 5-60 alfanumeričkih znakova, razmaka i znakova interpunkcija.";
 		}
-		elseif(!preg_match('/^[a-zA-Z.,!]{30,500}$/', $_REQUEST["tekst-vijesti"]))
+		elseif(!preg_match('/^[a-zA-Z0-9.,!: ]{30,800}$/m', $_REQUEST["tekst-vijesti"]))
 		{
-			echo "uso2";
 			$greska = 2;
-			$greska_string = "Nije validan unos. Tekst može sadržavati samo 5-30 alfanumeričkih znakova, razmaka i znakova interpunkcija.";
+			$greska_string = "Nije validan unos. Tekst može sadržavati samo 30-800 alfanumeričkih znakova, razmaka i znakova interpunkcija.";
 		}
 		else
 		{
-			echo "uso3";
 			$xml= simplexml_load_file("podaci.xml");
 			$nadjeni;
 			$trazeni = $_REQUEST["vijestId"];
@@ -68,7 +78,8 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 					$vijest->tekst = $_REQUEST["tekst-vijesti"];
 					$vijest->naslov = $_REQUEST["naslov"];
 					$xml->asXml("podaci.xml");
-
+				$uspjeh = 2;
+				$uspjeh_string = "Uspješno editovana vijest";
 					break;
 				}
 			}
@@ -82,6 +93,8 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 
 		unset($vijesti[0][0]);
 		$xml->asXml("podaci.xml");
+		$uspjeh = 2;
+		$uspjeh_string = "Uspješno izbrisana vijest";
 	}
 
 }
@@ -98,6 +111,14 @@ if ($greska == 2)
 	print $greska_string;
 }
 print "</span></div>";
+
+print "<div><span class='uspjeh'>";
+if ($uspjeh == 2)
+{
+	print $uspjeh_string;
+}
+print "</span></div>";
+
 
 foreach($vijesti as $vijest)
 {	
@@ -154,6 +175,14 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 		print $greska_string;
 	}
 	print "</span>
+
+<span class='uspjeh'>";
+	if ($uspjeh == 1)
+	{
+		print $uspjeh_string;
+	}
+	print "</span>
+
 	</div>
 	<div class='red'>
 	<div class='kolona tri'></div>
@@ -176,10 +205,14 @@ print "<div class=\"kolona jedan strana\">
 	<th></th>
 	<th>B</th>
 	</tr>";
-	
-foreach ($tabela as $klub) {
+
+
+$tabela = $xml->xpath('/podaci/tabela/klub');
+usort($tabela, "cmp");
+
+foreach ($tabela as $mjesto=>$klub) {
 	print "<tr>
-	<td>$klub->mjesto</td>
+	<td>". ($mjesto + 1) . "</td>
 	<td>$klub->naziv</td>
 	<td>$klub->bodovi</td>
 	</tr>";

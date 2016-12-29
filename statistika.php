@@ -1,63 +1,11 @@
 <div class="kolona cetri red glavni-sadrzaj">
 <div class="red">
-	<div class="kolona jedan centrirano">
-		<input type="button" value="Prethodno kolo">
-	</div>
-	<div class="kolona dva centrirano">
-		<span>14. kolo</span>
-	</div>
-	<div class="kolona jedan centrirano">
-		<input type="button" value="Naredno kolo">
-	</div>
-</div>
-<div class="red">
-<div class="kolona cetri centrirano">
-	<table>
-	<tr>
-		<td>Široki Brijeg</td>
-		<td>-</td>
-		<td>Željezničar</td>
-		<td>1:0</td>
-	</tr>
-	<tr>
-		<td>Sarajevo</td>
-		<td>-</td>
-		<td>Čelik</td>
-		<td>4:0</td>
-	</tr>
-	<tr>
-		<td>Radnik</td>
-		<td>-</td>
-		<td>Krupa</td>
-		<td>3:1</td>
-	</tr>
-	<tr>
-		<td>Vitez</td>
-		<td>-</td>
-		<td>Sloboda</td>
-		<td>0:0</td>
-	</tr>
-	<tr>
-		<td>Olimpic</td>
-		<td>-</td>
-		<td>Zrinjski</td>
-		<td>0:5</td>
-	</tr>
-	<tr>
-		<td>Metalleghe</td>
-		<td>-</td>
-		<td>Mladost</td>
-		<td>2:0</td>
-	</tr>
-	</table>
-</div>
-</div>
-<div class="red">
 
 <?php
 $greska = 0;
 $greska_string = "";
-
+$uspjeh = 0;
+$uspjeh_string = "";
 function idcmp($t1, $t2) {
 	return intval($t1->attributes()["id"]) < intval($t2->attributes()["id"]);
 }
@@ -98,6 +46,8 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 					$klub->naziv = $_REQUEST["naziv"];
 					$klub->bodovi = $_REQUEST["bodovi"];
 					$xml->asXml("podaci.xml");
+					$uspjeh = 1;
+					$uspjeh_string = "Uspješno editovana tabela.";
 
 					break;
 				}
@@ -134,7 +84,8 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 					$igrac->tim = $_REQUEST["tim"];
 					$igrac->golovi = $_REQUEST["golovi"];
 					$xml->asXml("podaci.xml");
-
+					$uspjeh = 2;
+					$uspjeh_string = "Uspješno editovana lista strijelaca.";
 					break;
 				}
 			}
@@ -147,6 +98,9 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 
 		unset($tabela[0][0]);
 		$xml->asXml("podaci.xml");
+
+		$uspjeh = 1;
+		$uspjeh_string = "Uspješno izbrisan klub";
 	}
 
 	if (isset($_REQUEST["brisi-strijelci"]))
@@ -155,6 +109,8 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 
 		unset($strijelci[0][0]);
 		$xml->asXml("podaci.xml");
+		$uspjeh = 2;
+		$uspjeh_string = "Uspješno izbrisan strijelac";
 	}
 
 	if (isset($_REQUEST["dodaj-tabela"]))
@@ -179,6 +135,8 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 		$novi->addChild("bodovi", $_REQUEST["bodovi"]);
 
 		$xml->asXml("podaci.xml");
+		$uspjeh = 1;
+		$uspjeh_string = "Uspješno dodan klub";
 		}
 	}
 
@@ -211,6 +169,9 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 			$novi->addChild("golovi", $_REQUEST["golovi"]);
 
 			$xml->asXml("podaci.xml");
+
+			$uspjeh = 2;
+			$uspjeh_string = "Uspješno dodan strijelac";
 		}
 	}
 }
@@ -229,6 +190,14 @@ if ($greska == 1)
 	print $greska_string;
 }
 print "</div>";
+
+print "<div class='red'><span class='uspjeh'>";
+if ($uspjeh == 1)
+{
+	print $uspjeh_string;
+}
+print "</div>";
+
 
 if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 {
@@ -293,6 +262,12 @@ print "<div class='red'><span class='greska' id='edit-klub-greska'>";
 if ($greska == 2)
 {
 	print $greska_string;
+}
+print "</div>";
+print "<div class='red'><span class='uspjeh'>";
+if ($uspjeh == 2)
+{
+	print $uspjeh_string;
 }
 print "</div>";
 
