@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <podaci>
 	<vijesti>
-	<vijest id="1"><naslov>Celik savladao Olimpic i prepustio fenjer ekipi s Otoke</naslov><tekst>Zenicani su dominirali tokom citavog susreta, a u prvom poluvremenu postigli su pogodak u 26. minuti koji je ponisten.&#13;
+	<vijest id="1"><naslov>Čelik savladao Olimpic i prepustio fenjer ekipi s Otoke</naslov><tekst>Zeničani su dominirali tokom čitavog susreta, a u prvom poluvremenu postigli su pogodak u 26. minuti koji je poništen.&#13;
 &#13;
-Nakon ubacaja iz slobodnog udarca sa lijeve strane lopta je padala u peterac gostiju, a Smriko se postavio ispred Bandovica i nakon blagog kontakta golman Olimpica je ubacio loptu u vlastitu mrezu, ali je sviran prekrsaj.&#13;
+Nakon ubačaja iz slobodnog udarca sa lijeve strane lopta je padala u peterac gostiju, a Smriko se postavio ispred Bandovića i nakon blagog kontakta golman Olimpica je ubacio loptu u vlastitu mrežu, ali je sviran prekrsaj.&#13;
 &#13;
-Smriko je u 42. minuti bio u odlicnoj sansi, ali je Bandovic odlicno odbranio. Celik je poveo u 50. minuti. Salcinovic je uputio jednu dubinsku loptu sa oko 40 metara, a Brkovic se odlicno snalazi i salje loptu u mrezu pored Bandovica za 1:0.&#13;
+Smriko je u 42. minuti bio u odličnoj sansi, ali je Bandović odlično odbranio. Čelik je poveo u 50. minuti. Salčinović je uputio jednu dubinsku loptu sa oko 40 metara, a Brković se odlično snalazi i šalje loptu u mrežu pored Bandovića za 1:0.&#13;
 &#13;
-Brkovic je samo sedam minuta kasnije mogao postici svoj drugi gol, no sa svega nekoliko metara sutirao je direktno u Bandovica. Celik savladao Olimpic i prepustio fenjer ekipi s Otoke.</tekst><autor>admin</autor></vijest><vijest id="2"><naslov>Krpic heroj Slobode: Pogodak na Grbavici sam posvetio ocu</naslov><tekst>Krpicu je prije nekoliko dana preminuo otac, ali je on odlucio biti na raspolaganju treneru Vladi Jagodicu te se rame uz rame sa svojim saigracima suprotstavio celjeznicaru u vecerasnjoj utakmici.</tekst><autor>admin</autor></vijest><vijest id="2"><naslov>Vitez minimalnim rezultatom pobijedio Metalleghe u gostima</naslov><tekst>U 15. kolu BHT Premijer lige Vitez je kao gost na stadionu Pirota u Travniku rezultatom 1:0 savladao Metalleghe iz Jajca.&#13;
-Ovo je treci uzastopni ligaski mec u kojem Vitez ne zna za poraz, dok je Metalleghe ostao na samo jednoj pobjedi u posljednjih 10 utakmica u svim takmicenjima.&#13;
-Trener domaceg tima Nermin Basic od prve minute sansu je dao Fejzicu, Duraku, Kovacu, Smajicu, Karadjuzu, Helvidi, Selimovicu, Dujakovicu, Rasicu, Radulovicu i Pezi, dok je Slaven Musa na drugoj strani na teren poslao sljedece igrace: Nwolokor, Rasic, Jevtic, Muminovic, Kokot, Livancnic, Mamic, Barisic, Sadikovic, Kapetan i Hodzurda.&#13;
-Gol odluke postigao je Kapetan u 29 .minuti sto je njegov treci ligaski gol u ovoj sezoni.</tekst><autor>admin</autor></vijest></vijesti>
+Brković je samo sedam minuta kasnije mogao postići svoj drugi gol, no sa svega nekoliko metara šutirao je direktno u Bandovića. Čelik savladao Olimpic i prepustio fenjer ekipi s Otoke.</tekst><autor>admin</autor></vijest><vijest id="2"><naslov>Krpić heroj Slobode: Pogodak na Grbavici sam posvetio ocu</naslov><tekst>Krpiću je prije nekoliko dana preminuo otac, ali je on odlučio biti na raspolaganju treneru Vladi Jagodiću te se rame uz rame sa svojim saigračima suprotstavio Željezničaru u večerašnjoj utakmici.</tekst><autor>admin</autor></vijest><vijest id="3"><naslov>Vitez minimalnim rezultatom pobijedio Metalleghe u gostima</naslov><tekst>U 15. kolu BHT Premijer lige Vitez je kao gost na stadionu Pirota u Travniku rezultatom 1:0 savladao Metalleghe iz Jajca.&#13;
+Ovo je treći uzastopni ligaški meč u kojem Vitez ne zna za poraz, dok je Metalleghe ostao na samo jednoj pobjedi u posljednjih 10 utakmica u svim takmičenjima.&#13;
+Trener domaćeg tima Nermin Bašić od prve minute sansu je dao Fejziću, Duraku, Kovaču, Smajiću, Karađuzu, Helvidi, Selimoviću, Dujakoviću, Rašiću, Raduloviću i Pezi, dok je Slaven Musa na drugoj strani na teren poslao sljedeće igrače: Nwolokor, Rasic, Jevtic, Muminovic, Kokot, Livančić, Mamić, Barišić, Sadiković, Kapetan i Hodžurda.&#13;
+Gol odluke postigao je Kapetan u 29 .minuti što je njegov treći ligaški gol u ovoj sezoni.</tekst><autor>admin</autor></vijest></vijesti>
 	<tabela>
 		<klub id="6">
 			<naziv>Sarajevo</naziv>
@@ -22,47 +22,47 @@ Gol odluke postigao je Kapetan u 29 .minuti sto je njegov treci ligaski gol u ov
 		</klub>
 		
 		<klub id="9">
-			<naziv>Celik</naziv>
+			<naziv>Čelik</naziv>
 			<bodovi>6</bodovi>
 		</klub>
-<klub id="11"><naziv>Zrinjski</naziv><bodovi>30</bodovi></klub><klub id="12"><naziv>Krupa</naziv><bodovi>24</bodovi></klub><klub id="13"><naziv>Radnik</naziv><bodovi>22</bodovi></klub><klub id="14"><naziv>Sloboda</naziv><bodovi>5</bodovi></klub><klub id="15"><naziv>Zeljeznicar</naziv><bodovi>3</bodovi></klub><klub id="16"><naziv>Siroki Brijeg</naziv><bodovi>15</bodovi></klub><klub id="17"><naziv>Metalleghe</naziv><bodovi>9</bodovi></klub><klub id="18"><naziv>Vitez</naziv><bodovi>9</bodovi></klub><klub id="19"><naziv>Olimpic</naziv><bodovi>4</bodovi></klub></tabela>
+<klub id="11"><naziv>Zrinjski</naziv><bodovi>30</bodovi></klub><klub id="12"><naziv>Krupa</naziv><bodovi>24</bodovi></klub><klub id="13"><naziv>Radnik</naziv><bodovi>22</bodovi></klub><klub id="14"><naziv>Sloboda</naziv><bodovi>5</bodovi></klub><klub id="15"><naziv>Zeljeznicar</naziv><bodovi>3</bodovi></klub><klub id="16"><naziv>Široki Brijeg</naziv><bodovi>15</bodovi></klub><klub id="17"><naziv>Metalleghe</naziv><bodovi>9</bodovi></klub><klub id="18"><naziv>Vitez</naziv><bodovi>9</bodovi></klub><klub id="19"><naziv>Olimpić</naziv><bodovi>4</bodovi></klub></tabela>
 
 	<strijelci>
 		<igrac id="1">
-			<ime>Sulejman Krpic</ime>
+			<ime>Sulejman Krpić</ime>
 			<tim>Sloboda</tim>
 			<golovi>8</golovi>
 		</igrac>
 		<igrac id="2">
-			<ime>Elvir Koljic</ime>
+			<ime>Elvir Koljić</ime>
 			<tim>Krupa</tim>
 			<golovi>7</golovi>
 		</igrac>
 		<igrac id="3">
-			<ime>Jasmin Mesanovic</ime>
+			<ime>Jasmin Mesanović</ime>
 			<tim>Zrinjski</tim>
 			<golovi>7</golovi>
 		</igrac>
 		<igrac id="4">
-			<ime>Marko Obradovic</ime>
+			<ime>Marko Obradović</ime>
 			<tim>Radnik</tim>
 			<golovi>7</golovi>
 		</igrac>
 		<igrac id="5">
-			<ime>Mersudin Ahmetovic</ime>
+			<ime>Mersudin Ahmetović</ime>
 			<tim>Sarajevo</tim>
 			<golovi>13</golovi>
 		</igrac>
 		
 		<igrac id="7">
-			<ime>Ivan Lendric</ime>
-			<tim>Zeljeznicar</tim>
+			<ime>Ivan Lendrić</ime>
+			<tim>Željezničar</tim>
 			<golovi>11</golovi>
 		</igrac>
 		
 		
 		<igrac id="10">
-			<ime>Sasa Kajkut</ime>
+			<ime>Saša Kajkut</ime>
 			<tim>Krupa</tim>
 			<golovi>5</golovi>
 		</igrac>
@@ -70,21 +70,21 @@ Gol odluke postigao je Kapetan u 29 .minuti sto je njegov treci ligaski gol u ov
 		
 		
 		<igrac id="14">
-			<ime>Nedim Crnkic</ime>
+			<ime>Nedim Crnkić</ime>
 			<tim>Sarajevo</tim>
 			<golovi>3</golovi>
 		</igrac>
 		<igrac id="15">
-			<ime>Adnan Huskic</ime>
+			<ime>Adnan Huskić</ime>
 			<tim>Mladost</tim>
 			<golovi>3</golovi>
 		</igrac>
-	<igrac id="17"><ime>Mujo Mujic</ime><tim>Sloboda</tim><golovi>4</golovi></igrac><igrac id="18"><ime>edhem bicakcic</ime><tim>Iskra</tim><golovi>9</golovi></igrac></strijelci>
+	<igrac id="17"><ime>Mujo Mujić</ime><tim>Sloboda</tim><golovi>4</golovi></igrac><igrac id="18"><ime>Edhem Bicakčić</ime><tim>Iskra</tim><golovi>9</golovi></igrac></strijelci>
 
 	<utakmice>
 		<utakmica id="1">
-			<domacin>Celik</domacin>
-			<gost>Siroki Brijeg</gost>
+			<domacin>Čelik</domacin>
+			<gost>Široki Brijeg</gost>
 			<cijena>6</cijena>
 		</utakmica>
 		
@@ -100,5 +100,5 @@ Gol odluke postigao je Kapetan u 29 .minuti sto je njegov treci ligaski gol u ov
 			<gost>Sarajevo</gost>
 			<cijena>6</cijena>
 		</utakmica>
-	<utakmica id="7"><domacin>Zrinjski</domacin><gost>Siroki</gost><cijena>7</cijena></utakmica><utakmica id="8"><domacin>Metalleghe</domacin><gost>Vitez</gost><cijena>3</cijena></utakmica></utakmice>
+	<utakmica id="7"><domacin>Zrinjski</domacin><gost>Široki</gost><cijena>7</cijena></utakmica><utakmica id="8"><domacin>Metalleghe</domacin><gost>Vitez</gost><cijena>3</cijena></utakmica></utakmice>
 </podaci>

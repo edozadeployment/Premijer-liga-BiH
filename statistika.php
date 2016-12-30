@@ -25,7 +25,7 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 {
 	if (isset($_REQUEST["edit-tabela"]))
 	{
-		if(!preg_match('/^[a-zA-Z0-9. ]{2,20}$/', $_REQUEST["naziv"]))
+		if(!preg_match('/^[a-zA-Z0-9.\x{0106}\x{0107}\x{010C}\x{010D}\x{0110}\x{0111}\x{0160}\x{0161}\x{017D}\x{017E} ]{2,20}$/u', $_REQUEST["naziv"]))
 		{
 			$greska = 1;
 			$greska_string = "Naziv kluba može sadržavati samo slova, brojeve i razmake, u dužini od 2 do 20 karaktera.";
@@ -57,12 +57,12 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 
 	elseif (isset($_REQUEST["edit-strijelci"]))
 	{
-		if(!isset($_REQUEST["ime"]) || !preg_match('/^[a-zA-Z ]{2,25}$/', $_REQUEST["ime"]))
+		if(!isset($_REQUEST["ime"]) || !preg_match('/^[a-zA-Z\x{0106}\x{0107}\x{010C}\x{010D}\x{0110}\x{0111}\x{0160}\x{0161}\x{017D}\x{017E} ]{2,25}$/u', $_REQUEST["ime"]))
 		{
 			$greska = 2;
 			$greska_string = "Ime mora biti niz slova (+ razmaci) u dužini od 2 do 25 karaktera.";
 		}
-		elseif(!isset($_REQUEST["tim"]) || !preg_match('/^[a-zA-Z0-9. ]{2,20}$/', $_REQUEST["ime"]))
+		elseif(!isset($_REQUEST["tim"]) || !preg_match('/^[a-zA-Z0-9.\x{0106}\x{0107}\x{010C}\x{010D}\x{0110}\x{0111}\x{0160}\x{0161}\x{017D}\x{017E} ]{2,20}$/u', $_REQUEST["ime"]))
 		{
 			$greska = 2;
 			$greska_string = "Naziv kluba može sadržavati samo slova i razmake, u dužini od 2 do 20 karaktera.";
@@ -115,7 +115,7 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 
 	if (isset($_REQUEST["dodaj-tabela"]))
 	{
-		if(!preg_match('/^[a-zA-Z. ]{2,20}$/', $_REQUEST["naziv"]))
+		if(!preg_match('/^[a-zA-Z.\x{0106}\x{0107}\x{010C}\x{010D}\x{0110}\x{0111}\x{0160}\x{0161}\x{017D}\x{017E} ]{2,20}$/u', $_REQUEST["naziv"]))
 		{
 			$greska = 1;
 			$greska_string = "Naziv kluba može sadržavati samo slova i razmake, u dužini od 2 do 20 karaktera.";
@@ -143,12 +143,12 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 	if (isset($_REQUEST["dodaj-strijelci"]))
 	{
 
-		if(!isset($_REQUEST["ime"]) || !preg_match('/^[a-zA-Z ]{2,25}$/', $_REQUEST["ime"]))
+		if(!isset($_REQUEST["ime"]) || !preg_match('/^[a-zA-Z\x{0106}\x{0107}\x{010C}\x{010D}\x{0110}\x{0111}\x{0160}\x{0161}\x{017D}\x{017E} ]{2,25}$/u', $_REQUEST["ime"]))
 		{
 			$greska = 2;
 			$greska_string = "Ime mora biti niz slova (+ razmaci) u dužini od 2 do 25 karaktera.";
 		}
-		elseif(!isset($_REQUEST["tim"]) || !preg_match('/^[a-zA-Z0-9. ]{2,20}$/', $_REQUEST["ime"]))
+		elseif(!isset($_REQUEST["tim"]) || !preg_match('/^[a-zA-Z0-9.\x{0106}\x{0107}\x{010C}\x{010D}\x{0110}\x{0111}\x{0160}\x{0161}\x{017D}\x{017E} ]{2,20}$/u', $_REQUEST["ime"]))
 		{
 			$greska = 2;
 			$greska_string = "Naziv kluba može sadržavati samo slova i razmake, u dužini od 2 do 20 karaktera.";

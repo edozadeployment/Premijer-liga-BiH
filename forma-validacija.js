@@ -7,7 +7,7 @@
 	
 	//var forma=document.getElementsByTagName('form');
 	var forma = e;
-	    var imeRegex = /^[a-zA-Z]{2,15}$/;
+	    var imeRegex = /^[a-zA-Z\u0106\u0107\u010C\u010D\u0110\u0111\u0160\u0161\u017D\u017E ]{2,15}$/;
 		var imeInput = forma['ime'];
 		if (imeInput && !imeRegex.test(imeInput.value)) {
 	            greska.innerHTML+="Ime mora imati 2-15 slova<br>";
@@ -68,9 +68,9 @@
 				return false;
 		}
 
-	var naslovRegex = /^([a-zA-Z0-9.,:! ]){5,60}$/;
-	var naslovInput = forma['naslov'];
-	if (naslovInput && !naslovRegex.test(naslovInput.value)) {
+	/*var naslovRegex = /^([a-zA-Z0-9.,:! ]){5,60}$/;*/
+		var naslovInput = forma['naslov'];
+		if (naslovInput && (naslovInput.value.length < 5 || naslovInput.value.length > 60)) {
 			var ova_greska = document.getElementById('edit-greska');
 			
 			if (forma.id == "pisanje-vijesti")
@@ -78,16 +78,15 @@
 				ova_greska = document.getElementById('nova-vijest-greska');
 			}
 
-            ova_greska.innerHTML="Nije validan unos. Naslov može sadržavati samo 5-60 alfanumeričkih znakova, razmaka i znakova interpunkcija.";
+            ova_greska.innerHTML="Nije validan unos. Naslov mora sadržavati 5-60 karaktera.";
             //e.preventDefault();
 			return false;
 	}
 
-	var tekstRegex = /^[a-zA-Z0-9.,!: \n]{30,800}$/;
 	var tekstInput = forma['tekst-vijesti'];
-	if (tekstInput && !tekstRegex.test(tekstInput.value)) {
+	if (naslovInput && (tekstInput.value.length < 30 || tekstInput.value.length > 800)) {
 			var ova_greska = document.getElementById('edit-greska');
-            ova_greska.innerHTML="Nije validan unos. Tekst može sadržavati samo 30-800 alfanumeričkih znakova, razmaka i znakova interpunkcija.";
+            ova_greska.innerHTML="Nije validan unos. Tekst mora sadržavati 30-800 karaktera.";
             //e.preventDefault();
 			return false;
 	}
@@ -107,7 +106,7 @@
 
 function validacijaKluba(e, greskaId)
 {
-	var nazivRegex = /^[a-zA-Z0-9. ]{2,20}$/;
+	var nazivRegex = /^[a-zA-Z0-9.\u0106\u0107\u010C\u010D\u0110\u0111\u0160\u0161\u017D\u017E ]{2,20}$/;
 	var input = e['naziv'];
 	if (input && !nazivRegex.test(input.value)) {
 			var greska = document.getElementById(greskaId);
@@ -130,7 +129,7 @@ function validacijaKluba(e, greskaId)
 
 function validacijaIgraca(e, greskaId)
 {
-	var imeRegex = /^[a-zA-Z ]{2,25}$/;
+	var imeRegex = /^[a-zA-Z\u0106\u0107\u010C\u010D\u0110\u0111\u0160\u0161\u017D\u017E ]{2,25}$/;
 	var input = e['ime'];
 	if (input && !imeRegex.test(input.value)) {
 			var greska = document.getElementById(greskaId);
@@ -139,7 +138,7 @@ function validacijaIgraca(e, greskaId)
 			return false;
 	}
 
-	var nazivRegex = /^[a-zA-Z0-9. ]{2,20}$/;
+	var nazivRegex = /^[a-zA-Z0-9.\u0106\u0107\u010C\u010D\u0110\u0111\u0160\u0161\u017D\u017E ]{2,20}$/;
 	var input = e['tim'];
 	if (input && !nazivRegex.test(input.value)) {
 			var greska = document.getElementById(greskaId);
@@ -174,7 +173,7 @@ function validacijaUtakmice(e, greskaId)
 
 
 
-	var regex = /^[a-zA-Z0-9. ]{2,20}$/;
+	var regex = /^[a-zA-Z0-9.\u0106\u0107\u010C\u010D\u0110\u0111\u0160\u0161\u017D\u017E ]{2,20}$/;
 	var input = e["domacin"];
 
 	if (input && !regex.test(input.value)) {
@@ -183,7 +182,7 @@ function validacijaUtakmice(e, greskaId)
 			return false;
 	}
 
-	var regex = /^[a-zA-Z0-9. ]{2,20}$/;
+	var regex = /^[a-zA-Z0-9.\u0106\u0107\u010C\u010D\u0110\u0111\u0160\u0161\u017D\u017E ]{2,20}$/;
 	var input = e["gost"];
 
 	if (input && !regex.test(input.value)) {

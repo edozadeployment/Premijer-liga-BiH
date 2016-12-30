@@ -31,24 +31,24 @@
     	}
 	}
 
-	if (isset($_REQUEST["registracija"]))
+	if (isset($_REQUEST["registracija"]) && isset($_REQUEST["ime"]) && isset($_REQUEST["prezime"]) && isset($_REQUEST["email"]) && isset($_REQUEST["telefon"]))
 	{
-		if(!isset($_REQUEST["ime"]) || !preg_match('/^([a-zA-Z]){2,15}$/', $_REQUEST["ime"]))
+		if(!preg_match('/^[a-zA-Z\x{0106}\x{0107}\x{010C}\x{010D}\x{0110}\x{0111}\x{0160}\x{0161}\x{017D}\x{017E}]{2,15}$/u', $_REQUEST["ime"]))
 		{
 			$greska = 1;
 			$greska_string = "Ime mora imati 2-15 slova<br>";
 		}
-		elseif(!isset($_REQUEST["prezime"]) || !preg_match('/^[a-zA-Z]{2,15}$/', $_REQUEST["prezime"]))
+		elseif(!preg_match('/^[a-zA-Z\x{0106}\x{0107}\x{010C}\x{010D}\x{0110}\x{0111}\x{0160}\x{0161}\x{017D}\x{017E}]{2,15}$/u', $_REQUEST["prezime"]))
 		{
 			$greska = 1;
 			$greska_string = "Prezime mora imati 2-15 slova<br>";			
 		}
-		elseif(!isset($_REQUEST["email"]) || (filter_var($_REQUEST["email"], FILTER_VALIDATE_EMAIL) === false))
+		elseif((filter_var($_REQUEST["email"], FILTER_VALIDATE_EMAIL) === false))
 		{
 			$greska = 1;
 			$greska_string = "Email adresa nije ispravna<br>";
 		}
-		elseif(!isset($_REQUEST["telefon"]) || !preg_match('/^\(?(\d{3})\)?[-]?(\d{3})[-]?(\d{3})$/', $_REQUEST["telefon"]))
+		elseif(!preg_match('/^\(?(\d{3})\)?[-]?(\d{3})[-]?(\d{3})$/', $_REQUEST["telefon"]))
 		{
 			$greska = 1;
 			$greska_string = "Telefon format: (061)-123-345 ili 061-123-456 ili 061123456<br>";
@@ -78,24 +78,24 @@
 			$uspjeh_string = "Uspješno registrovan novi član.";
 		}
 	}
-	elseif (isset($_REQUEST["edit"]))
+	elseif (isset($_REQUEST["edit"]) && isset($_REQUEST["ime"]) && isset($_REQUEST["prezime"]) && isset($_REQUEST["telefon"]) && isset($_REQUEST["email"]))
 	{
-		if(!isset($_REQUEST["ime"]) || preg_match('/^[a-zA-Z]{2,15}$/', $_REQUEST["ime"]))
+		if(!preg_match('/^[a-zA-Z\x{0106}\x{0107}\x{010C}\x{010D}\x{0110}\x{0111}\x{0160}\x{0161}\x{017D}\x{017E}]{2,15}$/u', $_REQUEST["ime"]))
 		{
 			$greska = 2;
 			$greska_string = "Ime mora imati 2-15 slova<br>";
 		}
-		elseif(!isset($_REQUEST["prezime"]) || preg_match('/^[a-zA-Z]{2,15}$/', $_REQUEST["prezime"]))
+		elseif(!preg_match('/^[a-zA-Z\x{0106}\x{0107}\x{010C}\x{010D}\x{0110}\x{0111}\x{0160}\x{0161}\x{017D}\x{017E}]{2,15}$/u', $_REQUEST["prezime"]))
 		{
 			$greska = 2;
 			$greska_string = "Prezime mora imati 2-15 slova<br>";			
 		}
-		elseif(!isset($_REQUEST["email"]) || (filter_var($email, FILTER_VALIDATE_EMAIL) === false))
+		elseif((filter_var($_REQUEST["email"], FILTER_VALIDATE_EMAIL) === false))
 		{
 			$greska = 2;
 			$greska_string = "Email adresa nije ispravna<br>";
 		}
-		elseif(!isset($_REQUEST["telefon"]) || preg_match('/^\(?(\d{3})\)?[-]?(\d{3})[-]?(\d{3})$/', $_REQUEST["telefon"]))
+		elseif(!preg_match('/^\(?(\d{3})\)?[-]?(\d{3})[-]?(\d{3})$/', $_REQUEST["telefon"]))
 		{
 			$greska = 2;
 			$greska_string = "Telefon format: (061)-123-345 ili 061-123-456 ili 061123456<br>";
@@ -104,8 +104,27 @@
 		{
 			$xml= simplexml_load_file("fan-klub.xml");
 			$src = "/dataset/record[id=".$_REQUEST["edit"]."]";
-			$trazeni = ($xml->xpath($src));
-			if (sizeof($trazeni != 1))
+			//$trazeni = ($xml->xpath($src));
+			$trazeni;
+			$svi = $xml->xpath("//record");
+
+			foreach ($svi as $neko) {
+				if ($neko->id == $_REQUEST["edit"])
+				{
+					$neko->ime = $_REQUEST["ime"];
+					$neko->prezime = $_REQUEST["prezime"];
+					$neko->email = $_REQUEST["email"];
+					$neko->telefon = $_REQUEST["telefon"];
+
+					$xml->asXml("fan-klub.xml");
+					$uspjeh = 2;
+					$uspjeh_string = "Uspješno editovan član.";
+					break;
+				}
+			}
+		}
+
+	/*		if (sizeof($trazeni != 1))
 			{
 				$greska = 2;
 				$greska_string = "Greska baze podataka";
@@ -121,11 +140,8 @@
 
 				$uspjeh = 2;
 				$uspjeh_string = "Uspješno editovan član.";
-			}
-		}
-
+			}*/
 	}
-
 	if (isset($_REQUEST["brisi"]))
 	{
 		$xml= simplexml_load_file("fan-klub.xml");
@@ -251,11 +267,18 @@
 <div class="kolona jedan">
 </div>
 <div class="kolona jedan">
-	<form method="GET" action="fanklub.php">
-		<input type="submit" value="Download CSV svih članova">
-		<input type="hidden" name="csv">
-	</form>
-</div>
+<?php
+	session_start();
+	if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
+	{
+		print 	"<form method=\"GET\" action=\"fanklub.php\">
+		<input type=\"submit\" value=\"Download CSV svih članova\">
+		<input type=\"hidden\" name=\"csv\">
+	</form>";
+	}
+
+print "</div>";
+?>
 
 </div>
 	<div id="pretraga-sugestija">

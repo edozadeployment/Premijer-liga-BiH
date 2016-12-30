@@ -66,12 +66,12 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 {
 	if (isset($_REQUEST["edit-utakmica"]))
 	{
-		if(!isset($_REQUEST["domacin"]) || !preg_match('/^[a-zA-Z0-9. ]{2,20}$/', $_REQUEST["domacin"]))
+		if(!isset($_REQUEST["domacin"]) || !preg_match('/^[a-zA-Z0-9.\x{0106}\x{0107}\x{010C}\x{010D}\x{0110}\x{0111}\x{0160}\x{0161}\x{017D}\x{017E} ]{2,20}$/u', $_REQUEST["domacin"]))
 		{
 			$greska = 1;
 			$greska_string = "Naziv kluba (domacin) može sadržavati samo slova, brojeve i razmake, u dužini od 2 do 20 karaktera.";
 		}
-		elseif(!isset($_REQUEST["gost"]) || !preg_match('/^[a-zA-Z0-9. ]{2,20}$/', $_REQUEST["gost"]))
+		elseif(!isset($_REQUEST["gost"]) || !preg_match('/^[a-zA-Z0-9.\x{0106}\x{0107}\x{010C}\x{010D}\x{0110}\x{0111}\x{0160}\x{0161}\x{017D}\x{017E} ]{2,20}$/u', $_REQUEST["gost"]))
 		{
 			$greska = 1;
 			$greska_string = "Naziv kluba (gost) može sadržavati samo slova, brojeve i razmake, u dužini od 2 do 20 karaktera.";
@@ -114,12 +114,12 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 	
 	elseif (isset($_REQUEST["dodaj-utakmica"]))
 	{
-		if(!isset($_REQUEST["domacin"]) || !preg_match('/^[a-zA-Z0-9. ]{2,20}$/', $_REQUEST["domacin"]))
+		if(!isset($_REQUEST["domacin"]) || !preg_match('/^[a-zA-Z0-9.\x{0106}\x{0107}\x{010C}\x{010D}\x{0110}\x{0111}\x{0160}\x{0161}\x{017D}\x{017E} ]{2,20}$/u', $_REQUEST["domacin"]))
 		{
 			$greska = 1;
 			$greska_string = "Naziv kluba (domacin) može sadržavati samo slova, brojeve i razmake, u dužini od 2 do 20 karaktera.";
 		}
-		elseif(!isset($_REQUEST["gost"]) || !preg_match('/^[a-zA-Z0-9. ]{2,20}$/', $_REQUEST["gost"]))
+		elseif(!isset($_REQUEST["gost"]) || !preg_match('/^[a-zA-Z0-9.\x{0106}\x{0107}\x{010C}\x{010D}\x{0110}\x{0111}\x{0160}\x{0161}\x{017D}\x{017E} ]{2,20}$/u', $_REQUEST["gost"]))
 		{
 			$greska = 1;
 			$greska_string = "Naziv kluba (gost) može sadržavati samo slova, brojeve i razmake, u dužini od 2 do 20 karaktera.";

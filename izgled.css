@@ -100,7 +100,7 @@ nav li:last-child a {
 border-top-right-radius: 15px;
 }
  
-p {
+p, pre {
 font-family: 'pt sans', arial, sans-serif;
 font-size: 14px;
 font-weight: normal;

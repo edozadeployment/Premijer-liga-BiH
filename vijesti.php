@@ -1,5 +1,5 @@
 <?php
-function cmp($t1, $t2) {
+function cmpbodovi($t1, $t2) {
 	return ((int) $t1->bodovi) < ((int)$t2->bodovi);
 }
 
@@ -11,29 +11,30 @@ $uspjeh_string = "";
 
 if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 {
-	if (isset($_REQUEST["dodavanje"]))
+	if (isset($_REQUEST["dodavanje"]) && isset($_REQUEST["naslov"]) && isset($_REQUEST["tekst-vijesti"]) && isset($_REQUEST["autor"]))
 	{
-		if(!preg_match('/^[a-zA-Z0-9.,!: ]{5,60}$/', $_REQUEST["naslov"]))
+		if(sizeof($_REQUEST["naslov"]) < 5 && sizeof($_REQUEST["naslov"]) > 60)
+		/*if(!preg_match('/^[a-zA-Z0-9.,!: ]{5,60}$/', $_REQUEST["naslov"]))*/
 		{
 			$greska = 1;
-			$greska_string = "Nije validan unos. Naslov može sadržavati samo 5-60 alfanumeričkih znakova, razmaka i znakova interpunkcija.";
+			$greska_string = "Nije validan unos. Naslov mora sadržavati samo 5-60 karaktera.";
 		}
-		elseif(!preg_match('/^[a-zA-Z0-9.,!: ]{30,800}$/m', $_REQUEST["tekst-vijesti"]))
+		elseif(sizeof($_REQUEST["tekst-vijesti"]) < 30 && sizeof($_REQUEST["tekst-vijesti"]) > 800)
 		{
 			var_dump($_REQUEST);
 			$greska = 1;
-			$greska_string = "Nije validan unos. Tekst može sadržavati samo 30-800 alfanumeričkih znakova, razmaka i znakova interpunkcija.";
+			$greska_string = "Nije validan unos. Tekst mora sadržavati 30-800 karaktera.";
 		}
 		else
 		{
 			$xml= simplexml_load_file("podaci.xml");
 			$sortirani = $xml->xpath('/podaci/vijesti/vijest');
 
-			function cmp($t1, $t2) {
-	    		return intval($t1->attributes()["id"]) > intval($t2->attributes()["id"]);
+			function idcmp($t1, $t2) {
+			return intval($t1->attributes()["id"]) < intval($t2->attributes()["id"]);
 			}
 
-			usort($sortirani, 'cmp');
+			usort($sortirani, "idcmp");
 			$noviId = 1;
 			if (sizeof($sortirani) > 0)
 			{
@@ -42,8 +43,8 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 
 			$novi = $xml->vijesti->addChild("vijest", "");
 			$novi->addAttribute("id", $noviId);
-			$novi->addChild("naslov", $_REQUEST["naslov"]);
-			$novi->addChild("tekst", $_REQUEST["tekst-vijesti"]);
+			$novi->addChild("naslov", htmlEntities($_REQUEST['naslov'], ENT_QUOTES));
+			$novi->addChild("tekst", htmlEntities($_REQUEST['tekst-vijesti'], ENT_QUOTES));
 			$novi->addChild("autor", $_SESSION["username"]);
 
 			$xml->asXml("podaci.xml");
@@ -53,17 +54,17 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 		}
 	}
 
-	if (isset($_REQUEST["edit"]))
+	if (isset($_REQUEST["edit"]) && isset($_REQUEST["naslov"]) && isset($_REQUEST["tekst-vijesti"]))
 	{
-		if(!preg_match('/^([a-zA-Z0-9.,! ]){5,60}$/', $_REQUEST["naslov"]))
+		if(sizeof($_REQUEST["naslov"]) < 5 && sizeof($_REQUEST["naslov"]) > 60)
 		{
 			$greska = 2;
-			$greska_string = "Nije validan unos. Naslov može sadržavati samo 5-60 alfanumeričkih znakova, razmaka i znakova interpunkcija.";
+			$greska_string = "Nije validan unos. Naslov mora sadržavati samo 5-60 karaktera.";
 		}
-		elseif(!preg_match('/^[a-zA-Z0-9.,!: ]{30,800}$/m', $_REQUEST["tekst-vijesti"]))
+		elseif(sizeof($_REQUEST["tekst-vijesti"]) < 30 && sizeof($_REQUEST["tekst-vijesti"]) > 800)
 		{
 			$greska = 2;
-			$greska_string = "Nije validan unos. Tekst može sadržavati samo 30-800 alfanumeričkih znakova, razmaka i znakova interpunkcija.";
+			$greska_string = "Nije validan unos. Tekst mora sadržavati 30-800 karaktera.";
 		}
 		else
 		{
@@ -139,8 +140,8 @@ foreach($vijesti as $vijest)
 	else
 	{
 			print "<article>
-				<h2>$vijest->naslov</h2>";
-	print "<p>$vijest->tekst</p>
+				<h2>" . htmlspecialchars($vijest->naslov) . "</h2>";
+	print "<p>" . htmlspecialchars($vijest->tekst) . "</p>
 			</article>";
 
 	}
@@ -208,7 +209,7 @@ print "<div class=\"kolona jedan strana\">
 
 
 $tabela = $xml->xpath('/podaci/tabela/klub');
-usort($tabela, "cmp");
+usort($tabela, "cmpbodovi");
 
 foreach ($tabela as $mjesto=>$klub) {
 	print "<tr>
