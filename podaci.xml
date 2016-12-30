@@ -29,35 +29,35 @@ Gol odluke postigao je Kapetan u 29 .minuti sto je njegov treci ligaski gol u ov
 
 	<strijelci>
 		<igrac id="1">
-			<ime>S. Krpić</ime>
+			<ime>Sulejman Krpic</ime>
 			<tim>Sloboda</tim>
 			<golovi>8</golovi>
 		</igrac>
 		<igrac id="2">
-			<ime>E. Koljić</ime>
+			<ime>Elvir Koljic</ime>
 			<tim>Krupa</tim>
 			<golovi>7</golovi>
 		</igrac>
 		<igrac id="3">
-			<ime>J. Mešanović</ime>
+			<ime>Jasmin Mesanovic</ime>
 			<tim>Zrinjski</tim>
 			<golovi>7</golovi>
 		</igrac>
 		<igrac id="4">
-			<ime>M. Obradović</ime>
+			<ime>Marko Obradovic</ime>
 			<tim>Radnik</tim>
 			<golovi>7</golovi>
 		</igrac>
 		<igrac id="5">
-			<ime>M. Ahmetović</ime>
+			<ime>Mersudin Ahmetovic</ime>
 			<tim>Sarajevo</tim>
-			<golovi>60</golovi>
+			<golovi>13</golovi>
 		</igrac>
 		
 		<igrac id="7">
 			<ime>Ivan Lendric</ime>
-			<tim>Zeljetnicar</tim>
-			<golovi>60</golovi>
+			<tim>Zeljeznicar</tim>
+			<golovi>11</golovi>
 		</igrac>
 		
 		
@@ -70,16 +70,16 @@ Gol odluke postigao je Kapetan u 29 .minuti sto je njegov treci ligaski gol u ov
 		
 		
 		<igrac id="14">
-			<ime>N. Crnkić</ime>
+			<ime>Nedim Crnkic</ime>
 			<tim>Sarajevo</tim>
 			<golovi>3</golovi>
 		</igrac>
 		<igrac id="15">
-			<ime>A. Huskić</ime>
-			<tim>Mlados</tim>
+			<ime>Adnan Huskic</ime>
+			<tim>Mladost</tim>
 			<golovi>3</golovi>
 		</igrac>
-	<igrac id="17"><ime>m. mujic</ime><tim>swoboda</tim><golovi>4</golovi></igrac><igrac id="18"><ime>edhem bicakcic</ime><tim>N.K. Istra</tim><golovi>9</golovi></igrac></strijelci>
+	<igrac id="17"><ime>Mujo Mujic</ime><tim>Sloboda</tim><golovi>4</golovi></igrac><igrac id="18"><ime>edhem bicakcic</ime><tim>Iskra</tim><golovi>9</golovi></igrac></strijelci>
 
 	<utakmice>
 		<utakmica id="1">
