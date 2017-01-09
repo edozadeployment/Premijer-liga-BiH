@@ -455,3 +455,7 @@ article > h2
 {
   color: green;
 }
+
+input, select{
+  margin: 4px;
+}

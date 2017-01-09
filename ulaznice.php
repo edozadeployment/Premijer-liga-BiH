@@ -7,58 +7,68 @@ $greska = 0;
 $uspjeh = 0;
 
 $xml= simplexml_load_file("podaci.xml");
+//$veza = new PDO("mysql:dbname=bh_pliga;host=localhost;charset=utf8", "root", "");
+$veza = new PDO("mysql:dbname=sampledb;host=172.30.235.155;charset=utf8", "root", "");
+
+$veza->exec("set names utf8");
+
 $utakmice = $xml->xpath('/podaci/utakmice/utakmica');
 
-	if (isset($_REQUEST["kupovina"]))
+if (isset($_REQUEST["kupovina"]))
+{
+	if (isset($_REQUEST["utakmica"]))
 	{
-		require('fpdf181/fpdf.php');
-
-		$pdf = new FPDF('L', 'mm', 'A5');
-		$pdf->AddPage();
-		$pdf->SetFont('Helvetica','B',16);
-		$pdf->Cell(40,10,'Racun');
-		$pdf->Ln();
-		$pdf->Ln();
-		$pdf->SetFont('Courier', '', 12);
-
-		$ut;
-
-		if (isset ($_REQUEST["utakmica"]))
-		{
-			$ut=$xml->xpath('//utakmica[@id="'.$_REQUEST["utakmica"].'"]')[0];
-			//var_dump($ut);
-
-		}
-
-
-		if (isset($_REQUEST["utakmica"]))
-		{
-
-			$par = $ut->domacin . " - " . $ut->gost;
-
-			$pdf->Cell(40,10,'Utakmica: '. $par);
-			$pdf->Ln();
-		}
-		if (isset($_REQUEST["tribina"]))
-		{
-			$pdf->Cell(40,10,'Tribina: '.$_REQUEST["tribina"]);
-			$pdf->Ln();
-		}
-		if (isset($_REQUEST["brojulaznica"]))
-		{
-			$pdf->Cell(40,10,'Broj ulaznica: '.$_REQUEST["brojulaznica"]);
-			$pdf->Ln();
-			$pdf->Ln();
-			$pdf->SetFont('Courier', 'B', 13);
-			$pdf->Cell(40,10,'Cijena: '. $ut->cijena . 'KM * '.$_REQUEST["brojulaznica"].'.........'.$_REQUEST["brojulaznica"]* intval($ut->cijena) . 'KM');
-			$pdf->Ln();
-			$pdf->Ln();
-		}
-
-	    $pdf->SetFont('Arial','I',8);
-	    $pdf->Cell(0,10,'Racun izdat '.date("d.m.Y."));
-		$pdf->Output();
+		$id = $_REQUEST["utakmica"];
+		$upit_string = "SELECT tabela1.naziv AS domacin, tabela2.naziv AS gost, utakmice.cijena AS cijena FROM utakmice JOIN tabela tabela1 ON tabela1.id = utakmice.domacin JOIN tabela tabela2 ON tabela2.id = utakmice.gost WHERE utakmice.id = $id;";
+		$upit = $veza->prepare($upit_string);
+		$upit->execute();
+		$ut = $upit->fetch(PDO::FETCH_ASSOC);
+		//var_dump($ut);
 	}
+
+	require('tfpdf/tfpdf.php');
+
+	$pdf = new tFPDF('L', 'mm', 'A5');
+	$pdf->AddPage();
+	$pdf->SetFont('Helvetica','B',16);
+	$pdf->Cell(40,10,'Racun');
+	$pdf->Ln();
+	$pdf->Ln();
+	$pdf->SetFont('Courier', '', 12);
+
+
+
+	if (isset($_REQUEST["utakmica"]))
+	{
+
+		$par = ($ut["domacin"]) . " - " . ($ut["gost"]);
+		
+		$pdf->Cell(40,10,'Utakmica: '. $par);
+		$pdf->Ln();
+	}
+	if (isset($_REQUEST["tribina"]))
+	{
+		$pdf->Cell(40,10,'Tribina: '.$_REQUEST["tribina"]);
+		$pdf->Ln();
+	}
+	if (isset($_REQUEST["brojulaznica"]))
+	{
+		$pdf->Cell(40,10,'Broj ulaznica: '.$_REQUEST["brojulaznica"]);
+		$pdf->Ln();
+		$pdf->Ln();
+		$pdf->SetFont('Courier', 'B', 13);
+		$pdf->Cell(40,10,'Cijena: '. $ut["cijena"] . 'KM * '.$_REQUEST["brojulaznica"].'.........'.$_REQUEST["brojulaznica"]* intval($ut["cijena"]) . 'KM');
+		$pdf->Ln();
+		$pdf->Ln();
+	}
+
+    $pdf->SetFont('Arial','I',8);
+    $pdf->Cell(0,10,'Racun izdat '.date("d.m.Y."));
+	$pdf->Output();
+}
+
+else
+{
 
 session_start();
 
@@ -66,15 +76,10 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 {
 	if (isset($_REQUEST["edit-utakmica"]))
 	{
-		if(!isset($_REQUEST["domacin"]) || !preg_match('/^[a-zA-Z0-9.\x{0106}\x{0107}\x{010C}\x{010D}\x{0110}\x{0111}\x{0160}\x{0161}\x{017D}\x{017E} ]{2,20}$/u', $_REQUEST["domacin"]))
+		if(!isset($_REQUEST["domacin"]) || !isset($_REQUEST["gost"]) || ($_REQUEST["domacin"] == $_REQUEST["gost"]))
 		{
 			$greska = 1;
-			$greska_string = "Naziv kluba (domacin) može sadržavati samo slova, brojeve i razmake, u dužini od 2 do 20 karaktera.";
-		}
-		elseif(!isset($_REQUEST["gost"]) || !preg_match('/^[a-zA-Z0-9.\x{0106}\x{0107}\x{010C}\x{010D}\x{0110}\x{0111}\x{0160}\x{0161}\x{017D}\x{017E} ]{2,20}$/u', $_REQUEST["gost"]))
-		{
-			$greska = 1;
-			$greska_string = "Naziv kluba (gost) može sadržavati samo slova, brojeve i razmake, u dužini od 2 do 20 karaktera.";
+			$greska_string = "Klub ne može igrati protiv samog sebe.";
 		}
 		elseif (!isset($_REQUEST["cijena"]) || !preg_match('/^(\d?[1-9]|[1-9]0)$/', $_REQUEST["cijena"])) {
 			$greska = 1;
@@ -82,47 +87,53 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 		}
 		else
 		{
-			$nadjeni;
-			$trazeni = $_REQUEST["edit-utakmica"];
+			$id = $_REQUEST["edit-utakmica"];
+			$domacin = $_REQUEST["domacin"];
+			$gost = $_REQUEST["gost"];
+			$cijena = $_REQUEST["cijena"];
 
-			foreach($xml->utakmice->utakmica as $utakmica)
+			$rezultat = $veza->exec("UPDATE utakmice SET domacin=$domacin, gost=$gost, cijena=$cijena WHERE id=$id;");
+
+			if (!$rezultat)
 			{
-				if ($utakmica->attributes()["id"] == $trazeni)
-				{
-					//var_dump($utakmica);
-					$utakmica->domacin = $_REQUEST["domacin"];
-					$utakmica->gost = $_REQUEST["gost"];
-					$utakmica->cijena = $_REQUEST["cijena"];
-					$xml->asXml("podaci.xml");
-					$uspjeh = 1;
-					$uspjeh_string = "Uspješno editovana utakmica.";
-					break;
-				}
+				$greska_info = $veza->errorInfo();
+				$greska = 1;
+				$uspjeh = 0;
+				$greska_string = "Greška baze podataka: " . $greska_info[2];
+			}
+			else
+			{
+				$uspjeh = 1;
+				$greska = 0;
+				$uspjeh_string = "Uspješno editovana utakmica";
 			}
 		}
 	}
 	elseif (isset($_REQUEST["brisi-utakmica"]))
 	{
-		$ut=$xml->xpath('//utakmica[@id="'.$_REQUEST["brisi-utakmica"].'"]');
+		$id = $_REQUEST["brisi-utakmica"];
+		$rezultat = $veza->exec("DELETE FROM utakmice WHERE id=$id;");
 
-		unset($ut[0][0]);
-		$xml->asXml("podaci.xml");
-		$utakmice = $xml->xpath('/podaci/utakmice/utakmica');
-		$uspjeh = 1;
-		$uspjeh_string = "Uspješno izbrisana utakmica.";
+		if (!$rezultat)
+		{
+			$greska_info = $veza->errorInfo();
+			$greska = 1;
+			$uspjeh = 0;
+			$greska_string = "Greška baze podataka: " . $greska_info[2];
+		}
+		else
+		{
+			$greska = 0;
+			$uspjeh = 1;
+			$uspjeh_string = "Uspješno izbrisana utakmica.";
+		}
 	}
-	
 	elseif (isset($_REQUEST["dodaj-utakmica"]))
 	{
-		if(!isset($_REQUEST["domacin"]) || !preg_match('/^[a-zA-Z0-9.\x{0106}\x{0107}\x{010C}\x{010D}\x{0110}\x{0111}\x{0160}\x{0161}\x{017D}\x{017E} ]{2,20}$/u', $_REQUEST["domacin"]))
+		if(!isset($_REQUEST["domacin"]) || !isset($_REQUEST["gost"]) || ($_REQUEST["domacin"] == $_REQUEST["gost"]))
 		{
 			$greska = 1;
-			$greska_string = "Naziv kluba (domacin) može sadržavati samo slova, brojeve i razmake, u dužini od 2 do 20 karaktera.";
-		}
-		elseif(!isset($_REQUEST["gost"]) || !preg_match('/^[a-zA-Z0-9.\x{0106}\x{0107}\x{010C}\x{010D}\x{0110}\x{0111}\x{0160}\x{0161}\x{017D}\x{017E} ]{2,20}$/u', $_REQUEST["gost"]))
-		{
-			$greska = 1;
-			$greska_string = "Naziv kluba (gost) može sadržavati samo slova, brojeve i razmake, u dužini od 2 do 20 karaktera.";
+			$greska_string = "Klub ne može igrati protiv samog sebe.";
 		}
 		elseif (!isset($_REQUEST["cijena"]) || !preg_match('/^(\d?[1-9]|[1-9]0)$/', $_REQUEST["cijena"])) {
 			$greska = 1;
@@ -130,20 +141,26 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 		}
 		else
 		{
+			$id = $_REQUEST["dodaj-utakmica"];
+			$domacin = $_REQUEST["domacin"];
+			$gost = $_REQUEST["gost"];
+			$cijena = $_REQUEST["cijena"];		
 			
-			$idtabela = $xml->xpath('/podaci/utakmice/utakmica');
-			usort($idtabela, "idcmp");
-			$idtabela[0];
-			$novi = $xml->utakmice->addChild("utakmica", "");
-			$novi->addAttribute("id", intval($idtabela[0]->attributes()["id"]) + 1);
-			$novi->addChild("domacin", $_REQUEST["domacin"]);
-			$novi->addChild("gost", $_REQUEST["gost"]);
-			$novi->addChild("cijena", $_REQUEST["cijena"]);
+			$rezultat = $veza->query("INSERT INTO utakmice (domacin, gost, cijena) VALUES ($domacin, $gost, $cijena);");
 
-			$xml->asXml("podaci.xml");
-			$utakmice = $xml->xpath('/podaci/utakmice/utakmica');
-			$uspjeh = 1;
-			$uspjeh_string = "Uspješno dodana utakmica.";
+			if (!$rezultat)
+			{
+				$uspjeh = 0;
+				$greska_info = $veza->errorInfo();
+				$greska = 1;
+				$greska_string = "Greška baze podataka: " . $greska_info[2];
+			}
+			else
+			{
+				$greska = 0;
+				$uspjeh = 1;
+				$uspjeh_string = "Uspješno dodana utakmica.";
+			}
 		}
 	}
 
@@ -172,35 +189,82 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 	</div>
 	<div class='kolona dva'>";
 
+
+$utakmice = $veza->query("SELECT utakmice.id, tabela1.naziv AS domacin, tabela2.naziv AS gost, tabela1.id AS domacinid, tabela2.id AS gostid, utakmice.cijena FROM utakmice JOIN tabela tabela1 ON tabela1.id = utakmice.domacin JOIN tabela tabela2 ON tabela2.id = utakmice.gost;");
+
+if (!$utakmice)
+{
+	$greska = $veza->errorInfo();
+	print "GREŠKA BAZE: " + $greska[2];
+	exit();
+}
+
 if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 {
 	print "<div class='tabela'>";
 
 	foreach ($utakmice as $utakmica) {
+		$domacini = $veza->query("SELECT id, naziv FROM tabela;");
+		$gosti = $veza->query("SELECT id, naziv FROM tabela;");
 		//print "<div class='red'>
 		print
 		"<div class='tr'>
 			<form class='mala-forma' method='POST' action='ulaznice.php' onsubmit=\"return validacijaUtakmice(this, 'greska') && submitForm(this);\">
-				<input type='hidden' name='edit-utakmica' value='".$utakmica->attributes()["id"]."'>
-				<div class='td'><input type='text' name='domacin' value='$utakmica->domacin'></div>
-				<div class='td'><input type='text' name='gost' value='$utakmica->gost'></div>
-				<div class='td'><input type='number' name='cijena' min='1' max='99' value='$utakmica->cijena'></div>
+				<input type='hidden' name='edit-utakmica' value='".$utakmica["id"]."'>
+				<div class='td'><select name='domacin'>";
+				
+				 foreach ($domacini as  $domacin) {
+				 	if (intval($utakmica["domacinid"]) == intval($domacin["id"]))
+				 	{
+				 		print "<option value='$domacin[id]' selected>$domacin[naziv]</option>";
+				 	}
+				 	else
+				 	{
+				 		print "<option value='$domacin[id]'>$domacin[naziv]</option>";
+				 	}
+				 }
+				
+				print "</select></div><div class='td'>
+				<select name='gost'>";
+
+				 foreach ($gosti as  $gost) {
+				 	if (intval($utakmica["gostid"]) == intval($gost["id"]))
+				 	{
+				 		print "<option value='$gost[id]' selected>$gost[naziv]</option>";
+				 	}
+				 	else
+				 	{
+				 		print "<option value='$gost[id]'>$gost[naziv]</option>";
+				 	}
+				 }
+
+				print "</select></div>
+				<div class='td'><input type='number' name='cijena' min='1' max='99' value='$utakmica[cijena]'></div>
 				<div class='td'><input type='submit' value='Sačuvaj'></div>
-			</form>
-			<div class='td'>
+			</form>";
+			print "<div class='td'>
 				<form class='mala-forma' method='POST' action='ulaznice.php' onsubmit=\"return submitForm(this);\">
-					<input type='hidden' name='brisi-utakmica' value='".$utakmica->attributes()["id"]."'>
+					<input type='hidden' name='brisi-utakmica' value='".$utakmica["id"]."'>
 					<input type='submit' value='Izbriši'>
 				</form>
 			</div>
 		</div>";
 	}
+	$klubovi = $veza->query("SELECT id, naziv FROM tabela;");
+	$opcije = "";
+	foreach($klubovi as $klub)
+	{
+		$opcije = $opcije . "<option value=$klub[id]>$klub[naziv]</option>";
+	}
+
 	print
 		"<div class='tr'>
 			<form method='POST' action='ulaznice.php' onsubmit=\"return validacijaUtakmice(this, 'greska') && submitForm(this);\">
 				<input type='hidden' name='dodaj-utakmica'>
-				<div class='td'><input type='text' name='domacin'></div>
-				<div class='td'><input type='text' name='gost'></div>
+				<div class='td'><select name='domacin'>";
+				print $opcije;			
+				print "</select></div>
+				<div class='td'><select name='gost'>" . $opcije .  "</select></div>
 				<div class='td'><input type='number' name='cijena' min='1' max='99'></div>
 				<div class='td'><input type='submit' value='Dodaj utakmicu'></div>
 			</form>
@@ -210,6 +274,15 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 }
 else
 {
+	$utakmice = $veza->query("SELECT utakmice.id, tabela1.naziv AS domacin, tabela2.naziv AS gost FROM utakmice JOIN tabela tabela1 ON tabela1.id = utakmice.domacin JOIN tabela tabela2 ON tabela2.id = utakmice.domacin;");
+
+	if (!$utakmice)
+	{
+		$greska = $veza->errorInfo();
+		print "GREŠKA BAZE: " + $greska[2];
+		exit();
+	}
+
 	print "<form action='ulaznice.php' method='GET' >
 	
 		<div class='red'>
@@ -218,7 +291,7 @@ else
 			<select name='utakmica' id='utakmica'>";
 				foreach($utakmice as $utakmica)
 				{
-				print "<option value='" . $utakmica->attributes()["id"] ."'>" . $utakmica->domacin ." - " . $utakmica->gost . "</option>";
+				print "<option value='" . $utakmica["id"] ."'>" . $utakmica["domacin"] ." - " . $utakmica["gost"] . "</option>";
 				}
 
 			print "</select>
@@ -250,6 +323,8 @@ else
 		<input type='hidden' name='kupovina'>
 	</form>";
 }
+}
+
 ?>	
 	</div>
 </div>

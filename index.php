@@ -36,11 +36,21 @@
 			}
 			else if (isset($_REQUEST["username"]) && isset($_REQUEST["password"]))
 			{
-				$xml= simplexml_load_file("admin-cred.xml");
-				if ($xml->username == $_REQUEST["username"] && $xml->password == $_REQUEST["password"])
-					{
-						$_SESSION["username"] = "admin";
-					}
+				$username = $_REQUEST["username"];
+				$password = $_REQUEST["password"];
+			
+				//$veza = new PDO("mysql:dbname=bh_pliga;host=localhost;charset=utf8", "root", "");
+				$veza = new PDO("mysql:dbname=sampledb;host=172.30.235.155;charset=utf8", "root", "");
+
+				$veza->exec("set names utf8");
+				$upit = $veza->prepare("SELECT * FROM korisnici WHERE username='$username' AND password='$password';");
+				$upit->execute();
+				$korisnik = $upit->fetch();
+
+				if ($korisnik)
+				{
+					$_SESSION["username"] = $username;
+				}
 				else
 				{
 					unset($_SESSION["username"]);
@@ -65,6 +75,7 @@
 			}
 			else
 			{
+				print "<a href=\"import-skripta.php\">Importuj podatke u bazu</a>";
 				print "<form method='post' action='index.php' id='logout-forma'>";
 				print "		<input type='hidden' name='logout'>";
 				print "		<input type='submit' value='Logout'>";

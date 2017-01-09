@@ -7,14 +7,14 @@ Nakon ubačaja iz slobodnog udarca sa lijeve strane lopta je padala u peterac go
 &#13;
 Smriko je u 42. minuti bio u odličnoj sansi, ali je Bandović odlično odbranio. Čelik je poveo u 50. minuti. Salčinović je uputio jednu dubinsku loptu sa oko 40 metara, a Brković se odlično snalazi i šalje loptu u mrežu pored Bandovića za 1:0.&#13;
 &#13;
-Brković je samo sedam minuta kasnije mogao postići svoj drugi gol, no sa svega nekoliko metara šutirao je direktno u Bandovića. Čelik savladao Olimpic i prepustio fenjer ekipi s Otoke.</tekst><autor>admin</autor></vijest><vijest id="2"><naslov>Krpić heroj Slobode: Pogodak na Grbavici sam posvetio ocu</naslov><tekst>Krpiću je prije nekoliko dana preminuo otac, ali je on odlučio biti na raspolaganju treneru Vladi Jagodiću te se rame uz rame sa svojim saigračima suprotstavio Željezničaru u večerašnjoj utakmici.</tekst><autor>admin</autor></vijest><vijest id="3"><naslov>Vitez minimalnim rezultatom pobijedio Metalleghe u gostima</naslov><tekst>U 15. kolu BHT Premijer lige Vitez je kao gost na stadionu Pirota u Travniku rezultatom 1:0 savladao Metalleghe iz Jajca.&#13;
+Brković je samo sedam minuta kasnije mogao postići svoj drugi gol, no sa svega nekoliko metara šutirao je direktno u Bandovića. Čelik savladao Olimpic i prepustio fenjer ekipi s Otoke.</tekst></vijest><vijest id="2"><naslov>Krpić heroj Slobode: Pogodak na Grbavici sam posvetio ocu</naslov><tekst>Krpiću je prije nekoliko dana preminuo otac, ali je on odlučio biti na raspolaganju treneru Vladi Jagodiću te se rame uz rame sa svojim saigračima suprotstavio Željezničaru u večerašnjoj utakmici.</tekst></vijest><vijest id="3"><naslov>Vitez minimalnim rezultatom pobijedio Metalleghe u gostima</naslov><tekst>U 15. kolu BHT Premijer lige Vitez je kao gost na stadionu Pirota u Travniku rezultatom 1:0 savladao Metalleghe iz Jajca.&#13;
 Ovo je treći uzastopni ligaški meč u kojem Vitez ne zna za poraz, dok je Metalleghe ostao na samo jednoj pobjedi u posljednjih 10 utakmica u svim takmičenjima.&#13;
 Trener domaćeg tima Nermin Bašić od prve minute sansu je dao Fejziću, Duraku, Kovaču, Smajiću, Karađuzu, Helvidi, Selimoviću, Dujakoviću, Rašiću, Raduloviću i Pezi, dok je Slaven Musa na drugoj strani na teren poslao sljedeće igrače: Nwolokor, Rasic, Jevtic, Muminovic, Kokot, Livančić, Mamić, Barišić, Sadiković, Kapetan i Hodžurda.&#13;
-Gol odluke postigao je Kapetan u 29 .minuti što je njegov treći ligaški gol u ovoj sezoni.</tekst><autor>admin</autor></vijest></vijesti>
+Gol odluke postigao je Kapetan u 29 .minuti što je njegov treći ligaški gol u ovoj sezoni.</tekst></vijest></vijesti>
 	<tabela>
 		<klub id="6">
 			<naziv>Sarajevo</naziv>
-			<bodovi>1</bodovi>
+			<bodovi>2</bodovi>
 		</klub>
 		<klub id="7">
 			<naziv>Mladost</naziv>
@@ -30,40 +30,40 @@ Gol odluke postigao je Kapetan u 29 .minuti što je njegov treći ligaški gol u
 	<strijelci>
 		<igrac id="1">
 			<ime>Sulejman Krpić</ime>
-			<tim>Sloboda</tim>
+			<tim>14</tim>
 			<golovi>8</golovi>
 		</igrac>
 		<igrac id="2">
 			<ime>Elvir Koljić</ime>
-			<tim>Krupa</tim>
+			<tim>12</tim>
 			<golovi>7</golovi>
 		</igrac>
 		<igrac id="3">
 			<ime>Jasmin Mesanović</ime>
-			<tim>Zrinjski</tim>
+			<tim>11</tim>
 			<golovi>7</golovi>
 		</igrac>
 		<igrac id="4">
 			<ime>Marko Obradović</ime>
-			<tim>Radnik</tim>
+			<tim>13</tim>
 			<golovi>7</golovi>
 		</igrac>
 		<igrac id="5">
 			<ime>Mersudin Ahmetović</ime>
-			<tim>Sarajevo</tim>
+			<tim>11</tim>
 			<golovi>13</golovi>
 		</igrac>
 		
 		<igrac id="7">
 			<ime>Ivan Lendrić</ime>
-			<tim>Željezničar</tim>
+			<tim>15</tim>
 			<golovi>11</golovi>
 		</igrac>
 		
 		
 		<igrac id="10">
 			<ime>Saša Kajkut</ime>
-			<tim>Krupa</tim>
+			<tim>12</tim>
 			<golovi>5</golovi>
 		</igrac>
 		
@@ -71,34 +71,42 @@ Gol odluke postigao je Kapetan u 29 .minuti što je njegov treći ligaški gol u
 		
 		<igrac id="14">
 			<ime>Nedim Crnkić</ime>
-			<tim>Sarajevo</tim>
+			<tim>6</tim>
 			<golovi>3</golovi>
 		</igrac>
 		<igrac id="15">
 			<ime>Adnan Huskić</ime>
-			<tim>Mladost</tim>
+			<tim>7</tim>
 			<golovi>3</golovi>
 		</igrac>
-	<igrac id="17"><ime>Mujo Mujić</ime><tim>Sloboda</tim><golovi>4</golovi></igrac><igrac id="18"><ime>Edhem Bicakčić</ime><tim>Iskra</tim><golovi>9</golovi></igrac></strijelci>
+	<igrac id="17"><ime>Mujo Mujić</ime><tim>14</tim><golovi>4</golovi></igrac></strijelci>
 
 	<utakmice>
 		<utakmica id="1">
-			<domacin>Čelik</domacin>
-			<gost>Široki Brijeg</gost>
+			<domacin>9</domacin>
+			<gost>16</gost>
 			<cijena>6</cijena>
 		</utakmica>
 		
 		
 		
 		<utakmica id="5">
-			<domacin>Krupa</domacin>
-			<gost>Olimpik</gost>
+			<domacin>12</domacin>
+			<gost>19</gost>
 			<cijena>4</cijena>
 		</utakmica>
 		<utakmica id="6">
-			<domacin>Sloboda</domacin>
-			<gost>Sarajevo</gost>
+			<domacin>14</domacin>
+			<gost>6</gost>
 			<cijena>6</cijena>
 		</utakmica>
-	<utakmica id="7"><domacin>Zrinjski</domacin><gost>Široki</gost><cijena>7</cijena></utakmica><utakmica id="8"><domacin>Metalleghe</domacin><gost>Vitez</gost><cijena>3</cijena></utakmica></utakmice>
+	<utakmica id="7"><domacin>11</domacin><gost>15</gost><cijena>7</cijena></utakmica><utakmica id="8"><domacin>17</domacin><gost>18</gost><cijena>3</cijena></utakmica></utakmice>
+
+	<korisnici>
+		<korisnik>
+			<id>1</id>
+			<username>admin</username>
+			<password>adminpass</password>
+		</korisnik>
+	</korisnici>
 </podaci>

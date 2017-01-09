@@ -9,48 +9,43 @@ $greska_string = "";
 $uspjeh = 0;
 $uspjeh_string = "";
 
+//$veza = new PDO("mysql:dbname=bh_pliga;host=localhost;charset=utf8", "root", "");
+$veza = new PDO("mysql:dbname=sampledb;host=172.30.235.155;charset=utf8", "root", "");
+$veza->exec("set names utf8");
+
+
 if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 {
-	if (isset($_REQUEST["dodavanje"]) && isset($_REQUEST["naslov"]) && isset($_REQUEST["tekst-vijesti"]) && isset($_REQUEST["autor"]))
+	if (isset($_REQUEST["dodavanje"]) && isset($_REQUEST["naslov"]) && isset($_REQUEST["tekst-vijesti"]))
 	{
 		if(sizeof($_REQUEST["naslov"]) < 5 && sizeof($_REQUEST["naslov"]) > 60)
-		/*if(!preg_match('/^[a-zA-Z0-9.,!: ]{5,60}$/', $_REQUEST["naslov"]))*/
 		{
 			$greska = 1;
+			$uspjeh = 0;
 			$greska_string = "Nije validan unos. Naslov mora sadržavati samo 5-60 karaktera.";
 		}
 		elseif(sizeof($_REQUEST["tekst-vijesti"]) < 30 && sizeof($_REQUEST["tekst-vijesti"]) > 800)
 		{
-			var_dump($_REQUEST);
+			$uspjeh = 0;
 			$greska = 1;
 			$greska_string = "Nije validan unos. Tekst mora sadržavati 30-800 karaktera.";
 		}
 		else
 		{
-			$xml= simplexml_load_file("podaci.xml");
-			$sortirani = $xml->xpath('/podaci/vijesti/vijest');
-
-			function idcmp($t1, $t2) {
-			return intval($t1->attributes()["id"]) < intval($t2->attributes()["id"]);
-			}
-
-			usort($sortirani, "idcmp");
-			$noviId = 1;
-			if (sizeof($sortirani) > 0)
-			{
-				$noviId = $sortirani[0]->attributes()["id"] + 1;
-			}
-
-			$novi = $xml->vijesti->addChild("vijest", "");
-			$novi->addAttribute("id", $noviId);
-			$novi->addChild("naslov", htmlEntities($_REQUEST['naslov'], ENT_QUOTES));
-			$novi->addChild("tekst", htmlEntities($_REQUEST['tekst-vijesti'], ENT_QUOTES));
-			$novi->addChild("autor", $_SESSION["username"]);
-
-			$xml->asXml("podaci.xml");
-
-			$uspjeh = 1;
-			$uspjeh_string = "Uspješno dodana vijest";
+			$naslov = $_REQUEST["naslov"];
+			$tekst = $_REQUEST["tekst-vijesti"];
+			$rezultat = $veza->query("INSERT INTO vijesti (naslov, tekst) VALUES ('$naslov', '$tekst');");
+			if (!$rezultat) {
+				$greska = $veza->errorInfo();
+				$uspjeh = 0;
+		        print "SQL greška: " . $greska[2];
+		        exit();
+		    }
+		    else
+		    {
+				$uspjeh = 1;
+				$uspjeh_string = "Uspješno dodana vijest";
+		    }
 		}
 	}
 
@@ -58,54 +53,65 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 	{
 		if(sizeof($_REQUEST["naslov"]) < 5 && sizeof($_REQUEST["naslov"]) > 60)
 		{
+			$uspjeh = 0;
 			$greska = 2;
 			$greska_string = "Nije validan unos. Naslov mora sadržavati samo 5-60 karaktera.";
 		}
 		elseif(sizeof($_REQUEST["tekst-vijesti"]) < 30 && sizeof($_REQUEST["tekst-vijesti"]) > 800)
 		{
+			$uspjeh = 0;
 			$greska = 2;
 			$greska_string = "Nije validan unos. Tekst mora sadržavati 30-800 karaktera.";
 		}
 		else
 		{
-			$xml= simplexml_load_file("podaci.xml");
-			$nadjeni;
-			$trazeni = $_REQUEST["vijestId"];
+			$id = $_REQUEST["vijestId"];
+			$naslov = $_REQUEST["naslov"];
+			$tekst = $_REQUEST["tekst-vijesti"];
+			$rezultat = $veza->query("UPDATE vijesti SET naslov='teset', tekst='opopopopopopop' WHERE id=$id;");
 
-			foreach($xml->vijesti->vijest as $vijest)
-			{
-				if ($vijest->attributes()["id"] == $trazeni)
-				{
-					$vijest->tekst = $_REQUEST["tekst-vijesti"];
-					$vijest->naslov = $_REQUEST["naslov"];
-					$xml->asXml("podaci.xml");
+
+
+			if (!$rezultat) {
+				$greska_info = $veza->errorInfo();
+				$uspjeh = 0;
+		  		print "SQL greška: " . $greska_info[2];
+		        exit();
+		    }
+		    else
+		    {
 				$uspjeh = 2;
+				$greska = 0;
 				$uspjeh_string = "Uspješno editovana vijest";
-					break;
-				}
-			}
+		    }
 		}
 	}
 
 	if (isset($_REQUEST["brisi"]))
 	{
-		$xml= simplexml_load_file("podaci.xml");
-		$vijesti=$xml->xpath('//vijest[@id="'.$_REQUEST["brisi"].'"]');
+		$id = $_REQUEST["brisi"];
+		$rezultat = $veza->query("DELETE FROM vijesti WHERE id=$id;");
 
-		unset($vijesti[0][0]);
-		$xml->asXml("podaci.xml");
-		$uspjeh = 2;
-		$uspjeh_string = "Uspješno izbrisana vijest";
+		if (!$rezultat) {
+			$greska_info = $veza->errorInfo();
+			$uspjeh = 0;
+	        print "SQL greška: " . $greska_info[2];
+	        exit();
+	    }
+	    else
+	    {
+			$uspjeh = 2;
+			$greska = 0;
+			$uspjeh_string = "Uspješno izbrisana vijest";
+	    }
 	}
-
 }
 
+$vijesti = $veza->query("SELECT id, naslov, tekst FROM vijesti;");
+
+
 print "<div class=\"kolona tri glavni-sadrzaj\">";
-$xml= simplexml_load_file("podaci.xml");
 
-
-$vijesti = $xml->vijesti->vijest;
-$tabela = $xml->tabela->klub;
 print "<div><span id='edit-greska' class='greska'>";
 if ($greska == 2)
 {
@@ -129,19 +135,19 @@ foreach($vijesti as $vijest)
 
 		print	"<form  method='POST' action='vijesti.php' onsubmit=\"return provjeriFormu(this) && submitForm(this);\">
 				<div class='red'><label for='naslov'>Naslov: </label>
-				<input type='text' name='naslov' value='$vijest->naslov'></div>
-				<div class='red'><textarea class='siroki-text' name='tekst-vijesti'>$vijest->tekst</textarea></div>
-				<input type='hidden' name='vijestId' value='".$vijest->attributes()["id"]."'>
+				<input type='text' name='naslov' value='$vijest[naslov]'></div>
+				<div class='red'><textarea class='siroki-text' name='tekst-vijesti'>$vijest[tekst]</textarea></div>
+				<input type='hidden' name='vijestId' value='".$vijest["id"]."'>
 				<input type='hidden' name='edit'>
-				<input hidden='".$vijest->attributes()["id"]."'>
+				<input hidden='".$vijest["id"]."'>
 				<div class='red'><input type='submit' value='Sačuvaj'></div>
 			</form>";
 	}
 	else
 	{
 			print "<article>
-				<h2>" . htmlspecialchars($vijest->naslov) . "</h2>";
-	print "<p>" . htmlspecialchars($vijest->tekst) . "</p>
+				<h2>" . htmlspecialchars($vijest["naslov"]) . "</h2>";
+	print "<p>" . htmlspecialchars($vijest["tekst"]) . "</p>
 			</article>";
 
 	}
@@ -149,7 +155,7 @@ foreach($vijesti as $vijest)
 	if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 	{
 		print "<form class='brisanje mala-forma' method='POST' action='vijesti.php' onsubmit=\"return submitForm(this);\">
-								<input type='hidden' name='brisi' value='".$vijest->attributes()["id"]."'>
+								<input type='hidden' name='brisi' value='".$vijest["id"]."'>
 								<input type='submit' value='Briši'>
 								</form>";
 	}
@@ -208,14 +214,20 @@ print "<div class=\"kolona jedan strana\">
 	</tr>";
 
 
-$tabela = $xml->xpath('/podaci/tabela/klub');
-usort($tabela, "cmpbodovi");
+$tabela = $veza->query("SELECT naziv, bodovi FROM tabela ORDER BY bodovi DESC;");
+
+if (!$tabela)
+{
+	$greska_info = $veza->errorInfo();
+ 	print "Greška baze podataka: " . $greska_info[2];
+ 	exit();
+}
 
 foreach ($tabela as $mjesto=>$klub) {
 	print "<tr>
 	<td>". ($mjesto + 1) . "</td>
-	<td>$klub->naziv</td>
-	<td>$klub->bodovi</td>
+	<td>$klub[naziv]</td>
+	<td>$klub[bodovi]</td>
 	</tr>";
 }
 

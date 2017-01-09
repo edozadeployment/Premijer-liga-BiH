@@ -53,13 +53,6 @@
 				return false;
 		}
 
-		var utakmicaInput = e.target['utakmica'];
-		if (utakmicaInput && utakmicaInput.value >= 0) {
-				greska.innerHTML+="Morate izabrati utakmicu";  
-	            e.preventDefault(); 
-				return false;
-		}
-
 		var brulaznicaInput = e.target['brojulaznica'];
 		if (brulaznicaInput && ((!brulaznicaInput.value) || brulaznicaInput.value < brulaznicaInput.min || brulaznicaInput.value > brulaznicaInput.max))
 		{
@@ -138,15 +131,6 @@ function validacijaIgraca(e, greskaId)
 			return false;
 	}
 
-	var nazivRegex = /^[a-zA-Z0-9.\u0106\u0107\u010C\u010D\u0110\u0111\u0160\u0161\u017D\u017E ]{2,20}$/;
-	var input = e['tim'];
-	if (input && !nazivRegex.test(input.value)) {
-			var greska = document.getElementById(greskaId);
-            greska.innerHTML= " Naziv kluba može sadržavati samo slova, brojeve i razmake, u dužini od 2 do 20 karaktera.";
-            //e.preventDefault();
-			return false;
-	}
-
 	input = e['golovi'];
 	if (input && !((!isNaN(parseFloat(input.value)) && isFinite(input.value)) && (parseInt(input.value) >= 0) && (parseInt(input.value) <= 99)))
 	{
@@ -171,24 +155,13 @@ function validacijaUtakmice(e, greskaId)
 {
 	var greska = document.getElementById(greskaId);
 
+	var domacin = e["domacin"];
+	var gost = e["gost"];
 
-
-	var regex = /^[a-zA-Z0-9.\u0106\u0107\u010C\u010D\u0110\u0111\u0160\u0161\u017D\u017E ]{2,20}$/;
-	var input = e["domacin"];
-
-	if (input && !regex.test(input.value)) {
-            greska.innerHTML= "Naziv kluba (domacin) može sadržavati samo slova, brojeve i razmake, u dužini od 2 do 20 karaktera.";
-            //e.preventDefault();
-			return false;
-	}
-
-	var regex = /^[a-zA-Z0-9.\u0106\u0107\u010C\u010D\u0110\u0111\u0160\u0161\u017D\u017E ]{2,20}$/;
-	var input = e["gost"];
-
-	if (input && !regex.test(input.value)) {
-            greska.innerHTML= "Naziv kluba (gost) može sadržavati samo slova, brojeve i razmake, u dužini od 2 do 20 karaktera.";
-            //e.preventDefault();
-			return false;
+	if (domacin.value == gost.value)
+	{		
+        greska.innerHTML= "Klub ne može igrati protiv samog sebe.";
+		return false;
 	}
 
 	var input = e['cijena'];
