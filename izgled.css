@@ -432,6 +432,7 @@ article > h2
 .td, .th
 {
   display: table-cell;
+  padding: 3px;
 
 }
 

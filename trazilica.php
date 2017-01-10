@@ -61,8 +61,6 @@ else
 	{
 		foreach ($clanovi as $clan)
 		{
-			if ((substr_count(strtolower($clan->ime), $pretraga) != 0) || (substr_count(strtolower($clan->prezime), $pretraga) != 0))
-			{
 				$rezultat = $rezultat . "<div class='tr'>
 											<div class='td'>$clan[ime]</div>
 											<div class='td'>$clan[prezime]</div>
@@ -70,13 +68,6 @@ else
 											<div class='td'>$clan[telefon]</div>
 										</div>";
 
-				$broj_pronadjenih++;
-
-				if (!isset($_REQUEST["sve"]) && $broj_pronadjenih == 10)
-				{
-					break;
-				}
-			}
 		}
 	}
 
