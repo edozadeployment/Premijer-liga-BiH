@@ -19,7 +19,8 @@ function cmp_strijelci($t1, $t2) {
 }
 
 session_start();
-$veza = new PDO("mysql:dbname=bh_pliga;host=localhost;charset=utf8", "root", "");
+//$veza = new PDO("mysql:dbname=bh_pliga;host=localhost;charset=utf8", "root", "");
+$veza = new PDO("mysql:dbname=sampledb;host=172.30.235.155;charset=utf8", "root", "");
 $veza->exec("set names utf8");
 
 if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
@@ -43,7 +44,13 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 			$naziv = $_REQUEST["naziv"];
 			$bodovi = $_REQUEST["bodovi"];
 			
-			$rezultat = $veza->query("UPDATE tabela SET naziv='$naziv', bodovi=$bodovi WHERE id=$id;");
+			$upit = $veza->prepare("UPDATE tabela SET naziv=?, bodovi=? WHERE id=?;");
+			$upit->bindValue(1, $naziv, PDO::PARAM_STR);
+			$upit->bindValue(2, $bodovi, PDO::PARAM_INT);
+			$upit->bindValue(3, $id, PDO::PARAM_INT);
+
+			$rezultat = $upit->execute();
+
 
 			if (!$rezultat)
 			{
@@ -81,7 +88,13 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 			$golovi =  $_REQUEST["golovi"];
 			$tim = $_REQUEST["tim"];
 			
-			$rezultat = $veza->query("UPDATE strijelci SET ime='$ime', golovi=$golovi, tim=$tim WHERE id=$id;");
+			$upit = $veza->prepare("UPDATE strijelci SET ime=?, golovi=?, tim=? WHERE id=?;");
+			$upit->bindValue(1, $ime, PDO::PARAM_STR);
+			$upit->bindValue(2, $golovi, PDO::PARAM_INT);
+			$upit->bindValue(3, $tim, PDO::PARAM_INT);
+			$upit->bindValue(4, $id, PDO::PARAM_INT);
+
+			$rezultat = $upit->execute();
 
 			if (!$rezultat)
 			{
@@ -102,7 +115,11 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 	elseif (isset($_REQUEST["brisi-tabela"]))
 	{
 		$id = $_REQUEST["brisi-tabela"];
-		$rezultat = $veza->query("DELETE FROM tabela WHERE id=$id;");
+		$upit = $veza->prepare("DELETE FROM tabela WHERE id=?;");
+
+		$upit->bindValue(1, $id, PDO::PARAM_INT);
+
+		$rezultat = $upit->execute();
 
 		if (!$rezultat)
 		{
@@ -122,8 +139,10 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 	if (isset($_REQUEST["brisi-strijelci"]))
 	{
 		$id = $_REQUEST["brisi-strijelci"];
-		$rezultat = $veza->query("DELETE FROM strijelci WHERE id=$id;");
-		
+		$upit = $veza->prepare("DELETE FROM strijelci WHERE id=?;");
+		$upit->bindValue(1, $id, PDO::PARAM_INT);
+		$rezultat = $upit->execute();
+
 		if (!$rezultat)
 		{
 			$greska_info = $veza->errorInfo();
@@ -157,7 +176,11 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 			$naziv = $_REQUEST["naziv"];
 			$bodovi = $_REQUEST["bodovi"];
 
-			$rezultat = $veza->query("INSERT INTO tabela (naziv, bodovi) VALUES ('$naziv', $bodovi);");
+			$upit = $veza->prepare("INSERT INTO tabela (naziv, bodovi) VALUES (?, ?);");
+			$upit->bindValue(1, $naziv, PDO::PARAM_STR);
+			$upit->bindValue(2, $bodovi, PDO::PARAM_INT);
+			
+			$rezultat = $upit->execute();
 
 
 			if (!$rezultat)
@@ -196,7 +219,12 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 			$golovi =  $_REQUEST["golovi"];
 			$tim = $_REQUEST["tim"];
 
-			$rezultat = $veza->query("INSERT INTO strijelci (ime, golovi, tim) VALUES ('$ime', $golovi, $tim);");
+			$upit = $veza->prepare("INSERT INTO strijelci (ime, golovi, tim) VALUES (?, ?, ?);");
+			$upit->bindValue(1, $ime, PDO::PARAM_STR);
+			$upit->bindValue(2, $golovi, PDO::PARAM_INT);
+			$upit->bindValue(3, $tim, PDO::PARAM_INT);
+
+			$rezultat = $upit->execute();
 
 			if (!$rezultat)
 			{
@@ -215,19 +243,29 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 	}
 }
 
-$tabela = $veza->query("SELECT id, naziv, bodovi FROM tabela ORDER BY bodovi DESC;");
-if (!$tabela) {
+//$tabela = $veza->query("SELECT id, naziv, bodovi FROM tabela ORDER BY bodovi DESC;");
+$upit = $veza->prepare("SELECT id, naziv, bodovi FROM tabela ORDER BY bodovi DESC;");
+$ispravno = $upit->execute();
+
+if (!$ispravno) {
+	$greska = $veza->errorInfo();
+    print "SQL greška: " . $greska[2];
+    exit();
+}
+$tabela = $upit->fetchAll();
+
+$upit = $veza->prepare("SELECT strijelci.id, strijelci.ime, tabela.naziv AS tim, strijelci.tim AS timid, strijelci.golovi FROM strijelci JOIN tabela ON tabela.id=strijelci.tim ORDER BY strijelci.golovi DESC;");
+
+$ispravno = $upit->execute();
+
+if (!$ispravno) {
 	$greska = $veza->errorInfo();
     print "SQL greška: " . $greska[2];
     exit();
 }
 
-$strijelci = $veza->query("SELECT strijelci.id, strijelci.ime, tabela.naziv AS tim, strijelci.tim AS timid, strijelci.golovi FROM strijelci JOIN tabela ON tabela.id=strijelci.tim ORDER BY strijelci.golovi DESC;");
-if (!$strijelci) {
-	$greska = $veza->errorInfo();
-    print "SQL greška: " . $greska[2];
-    exit();
-}
+$strijelci = $upit->fetchAll();
+
 
 //usort($tabela, 'cmp');
 //usort($strijelci, 'cmp_strijelci');
@@ -338,12 +376,6 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 		
 		<div class='td'><input type='text' name='ime' value='". $igrac["ime"] . "'></div>
 		<div class='td'><select name='tim'>";
-		$tabela = $veza->query("SELECT id, naziv, bodovi FROM tabela ORDER BY bodovi DESC;");
-		if (!$tabela) {
-			$greska = $veza->errorInfo();
-    		print "SQL greška: " . $greska[2];
-    		exit();
-		}
 		
 		foreach ($tabela as $klub)
 		{
@@ -371,12 +403,7 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 		</div>";
 		//</div>";
 	}
-	$tabela = $veza->query("SELECT id, naziv, bodovi FROM tabela ORDER BY bodovi DESC;");
-	if (!$tabela) {
-		$greska = $veza->errorInfo();
-		print "SQL greška: " . $greska[2];
-		exit();
-	}
+
 	//print "<div class='red'>
 	print "<tr><form method='POST' action='statistika.php' onsubmit=\"return validacijaIgraca(this, 'edit-klub-greska') && submitForm(this);\">
 	<td><input type='text' name='ime'></td>

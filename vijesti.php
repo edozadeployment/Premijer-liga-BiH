@@ -34,7 +34,11 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 		{
 			$naslov = $_REQUEST["naslov"];
 			$tekst = $_REQUEST["tekst-vijesti"];
-			$rezultat = $veza->query("INSERT INTO vijesti (naslov, tekst) VALUES ('$naslov', '$tekst');");
+			$upit = $veza->prepare("INSERT INTO vijesti (naslov, tekst) VALUES (?, ?);");
+			$upit->bindValue(1, $naslov, PDO::PARAM_STR);
+			$upit->bindValue(2, $tekst, PDO::PARAM_STR);
+			$rezultat = $upit->execute();
+
 			if (!$rezultat) {
 				$greska = $veza->errorInfo();
 				$uspjeh = 0;
@@ -68,8 +72,12 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 			$id = $_REQUEST["vijestId"];
 			$naslov = $_REQUEST["naslov"];
 			$tekst = $_REQUEST["tekst-vijesti"];
-			$rezultat = $veza->query("UPDATE vijesti SET naslov='teset', tekst='opopopopopopop' WHERE id=$id;");
+			$upit = $veza->prepare("UPDATE vijesti SET naslov=?, tekst=? WHERE id=?;");
+			$upit->bindValue(1, $naslov, PDO::PARAM_STR);
+			$upit->bindValue(2, $tekst, PDO::PARAM_STR);
+			$upit->bindValue(3, $id, PDO::PARAM_INT);
 
+			$rezultat = $upit->execute();
 
 
 			if (!$rezultat) {
@@ -90,7 +98,9 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 	if (isset($_REQUEST["brisi"]))
 	{
 		$id = $_REQUEST["brisi"];
-		$rezultat = $veza->query("DELETE FROM vijesti WHERE id=$id;");
+		$upit = $veza->prepare("DELETE FROM vijesti WHERE id=?;");
+		$upit->bindValue(1, $id, PDO::PARAM_INT);
+		$rezultat = $upit->execute();
 
 		if (!$rezultat) {
 			$greska_info = $veza->errorInfo();
@@ -107,8 +117,9 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 	}
 }
 
-$vijesti = $veza->query("SELECT id, naslov, tekst FROM vijesti;");
-
+$upit = $veza->prepare("SELECT id, naslov, tekst FROM vijesti;");
+$upit->execute();
+$vijesti = $upit->fetchAll();
 
 print "<div class=\"kolona tri glavni-sadrzaj\">";
 
@@ -131,7 +142,6 @@ foreach($vijesti as $vijest)
 {	
 	if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 	{
-
 
 		print	"<form  method='POST' action='vijesti.php' onsubmit=\"return provjeriFormu(this) && submitForm(this);\">
 				<div class='red'><label for='naslov'>Naslov: </label>
@@ -214,14 +224,17 @@ print "<div class=\"kolona jedan strana\">
 	</tr>";
 
 
-$tabela = $veza->query("SELECT naziv, bodovi FROM tabela ORDER BY bodovi DESC;");
+$upit = $veza->prepare("SELECT naziv, bodovi FROM tabela ORDER BY bodovi DESC;");
+$uspjeh = $upit->execute();
 
-if (!$tabela)
+if (!$uspjeh)
 {
 	$greska_info = $veza->errorInfo();
  	print "Greška baze podataka: " . $greska_info[2];
  	exit();
 }
+
+$tabela = $upit->fetchAll();
 
 foreach ($tabela as $mjesto=>$klub) {
 	print "<tr>

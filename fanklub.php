@@ -6,6 +6,7 @@ $uspjeh_string = "";
 
 //$veza = new PDO("mysql:dbname=bh_pliga;host=localhost;charset=utf8", "root", "");
 $veza = new PDO("mysql:dbname=sampledb;host=172.30.235.155;charset=utf8", "root", "");
+
 $veza->exec("set names utf8");
 
 if (isset($_REQUEST['csv']))
@@ -65,8 +66,13 @@ if (isset($_REQUEST["registracija"]) && isset($_REQUEST["ime"]) && isset($_REQUE
 		$prezime = $_REQUEST["prezime"];
 		$email = $_REQUEST["email"];
 		$telefon = $_REQUEST["telefon"];
+		$upit = $veza->prepare("INSERT INTO fanklub (ime, prezime, email, telefon) VALUES (?, ?, ?, ?);");
+		$upit->bindValue(1, $ime, PDO::PARAM_STR);
+		$upit->bindValue(2, $prezime, PDO::PARAM_STR);
+		$upit->bindValue(3, $email, PDO::PARAM_STR);
+		$upit->bindValue(4, $telefon, PDO::PARAM_STR);
 
-		$rezultat = $veza->query("INSERT INTO fanklub (ime, prezime, email, telefon) VALUES ('$ime', '$prezime', '$email', '$telefon');");
+		$rezultat = $upit->execute();
 		
 		if (!$rezultat)
 		{
@@ -118,10 +124,14 @@ elseif (isset($_REQUEST["edit"]) && isset($_REQUEST["ime"]) && isset($_REQUEST["
 		$telefon = $_REQUEST["telefon"];
 		
 
-		$upit = "UPDATE fanklub SET ime='$ime', prezime='$prezime', email='$email', telefon='$telefon' WHERE id=$id;";
-		var_dump($upit);
+		$upit = $veza->prepare("UPDATE fanklub SET ime=?, prezime=?, email=?, telefon=? WHERE id=?;");
+		$upit->bindValue(1, $ime, PDO::PARAM_STR);
+		$upit->bindValue(2, $prezime, PDO::PARAM_STR);
+		$upit->bindValue(3, $email, PDO::PARAM_STR);
+		$upit->bindValue(4, $telefon, PDO::PARAM_STR);
+		$upit->bindValue(5, $id, PDO::PARAM_INT);
 
-		$rezultat = $veza->query("UPDATE fanklub SET ime='$ime', prezime='$prezime', email='$email', telefon='$telefon' WHERE id=$id;");
+		$rezultat = $upit->execute();
 		if (!$rezultat)
 		{
 			$greska_info = $veza->errorInfo();
@@ -141,8 +151,9 @@ if (isset($_REQUEST["brisi"]))
 {
 	$id = $_REQUEST["brisi"];
 
-	$rezultat=$query("DELETE FROM fanklub WHERE id=$id");
-
+	$upit = $veza->prepare("DELETE FROM fanklub WHERE id=?");
+	$upit->bindValue(1, $id);
+	$rezultat = $upit->execute();
 	if (!$rezultat)
 	{
 		$greska_info = $veza->errorInfo();

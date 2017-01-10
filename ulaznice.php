@@ -6,21 +6,18 @@ function idcmp($t1, $t2) {
 $greska = 0;
 $uspjeh = 0;
 
-$xml= simplexml_load_file("podaci.xml");
 //$veza = new PDO("mysql:dbname=bh_pliga;host=localhost;charset=utf8", "root", "");
 $veza = new PDO("mysql:dbname=sampledb;host=172.30.235.155;charset=utf8", "root", "");
-
 $veza->exec("set names utf8");
-
-$utakmice = $xml->xpath('/podaci/utakmice/utakmica');
 
 if (isset($_REQUEST["kupovina"]))
 {
 	if (isset($_REQUEST["utakmica"]))
 	{
 		$id = $_REQUEST["utakmica"];
-		$upit_string = "SELECT tabela1.naziv AS domacin, tabela2.naziv AS gost, utakmice.cijena AS cijena FROM utakmice JOIN tabela tabela1 ON tabela1.id = utakmice.domacin JOIN tabela tabela2 ON tabela2.id = utakmice.gost WHERE utakmice.id = $id;";
-		$upit = $veza->prepare($upit_string);
+
+		$upit = $veza->prepare("SELECT tabela1.naziv AS domacin, tabela2.naziv AS gost, utakmice.cijena AS cijena FROM utakmice JOIN tabela tabela1 ON tabela1.id = utakmice.domacin JOIN tabela tabela2 ON tabela2.id = utakmice.gost WHERE utakmice.id=?;");
+		$upit->bindValue(1, $id, PDO::PARAM_INT);
 		$upit->execute();
 		$ut = $upit->fetch(PDO::FETCH_ASSOC);
 		//var_dump($ut);
@@ -92,7 +89,9 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 			$gost = $_REQUEST["gost"];
 			$cijena = $_REQUEST["cijena"];
 
-			$rezultat = $veza->exec("UPDATE utakmice SET domacin=$domacin, gost=$gost, cijena=$cijena WHERE id=$id;");
+			$upit = $veza->prepare("UPDATE utakmice SET domacin=$domacin, gost=$gost, cijena=$cijena WHERE id=?;");
+			$upit->bindValue(1, $id, PDO::PARAM_INT);
+			$rezultat = $upit->execute();
 
 			if (!$rezultat)
 			{
@@ -112,7 +111,10 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 	elseif (isset($_REQUEST["brisi-utakmica"]))
 	{
 		$id = $_REQUEST["brisi-utakmica"];
-		$rezultat = $veza->exec("DELETE FROM utakmice WHERE id=$id;");
+		$upit = $veza->prepare("DELETE FROM utakmice WHERE id=?;");
+		$upit->bindValue(1, $id, PDO::PARAM_INT);
+
+		$rezultat = $upit->execute();
 
 		if (!$rezultat)
 		{
@@ -146,7 +148,12 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 			$gost = $_REQUEST["gost"];
 			$cijena = $_REQUEST["cijena"];		
 			
-			$rezultat = $veza->query("INSERT INTO utakmice (domacin, gost, cijena) VALUES ($domacin, $gost, $cijena);");
+			$upit = $veza->prepare("INSERT INTO utakmice (domacin, gost, cijena) VALUES (?, ?, ?);");
+			$upit->bindValue(1, $domacin, PDO::PARAM_INT);
+			$upit->bindValue(2, $gost, PDO::PARAM_INT);
+			$upit->bindValue(3, $cijena, PDO::PARAM_INT);
+
+			$rezultat = $upit->execute();
 
 			if (!$rezultat)
 			{
@@ -190,9 +197,12 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 	<div class='kolona dva'>";
 
 
-$utakmice = $veza->query("SELECT utakmice.id, tabela1.naziv AS domacin, tabela2.naziv AS gost, tabela1.id AS domacinid, tabela2.id AS gostid, utakmice.cijena FROM utakmice JOIN tabela tabela1 ON tabela1.id = utakmice.domacin JOIN tabela tabela2 ON tabela2.id = utakmice.gost;");
+$upit = $veza->prepare("SELECT utakmice.id, tabela1.naziv AS domacin, tabela2.naziv AS gost, tabela1.id AS domacinid, tabela2.id AS gostid, utakmice.cijena FROM utakmice JOIN tabela tabela1 ON tabela1.id = utakmice.domacin JOIN tabela tabela2 ON tabela2.id = utakmice.gost;");
+$uspjeh = $upit->execute();
 
-if (!$utakmice)
+$utakmice = $upit->fetchAll();
+
+if (!$uspjeh)
 {
 	$greska = $veza->errorInfo();
 	print "GREŠKA BAZE: " + $greska[2];
@@ -203,9 +213,13 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 {
 	print "<div class='tabela'>";
 
+	$upit = $veza->prepare("SELECT id, naziv FROM tabela;");
+	$upit->execute();
+	$domacini = $upit->fetchAll();
+
 	foreach ($utakmice as $utakmica) {
-		$domacini = $veza->query("SELECT id, naziv FROM tabela;");
-		$gosti = $veza->query("SELECT id, naziv FROM tabela;");
+		//$domacini = $veza->query("SELECT id, naziv FROM tabela;");
+		//$gosti = $veza->query("SELECT id, naziv FROM tabela;");
 		//print "<div class='red'>
 		print
 		"<div class='tr'>
@@ -227,7 +241,7 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 				print "</select></div><div class='td'>
 				<select name='gost'>";
 
-				 foreach ($gosti as  $gost) {
+				 foreach ($domacini as  $gost) {
 				 	if (intval($utakmica["gostid"]) == intval($gost["id"]))
 				 	{
 				 		print "<option value='$gost[id]' selected>$gost[naziv]</option>";
@@ -250,9 +264,9 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 			</div>
 		</div>";
 	}
-	$klubovi = $veza->query("SELECT id, naziv FROM tabela;");
+	//$klubovi = $veza->query("SELECT id, naziv FROM tabela;");
 	$opcije = "";
-	foreach($klubovi as $klub)
+	foreach($domacini as $klub)
 	{
 		$opcije = $opcije . "<option value=$klub[id]>$klub[naziv]</option>";
 	}
@@ -274,7 +288,7 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")
 }
 else
 {
-	$utakmice = $veza->query("SELECT utakmice.id, tabela1.naziv AS domacin, tabela2.naziv AS gost FROM utakmice JOIN tabela tabela1 ON tabela1.id = utakmice.domacin JOIN tabela tabela2 ON tabela2.id = utakmice.domacin;");
+	//$utakmice = $veza->query("SELECT utakmice.id, tabela1.naziv AS domacin, tabela2.naziv AS gost FROM utakmice JOIN tabela tabela1 ON tabela1.id = utakmice.domacin JOIN tabela tabela2 ON tabela2.id = utakmice.gost;");
 
 	if (!$utakmice)
 	{

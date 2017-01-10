@@ -43,8 +43,11 @@
 				$veza = new PDO("mysql:dbname=sampledb;host=172.30.235.155;charset=utf8", "root", "");
 
 				$veza->exec("set names utf8");
-				$upit = $veza->prepare("SELECT * FROM korisnici WHERE username='$username' AND password='$password';");
+				$upit = $veza->prepare("SELECT * FROM korisnici WHERE username=? AND password=?;");
+				$upit->bindValue(1, $username, PDO::PARAM_STR);
+				$upit->bindValue(2, $password, PDO::PARAM_STR);
 				$upit->execute();
+
 				$korisnik = $upit->fetch();
 
 				if ($korisnik)
