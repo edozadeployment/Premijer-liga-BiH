@@ -9,8 +9,8 @@ $greska_string = "";
 $uspjeh = 0;
 $uspjeh_string = "";
 
-//$veza = new PDO("mysql:dbname=bh_pliga;host=localhost;charset=utf8", "root", "");
-$veza = new PDO("mysql:dbname=sampledb;host=172.30.235.155;charset=utf8", "root", "");
+$veza = new PDO("mysql:dbname=bh_pliga;host=localhost;charset=utf8", "root", "");
+//$veza = new PDO("mysql:dbname=sampledb;host=172.30.235.155;charset=utf8", "root", "");
 $veza->exec("set names utf8");
 
 

@@ -39,8 +39,8 @@
 				$username = $_REQUEST["username"];
 				$password = $_REQUEST["password"];
 			
-				//$veza = new PDO("mysql:dbname=bh_pliga;host=localhost;charset=utf8", "root", "");
-				$veza = new PDO("mysql:dbname=sampledb;host=172.30.235.155;charset=utf8", "root", "");
+				$veza = new PDO("mysql:dbname=bh_pliga;host=localhost;charset=utf8", "root", "");
+				//$veza = new PDO("mysql:dbname=sampledb;host=172.30.235.155;charset=utf8", "root", "");
 
 				$veza->exec("set names utf8");
 				$upit = $veza->prepare("SELECT * FROM korisnici WHERE username=? AND password=?;");

@@ -19,8 +19,8 @@ function cmp_strijelci($t1, $t2) {
 }
 
 session_start();
-//$veza = new PDO("mysql:dbname=bh_pliga;host=localhost;charset=utf8", "root", "");
-$veza = new PDO("mysql:dbname=sampledb;host=172.30.235.155;charset=utf8", "root", "");
+$veza = new PDO("mysql:dbname=bh_pliga;host=localhost;charset=utf8", "root", "");
+//$veza = new PDO("mysql:dbname=sampledb;host=172.30.235.155;charset=utf8", "root", "");
 $veza->exec("set names utf8");
 
 if (isset($_SESSION["username"]) && $_SESSION["username"] == "admin")

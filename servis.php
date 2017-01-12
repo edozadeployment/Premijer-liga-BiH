@@ -10,10 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] != "GET")
 	header("{$_SERVER['SERVER_PROTOCOL']} 404 Not Found");
 }
 else{
-	//var_dump($_GET);
-	//$veza = new PDO("mysql:dbname=bh_pliga;host=localhost;charset=utf8", "root", "");
-	$veza = new PDO("mysql:dbname=sampledb;host=172.30.235.155;charset=utf8", "root", "");
-	//var_dump($_GET);
+	$veza = new PDO("mysql:dbname=bh_pliga;host=localhost;charset=utf8", "root", "");
+	//$veza = new PDO("mysql:dbname=sampledb;host=172.30.235.155;charset=utf8", "root", "");
 	zag();
 	$utakmice = [];
 	if (!isset($_GET["id"]))

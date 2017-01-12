@@ -6,8 +6,8 @@ function idcmp($t1, $t2) {
 $greska = 0;
 $uspjeh = 0;
 
-//$veza = new PDO("mysql:dbname=bh_pliga;host=localhost;charset=utf8", "root", "");
-$veza = new PDO("mysql:dbname=sampledb;host=172.30.235.155;charset=utf8", "root", "");
+$veza = new PDO("mysql:dbname=bh_pliga;host=localhost;charset=utf8", "root", "");
+//$veza = new PDO("mysql:dbname=sampledb;host=172.30.235.155;charset=utf8", "root", "");
 $veza->exec("set names utf8");
 
 if (isset($_REQUEST["kupovina"]))
@@ -20,7 +20,6 @@ if (isset($_REQUEST["kupovina"]))
 		$upit->bindValue(1, $id, PDO::PARAM_INT);
 		$upit->execute();
 		$ut = $upit->fetch(PDO::FETCH_ASSOC);
-		//var_dump($ut);
 	}
 
 	require('tfpdf/tfpdf.php');
