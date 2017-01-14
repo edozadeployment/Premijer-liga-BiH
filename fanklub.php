@@ -4,7 +4,7 @@ $greska_string = "";
 $uspjeh = 0;
 $uspjeh_string = "";
 
-$veza = new PDO("mysql:dbname=bhpliga;host=mysql-55-centos7-1-gcxqv;charset=utf8", "edo", "pass123");
+$veza = new PDO("mysql:dbname=bhpliga;host=mysql-55-centos7;charset=utf8", "edo", "pass123");
 //$veza = new PDO("mysql:dbname=bh_pliga;host=localhost;charset=utf8", "root", "");
 //$veza = new PDO("mysql:dbname=sampledb;host=172.30.235.155;charset=utf8", "root", "");
 
