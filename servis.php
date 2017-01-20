@@ -10,8 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] != "GET")
 	header("{$_SERVER['SERVER_PROTOCOL']} 404 Not Found");
 }
 else{
-	//$veza = new PDO("mysql:dbname=bhpliga;host=mysql-55-centos7;charset=utf8", "edo", "pass123");
-	$veza = new PDO("mysql:dbname=bhpliga;host=localhost;charset=utf8", "edo", "pass123");
+	$veza = new PDO("mysql:dbname=bhpliga;host=mysql-55-centos7;charset=utf8", "edo", "pass123");
+	//$veza = new PDO("mysql:dbname=bhpliga;host=localhost;charset=utf8", "edo", "pass123");
 
 	zag();
 	$utakmice = [];
